@@ -28,8 +28,8 @@ public class resign_screen extends AppCompatActivity {
     DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
     EditText account,repeat,nickname,password,no,truename;
     Button enter;
-    //Map<String,Object> worker=new HashMap<>();
-    //FirebaseFirestore db= FirebaseFirestore.getInstance();
+    Map<String,Object> worker=new HashMap<>();
+    FirebaseFirestore db= FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +39,6 @@ public class resign_screen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
             input_data();
-            /*
             db.collection("worker").add(worker).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
                 public void onSuccess(DocumentReference documentReference) {
@@ -50,7 +49,7 @@ public class resign_screen extends AppCompatActivity {
                 public void onFailure(@NonNull Exception e) {
                 nofition("no internet");
                 }
-            });*/
+            });
             //reference.child("account").child(truename.getText().toString()).setValue(worker1);
     }
 });
@@ -58,12 +57,12 @@ public class resign_screen extends AppCompatActivity {
     }
     void input_data()
     {
-        /*
+
         worker.put("account",account.getText().toString());
         worker.put("nickname",nickname.getText().toString());
         worker.put("no",no.getText().toString());
         worker.put("password",password.getText().toString());
-        */
+
 
     }
     void nofition(String data)
