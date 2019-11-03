@@ -3,6 +3,7 @@ package com.example.health_system;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.protobuf.NullValue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,8 +30,9 @@ public class resign_screen extends AppCompatActivity {
     DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
     EditText account,repeat,nickname,password,no,truename;
     Button enter;
+    String temp="";
     Map<String,Object> worker=new HashMap<>();
-    FirebaseFirestore db= FirebaseFirestore.getInstance();
+    Map<String,Object> test=new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,25 +42,74 @@ public class resign_screen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
             input_data();
-            db.collection("worker").add(worker).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                @Override
-                public void onSuccess(DocumentReference documentReference) {
-                nofition("id="+documentReference.getId());
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                nofition("no internet");
-                }
-            });
-            //reference.child("account").child(truename.getText().toString()).setValue(worker1);
+            if(check())
+            {
+                reference.child("account").child(nickname.getText().toString()).setValue(worker);
+                nofition("successful");
+                Intent intent=new Intent(resign_screen.this,MainActivity.class);
+                startActivity(intent);
+            }
+
+
+    }
+    boolean check()
+    {
+    if(truename.getText().toString().equals(""))
+    {
+      nofition("你的真實名子沒輸入喔 ");
+      return false;
+    }
+    reference.child("account").child(nickname.getText().toString()).child("nickname").addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+         temp=dataSnapshot.getValue(String.class);
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+        }
+    });
+
+    if(!temp.equals(""))
+    {
+        nofition("此帳已被註冊");
+        return false;
+    }
+
+    if(no.getText().toString().equals(""))
+    {
+        nofition("你的編號沒輸入喔 ");
+        return false;
+    }
+    if(account.getText().toString().equals(""))
+    {
+        nofition("你的帳號沒輸入喔 ");
+        return false;
+    }
+    if(nickname.getText().toString().equals(""))
+    {
+        nofition("你的沒輸入喔 ");
+        return false;
+    }
+    if(password.getText().toString().equals(""))
+    {
+        nofition("你的密碼沒輸入喔 ");
+        return false;
+    }
+    if(!password.getText().toString().equals(repeat.getText().toString()))
+    {
+        nofition("你的密碼不相同 ");
+        return false;
+    }
+    return true;
     }
 });
+
 
     }
     void input_data()
     {
-
+        worker.put("truename",truename.getText().toString());
         worker.put("account",account.getText().toString());
         worker.put("nickname",nickname.getText().toString());
         worker.put("no",no.getText().toString());
@@ -67,7 +119,8 @@ public class resign_screen extends AppCompatActivity {
     }
     void nofition(String data)
     {
-        Toast.makeText(this,data,Toast.LENGTH_LONG);
+        Toast.makeText(this,data,Toast.LENGTH_SHORT).show();
+
     }
     void setup()
     {
