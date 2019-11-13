@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+
     Button resign_btn,enter;
     long first=0;
     EditText account,password;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setup();
+
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

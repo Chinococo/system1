@@ -270,6 +270,12 @@
                     app:layout_constraintEnd_toEndOf="@+id/score"
                     app:layout_constraintTop_toTopOf="@+id/class1" />
 
+                <EditText
+                    android:id="@+id/class1_p1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    tools:layout_editor_absoluteX="154dp"
+                    tools:layout_editor_absoluteY="84dp" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </HorizontalScrollView>
     </ScrollView>
