@@ -182,7 +182,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
-                    android:layout_marginBottom="80dp"
+                    android:layout_marginBottom="40dp"
                     android:text="班級8"
                     android:textSize="40sp"
                     app:layout_constraintBottom_toBottomOf="parent"
