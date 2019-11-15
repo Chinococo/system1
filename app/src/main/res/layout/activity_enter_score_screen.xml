@@ -4,38 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/enter_score"
     android:orientation="horizontal"
     tools:context=".enter_score_screen">
 
 
-    <EditText
-        android:id="@+id/editText4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="@+id/textView7"
-        app:layout_constraintEnd_toEndOf="@+id/editText3"
-        app:layout_constraintTop_toTopOf="@+id/textView7"
-        app:layout_constraintVertical_bias="0.384" />
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="350dp"
+        android:layout_height="560dp"
+        android:background="#C6000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.071"
+        app:srcCompat="@color/common_google_signin_btn_text_dark_disabled" />
 
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="232dp"
         android:layout_height="43dp"
-        android:layout_marginTop="128dp"
-        android:layout_marginEnd="88dp"
+        android:layout_marginTop="48dp"
+        android:background="#BE0B7485"
+        android:entries="@array/class1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
         android:layout_marginTop="36dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginEnd="20dp"
+        android:text="評1"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/enter_score_edit1"
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <TextView
@@ -43,7 +50,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:text="TextView"
+        android:text="評2"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -52,7 +61,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:text="TextView"
+        android:text="評3"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -61,7 +72,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:text="TextView"
+        android:text="評4"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/textView6"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -70,61 +83,87 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:text="TextView"
+        android:text="評5"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/textView7"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
+        android:id="@+id/enter_score_edit1"
+        android:layout_width="75dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="152dp"
+        android:background="#BA4C56E7"
         android:ems="10"
         android:inputType="number"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/textView4"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="@+id/textView4" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView4"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/editText3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/enter_score_edit2"
+        android:layout_width="75dp"
+        android:layout_height="40dp"
+        android:background="#BA4C56E7"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="@+id/textView6"
-        app:layout_constraintEnd_toEndOf="@+id/editText2"
-        app:layout_constraintTop_toTopOf="@+id/textView6"
-        app:layout_constraintVertical_bias="0.692" />
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
-        app:layout_constraintEnd_toEndOf="@+id/editText"
+        app:layout_constraintEnd_toEndOf="@+id/enter_score_edit1"
         app:layout_constraintTop_toTopOf="@+id/textView5"
         app:layout_constraintVertical_bias="0.615" />
 
     <EditText
-        android:id="@+id/editText5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/enter_score_edit3"
+        android:layout_width="75dp"
+        android:layout_height="40dp"
+        android:background="#BA4C56E7"
         android:ems="10"
         android:inputType="number"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/textView6"
+        app:layout_constraintEnd_toEndOf="@+id/enter_score_edit2"
+        app:layout_constraintTop_toTopOf="@+id/textView6"
+        app:layout_constraintVertical_bias="0.692" />
+
+    <EditText
+        android:id="@+id/enter_score_edit4"
+        android:layout_width="75dp"
+        android:layout_height="40dp"
+        android:background="#BA4C56E7"
+        android:ems="10"
+        android:inputType="number"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/textView7"
+        app:layout_constraintEnd_toEndOf="@+id/enter_score_edit3"
+        app:layout_constraintTop_toTopOf="@+id/textView7"
+        app:layout_constraintVertical_bias="0.384" />
+
+    <EditText
+        android:id="@+id/enter_score_edit5"
+        android:layout_width="75dp"
+        android:layout_height="40dp"
+        android:background="#BA4C56E7"
+        android:ems="10"
+        android:inputType="number"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/textView8"
-        app:layout_constraintEnd_toEndOf="@+id/editText4"
+        app:layout_constraintEnd_toEndOf="@+id/enter_score_edit4"
         app:layout_constraintTop_toTopOf="@+id/textView8"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/enter_scorce_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="30dp"
+        android:background="#AEF02222"
         android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
