@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -111,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
     }
     void setup()
     {
+
         resign_btn=findViewById(R.id.resign_btn);
         enter=findViewById(R.id.enter_main_btn);
         account=findViewById(R.id.account_main_edittext);

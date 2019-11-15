@@ -16,6 +16,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 public class enter_score_screen extends AppCompatActivity {
     Intent intent=this.getIntent();
     @Nullable
@@ -29,7 +34,6 @@ public class enter_score_screen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_score_screen);
         intent=getIntent();
-
 
     }
 

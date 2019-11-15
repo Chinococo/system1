@@ -2,283 +2,131 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/test123"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
     tools:context=".enter_score_screen">
 
-    <TextView
-        android:id="@+id/position_floor"
+
+    <EditText
+        android:id="@+id/editText4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="4dp"
-        android:text="just_test"
-        android:textSize="40sp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/textView7"
+        app:layout_constraintEnd_toEndOf="@+id/editText3"
+        app:layout_constraintTop_toTopOf="@+id/textView7"
+        app:layout_constraintVertical_bias="0.384" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="232dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginEnd="88dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:id="@+id/scrollView2"
+    <TextView
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="36dp"
+        android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/position_floor">
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
-                <TextView
-                    android:id="@+id/c1s8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="總分"
-                    android:textSize="40sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/class8"
-                    app:layout_constraintEnd_toEndOf="@+id/c1s7"
-                    app:layout_constraintTop_toTopOf="@+id/class8"
-                    app:layout_constraintVertical_bias="0.0" />
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/textView7"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
-                <TextView
-                    android:id="@+id/c1s7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="總分"
-                    android:textSize="40sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/class7"
-                    app:layout_constraintEnd_toEndOf="@+id/c1s6"
-                    app:layout_constraintTop_toTopOf="@+id/class7" />
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="@+id/textView4" />
 
-                <TextView
-                    android:id="@+id/c1s6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="總分"
-                    android:textSize="40sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/class6"
-                    app:layout_constraintEnd_toEndOf="@+id/c1s5"
-                    app:layout_constraintTop_toTopOf="@+id/class6" />
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/textView6"
+        app:layout_constraintEnd_toEndOf="@+id/editText2"
+        app:layout_constraintTop_toTopOf="@+id/textView6"
+        app:layout_constraintVertical_bias="0.692" />
 
-                <TextView
-                    android:id="@+id/c1s5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="總分"
-                    android:textSize="40sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/class5"
-                    app:layout_constraintEnd_toEndOf="@+id/c1s4"
-                    app:layout_constraintTop_toTopOf="@+id/class5" />
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/textView5"
+        app:layout_constraintEnd_toEndOf="@+id/editText"
+        app:layout_constraintTop_toTopOf="@+id/textView5"
+        app:layout_constraintVertical_bias="0.615" />
 
-                <TextView
-                    android:id="@+id/c1s4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="總分"
-                    android:textSize="40sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/class4"
-                    app:layout_constraintEnd_toEndOf="@+id/c1s3"
-                    app:layout_constraintTop_toTopOf="@+id/class4" />
+    <EditText
+        android:id="@+id/editText5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/textView8"
+        app:layout_constraintEnd_toEndOf="@+id/editText4"
+        app:layout_constraintTop_toTopOf="@+id/textView8"
+        app:layout_constraintVertical_bias="0.0" />
 
-                <TextView
-                    android:id="@+id/c1s3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="總分"
-                    android:textSize="40sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/class3"
-                    app:layout_constraintEnd_toEndOf="@+id/c1s2"
-                    app:layout_constraintTop_toTopOf="@+id/class3" />
-
-                <TextView
-                    android:id="@+id/c1s2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="總分"
-                    android:textSize="40sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/class2"
-                    app:layout_constraintEnd_toEndOf="@+id/c1s"
-                    app:layout_constraintTop_toTopOf="@+id/class2" />
-
-                <TextView
-                    android:id="@+id/class1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="84dp"
-                    android:text="班級1"
-                    android:textSize="40sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/class2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:text="班級2"
-                    android:textSize="40sp"
-                    app:layout_constraintEnd_toEndOf="@+id/class1"
-                    app:layout_constraintTop_toBottomOf="@+id/class1" />
-
-                <TextView
-                    android:id="@+id/class3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:text="班級3"
-                    android:textSize="40sp"
-                    app:layout_constraintEnd_toEndOf="@+id/class2"
-                    app:layout_constraintTop_toBottomOf="@+id/class2" />
-
-                <TextView
-                    android:id="@+id/class4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:text="班級4"
-                    android:textSize="40sp"
-                    app:layout_constraintEnd_toEndOf="@+id/class3"
-                    app:layout_constraintTop_toBottomOf="@+id/class3" />
-
-                <TextView
-                    android:id="@+id/class5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:text="班級5"
-                    android:textSize="40sp"
-                    app:layout_constraintEnd_toEndOf="@+id/class4"
-                    app:layout_constraintTop_toBottomOf="@+id/class4" />
-
-                <TextView
-                    android:id="@+id/class6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:text="班級6"
-                    android:textSize="40sp"
-                    app:layout_constraintEnd_toEndOf="@+id/class5"
-                    app:layout_constraintTop_toBottomOf="@+id/class5" />
-
-                <TextView
-                    android:id="@+id/class7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:text="班級7"
-                    android:textSize="40sp"
-                    app:layout_constraintEnd_toEndOf="@+id/class6"
-                    app:layout_constraintTop_toBottomOf="@+id/class6" />
-
-                <TextView
-                    android:id="@+id/class8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginBottom="40dp"
-                    android:text="班級8"
-                    android:textSize="40sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/class7"
-                    app:layout_constraintTop_toBottomOf="@+id/class7"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <TextView
-                    android:id="@+id/c1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="38dp"
-                    android:layout_marginTop="16dp"
-                    android:text="評1"
-                    android:textSize="40sp"
-                    app:layout_constraintStart_toEndOf="@+id/class1"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/c2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="80dp"
-                    android:text="評2"
-                    android:textSize="40sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/c1"
-                    app:layout_constraintStart_toEndOf="@+id/c1"
-                    app:layout_constraintTop_toTopOf="@+id/c1"
-                    app:layout_constraintVertical_bias="1.0" />
-
-                <TextView
-                    android:id="@+id/c3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="80dp"
-                    android:text="評3"
-                    android:textSize="40sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/c2"
-                    app:layout_constraintStart_toEndOf="@+id/c2"
-                    app:layout_constraintTop_toTopOf="@+id/c2"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <TextView
-                    android:id="@+id/c4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="80dp"
-                    android:text="評4"
-                    android:textSize="40sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/c3"
-                    app:layout_constraintStart_toEndOf="@+id/c3"
-                    app:layout_constraintTop_toTopOf="@+id/c3" />
-
-                <TextView
-                    android:id="@+id/c5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="80dp"
-                    android:text="評5"
-                    android:textSize="40sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/c4"
-                    app:layout_constraintStart_toEndOf="@+id/c4"
-                    app:layout_constraintTop_toTopOf="@+id/c4"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <TextView
-                    android:id="@+id/score"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="80dp"
-                    android:text="總分"
-                    android:textSize="40sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/c5"
-                    app:layout_constraintStart_toEndOf="@+id/c5"
-                    app:layout_constraintTop_toTopOf="@+id/c5"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <TextView
-                    android:id="@+id/c1s"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="總分"
-                    android:textSize="40sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/class1"
-                    app:layout_constraintEnd_toEndOf="@+id/score"
-                    app:layout_constraintTop_toTopOf="@+id/class1" />
-
-                <EditText
-                    android:id="@+id/class1_p1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    tools:layout_editor_absoluteX="154dp"
-                    tools:layout_editor_absoluteY="84dp" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </HorizontalScrollView>
-    </ScrollView>
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="108dp"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
