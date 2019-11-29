@@ -23,7 +23,7 @@
         app:srcCompat="@color/common_google_signin_btn_text_dark_disabled" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/enter_score_spinner"
         android:layout_width="232dp"
         android:layout_height="43dp"
         android:layout_marginTop="48dp"
@@ -43,7 +43,7 @@
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@+id/enter_score_edit1"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/enter_score_spinner" />
 
     <TextView
         android:id="@+id/textView5"
