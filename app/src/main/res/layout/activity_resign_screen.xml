@@ -14,6 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:background="#8F2C2C2C"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/nickname_editText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +58,7 @@
 
     <EditText
         android:id="@+id/nickname_editText"
-        android:layout_width="175dp"
+        android:layout_width="150dp"
         android:layout_height="0dp"
         android:background="#BA8A8989"
         android:ems="10"
@@ -69,7 +70,7 @@
 
     <EditText
         android:id="@+id/password_editText"
-        android:layout_width="175dp"
+        android:layout_width="150dp"
         android:layout_height="0dp"
         android:background="#BA8A8989"
         android:ems="10"
@@ -84,15 +85,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:background="#D7F4FF00"
+        android:background="#805F378A"
         android:text="送出"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/repeat_Edittext" />
 
     <EditText
         android:id="@+id/account_editText"
-        android:layout_width="175dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:background="#BA8A8989"
         android:ems="10"
@@ -104,7 +106,7 @@
 
     <EditText
         android:id="@+id/no_edittext"
-        android:layout_width="175dp"
+        android:layout_width="150dp"
         android:layout_height="0dp"
         android:background="#BA8A8989"
         android:ems="10"
@@ -152,7 +154,7 @@
 
     <EditText
         android:id="@+id/repeat_editText"
-        android:layout_width="175dp"
+        android:layout_width="150dp"
         android:layout_height="0dp"
         android:background="#BA8A8989"
         android:ems="10"
@@ -175,13 +177,15 @@
 
     <EditText
         android:id="@+id/truename_editText"
-        android:layout_width="175dp"
+        android:layout_width="150dp"
         android:layout_height="0dp"
         android:layout_marginStart="40dp"
+        android:layout_marginEnd="30dp"
         android:background="#BA8A8989"
         android:ems="10"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="@+id/truename"
+        app:layout_constraintEnd_toEndOf="@+id/imageView2"
         app:layout_constraintStart_toEndOf="@+id/truename"
         app:layout_constraintTop_toTopOf="@+id/truename"
         app:layout_constraintVertical_bias="0.0" />
