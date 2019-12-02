@@ -1,9 +1,15 @@
 package com.example.health_system;
 
-public class score_struct {
-    private String name;
-    private int[] score=new int[5];
+import java.util.ArrayList;
+import java.util.List;
 
+public class score_struct {
+     String name;
+    List<Integer> score=new ArrayList<>();
+    public void SETSCORE(List<Integer> t)
+    {
+        this.score=t;
+    }
     public String getName() {
         return name;
     }
@@ -12,13 +18,11 @@ public class score_struct {
         this.name = name;
     }
 
-    public int[] getScore() {
+    public List<Integer> getScore() {
         return score;
     }
 
     public void setScore(int index,int data) {
-        this.score[index]=data;
+        this.score.set(index,data);
     }
-
-
 }

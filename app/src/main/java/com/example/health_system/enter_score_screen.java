@@ -41,7 +41,7 @@ import java.util.Map;
 
 public class enter_score_screen extends AppCompatActivity {
     int pos=-1;
-    score_struct[] score_s1=new score_struct[5];
+    score_struct[] score_s1=new score_struct[10];
     EditText enter1, enter2, enter3, enter4, enter5;
     Button enter;
     Calendar calendar = Calendar.getInstance();
@@ -69,7 +69,7 @@ public class enter_score_screen extends AppCompatActivity {
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            for(int i=0;i<5;i++)
+            for(int i=0;i<=5;i++)
             databaseReference.child("no").child("2").child(today).child(score_s1[i].getName()).setValue(score_s1[i].getScore());
             }
         });
@@ -97,7 +97,16 @@ public class enter_score_screen extends AppCompatActivity {
     void do1() {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, get);
         choose.setAdapter(adapter);
-        score_s1[0].setName("1");
+        for(int i=0;i<get.size();i++)
+        {
+            //Log.d("re",get.get(i));
+            score_s1[i].setName(get.get(i));
+            for(int x=0;x<5;x++)
+            {
+                score_s1[i].score.add(0);
+            }
+        }
+
 
     }//中繼站
 
@@ -113,9 +122,8 @@ public class enter_score_screen extends AppCompatActivity {
     }//上傳程式
 
     void setup() {
-        for(int i=0;i<5;i++)
+        for(int i=0;i<6;i++)
         score_s1[i]=new score_struct();
-        score_s1[0].setScore(1,100);
         choose = findViewById(R.id.enter_score_spinner);
         enter = findViewById(R.id.enter_scorce_btn);
         enter1 = findViewById(R.id.enter_score_edit1);
@@ -132,15 +140,16 @@ public class enter_score_screen extends AppCompatActivity {
     private void getnowdata(String no) {
         String today = Integer.toString(calendar.get(Calendar.YEAR)) + Integer.toString(calendar.get(Calendar.MONTH) + 1) + Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
         enter5.setText(today);
-        databaseReference.child("no").child(no).child(today).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("no").child("2").child(today).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 if(dataSnapshot.getValue()==null)
                 {
-                    nofition("no data");
                 }else
-                { //score_structs1=(score_struct[]) dataSnapshot.getValue();
+                {
+                    for(int i=0;i<=5;i++)
+                    score_s1[i].SETSCORE((List<Integer>) dataSnapshot.child(get.get(i)).getValue());
                 }
             }
 
@@ -158,18 +167,16 @@ public class enter_score_screen extends AppCompatActivity {
            @Override
            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                nofition(Integer.toString(position));
-               pos=position-1;
+               pos=position;
                //Log.d("ERROR",String.valueOf(pos));
                if(position-1>=0)
                {
-
-                   int[] temp=score_s1[pos].getScore();
-
-                   enter1.setText(Integer.toString(temp[0]));
-                   enter2.setText(Integer.toString(temp[1]));
-                   enter3.setText(Integer.toString(temp[2]));
-                   enter4.setText(Integer.toString(temp[3]));
-                   enter5.setText(Integer.toString(temp[4]));
+                   List<Integer> temp=score_s1[pos].getScore();
+                   enter1.setText(String.valueOf(temp.get(0)));
+                   enter2.setText(String.valueOf(temp.get(1)));
+                   enter3.setText(String.valueOf(temp.get(2)));
+                   enter4.setText(String.valueOf(temp.get(3)));
+                   enter5.setText(String.valueOf(temp.get(4)));
                }
 
 
