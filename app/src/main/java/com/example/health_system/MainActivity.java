@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -24,10 +25,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-
-    Button resign_btn,enter;
+    Button resign_btn,enter,test;
     long first=0;
     EditText account,password;
+    String no;
     DatabaseReference db=FirebaseDatabase.getInstance().getReference();
     boolean ch;
     @Override
@@ -35,7 +36,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setup();
-
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,search_socore.class);
+                startActivity(intent);
+            }
+        });
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,7 +98,10 @@ public class MainActivity extends AppCompatActivity {
                  if(account.getText().toString().equals(account1)&&password.getText().toString().equals(password1))
                  {
                  Intent intent=new Intent(MainActivity.this,enter_score_screen.class);
+                 no=temp.get("no").toString();
+
                  intent.putExtra("account",account1);
+                 intent.putExtra("no",no);
                  startActivity(intent);
                  }
                  else
@@ -117,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
         enter=findViewById(R.id.enter_main_btn);
         account=findViewById(R.id.account_main_edittext);
         password=findViewById(R.id.password_main_edittext);
+        test=findViewById(R.id.test);
     }
     void nofition(String data)
     {
@@ -128,4 +139,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 }

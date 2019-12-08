@@ -5,13 +5,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_test">test</string>
     <string name="hello">hello</string>
-    <string-array name="class1">
-        <item>no select</item>
-        <item>gary1</item>
-        <item>gary2</item>
-        <item>gary3</item>
-
-
+    <string-array name="class_spinner">
+        <item>請選擇</item>
+        <item>空調二</item>
     </string-array>
 
 

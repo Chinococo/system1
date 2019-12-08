@@ -42,7 +42,6 @@
         android:layout_height="43dp"
         android:layout_marginTop="48dp"
         android:background="#BE0B7485"
-        android:entries="@array/class1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
