@@ -31,48 +31,37 @@ import java.util.Map;
 
 public class search_socore extends AppCompatActivity {
     int k;
+    List<Integer> list=new ArrayList<>();
     Calendar calendar = Calendar.getInstance();
     AutoCompleteTextView ch;
     Button search;
     String today;
     DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference();
-    Map<Integer, List> temp= new HashMap<>();
-    List<Integer> spi=new ArrayList<>();
-    List<Integer> p=new ArrayList<>();
     ListView listView;
     Spinner choose;
+    List<String> sp=new ArrayList<>();
+    String test="汽美一";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_socore);
         setup();
-        ch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            nofition(parent.getSelectedItem().toString());
-            }
-        });
-        search.setOnClickListener(new View.OnClickListener() {
+
+        choose.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-            String test="空調一";
-            int l=1;
-            for( k=1;k<3;k++)
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            if(!sp.get(position).equals("請選擇"))
             {
-                Log.d("k=", String.valueOf(k));
-                databaseReference.child("no").child(String.valueOf(k)).child(today).child(test).addListenerForSingleValueEvent(new ValueEventListener() {
+                nofition(sp.get(position));
+
+                databaseReference.child("no").child(sp.get(position)).child(today).child(test).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.getValue()!=null)
-                    {
-                        p=(List<Integer>)dataSnapshot.getValue();
-                        temp.put(k,p);
-                        spi.add(k);
-                    }
-                    if(k==3)
-                    do1();
 
-                }
+                       list=(List<Integer>)dataSnapshot.getValue();
+                       do2();
+
+                    }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -80,19 +69,58 @@ public class search_socore extends AppCompatActivity {
                     }
                 });
             }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            int l=1;
+            sp.clear();
+            sp.add("請選擇");
+            for( k=1;k<3;k++)
+            {
+                Log.d("k=", String.valueOf(k));
+                getdata(k);
+            }
 
             }
         });
     }
-void do1()
+public void getdata(final int index)
 {
-    Log.d("123","123");
+    databaseReference.child("no").child(String.valueOf(index)).child(today).addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        if(dataSnapshot.getValue()!=null)
+        sp.add(String.valueOf(index));
+        if(index==2)
+        do1();
+        }
 
-    ArrayAdapter<Integer> arrayAdapter=new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,spi);
-    choose.setAdapter(arrayAdapter);
-    ListAdapter listAdapter=new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,p);
-    listView.setAdapter(listAdapter);
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    });
+
+
 }
+    void do1()
+    {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,sp);
+        //adapter.setDropDownViewResource(R.layout.spinner_custom);
+        choose.setAdapter(adapter);
+    }
+    void do2()
+    {
+        ListAdapter adapter = new ArrayAdapter<Integer>(this , android.R.layout.simple_list_item_1 ,list);
+        listView.setAdapter(adapter);
+    }
     void setup() {
         choose=findViewById(R.id.choose_no);
         today = Integer.toString(calendar.get(Calendar.YEAR));
@@ -108,6 +136,7 @@ void do1()
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.class_spinner, android.R.layout.simple_list_item_1);
         ch.setAdapter(adapter);
         databaseReference.setPriority(10);
+
     }
     void nofition(String data)
     {
