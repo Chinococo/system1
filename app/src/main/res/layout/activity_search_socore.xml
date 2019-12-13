@@ -4,18 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/search_bk"
     tools:context=".search_socore">
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="330dp"
+        android:layout_height="500dp"
+        android:background="#A6000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.060000002"
+        app:srcCompat="@color/common_google_signin_btn_text_dark_disabled" />
 
     <AutoCompleteTextView
 
         android:id="@+id/auto_choose_class"
         android:layout_width="201dp"
         android:layout_height="0dp"
-        android:backgroundTint="#D81646D6"
-        android:textColor="#DC0B39E0"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="#C419EB23"
+        android:textColor="#DC36D60B"
         app:layout_constraintBottom_toBottomOf="@+id/textView9"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.686"
+        app:layout_constraintHorizontal_bias="0.38"
         app:layout_constraintStart_toEndOf="@+id/textView9"
         app:layout_constraintTop_toTopOf="@+id/textView9"
         app:layout_constraintVertical_bias="1.0" />
@@ -24,7 +38,7 @@
         android:id="@+id/textView9"
         android:layout_width="82dp"
         android:layout_height="57dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="45dp"
         android:layout_marginTop="36dp"
         android:background="#BEFFE604"
         android:text="班級"
@@ -37,11 +51,15 @@
         android:id="@+id/search_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="152dp"
-        android:layout_marginTop="396dp"
+        android:backgroundTint="#B42326E2"
         android:text="搜尋"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintTop_toBottomOf="@+id/listview"
+        app:layout_constraintVertical_bias="0.39" />
 
     <ListView
         android:id="@+id/listview"
@@ -65,4 +83,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

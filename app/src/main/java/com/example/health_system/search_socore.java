@@ -113,7 +113,7 @@ public void getdata(final int index)
     void do1()
     {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,sp);
-        //adapter.setDropDownViewResource(R.layout.spinner_custom);
+        adapter.setDropDownViewResource(R.layout.spinner_custom);
         choose.setAdapter(adapter);
     }
     void do2()
