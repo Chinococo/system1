@@ -31,16 +31,17 @@ import java.util.Map;
 
 public class search_socore extends AppCompatActivity {
     int k;
-    List<Integer> list=new ArrayList<>();
+    List<Integer> list = new ArrayList<>();
     Calendar calendar = Calendar.getInstance();
     AutoCompleteTextView ch;
     Button search;
+    List<String> allclass = new ArrayList<>();
     String today;
-    DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference();
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     ListView listView;
     Spinner choose;
-    List<String> sp=new ArrayList<>();
-    String test="汽美一";
+    List<String> sp = new ArrayList<>();
+    //String nowclass="no select";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,25 +51,27 @@ public class search_socore extends AppCompatActivity {
         choose.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if(!sp.get(position).equals("請選擇"))
-            {
-                nofition(sp.get(position));
+                if (!sp.get(position).equals("請選擇")) {
+                    nofition(sp.get(position));
 
-                databaseReference.child("no").child(sp.get(position)).child(today).child(test).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    databaseReference.child("no").child(sp.get(position)).child(today).child(ch.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.getValue()!=null)
+                            {
+                                list = (List<Integer>) dataSnapshot.getValue();
+                                do2();
+                            }
 
-                       list=(List<Integer>)dataSnapshot.getValue();
-                       do2();
 
-                    }
+                        }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-                });
-            }
+                        }
+                    });
+                }
             }
 
             @Override
@@ -79,50 +82,57 @@ public class search_socore extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            int l=1;
-            sp.clear();
-            sp.add("請選擇");
-            for( k=1;k<3;k++)
-            {
-                Log.d("k=", String.valueOf(k));
-                getdata(k);
+                if (allclass.indexOf(ch.getText().toString()) != -1) {
+                    int l = 1;
+                    sp.clear();
+                    sp.add("請選擇");
+                    for (k = 1; k <= 10; k++)
+                        getdata(k);
+                } else
+                    nofition("沒有此班級");
+
             }
+
+
+        });
+    }
+
+    public void getdata(final int index) {
+        databaseReference.child("no").child(String.valueOf(index)).child(today).child(ch.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null)
+                    sp.add(String.valueOf(index));
+                if (index == 2)
+                    do1();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
+
+
     }
-public void getdata(final int index)
-{
-    databaseReference.child("no").child(String.valueOf(index)).child(today).addListenerForSingleValueEvent(new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-        if(dataSnapshot.getValue()!=null)
-        sp.add(String.valueOf(index));
-        if(index==2)
-        do1();
-        }
 
-        @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-        }
-    });
-
-
-}
-    void do1()
-    {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,sp);
-        adapter.setDropDownViewResource(R.layout.spinner_custom);
+    void do1() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_custom, sp);
         choose.setAdapter(adapter);
     }
-    void do2()
-    {
-        ListAdapter adapter = new ArrayAdapter<Integer>(this , android.R.layout.simple_list_item_1 ,list);
+
+    void do2() {
+        ListAdapter adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_list_item_1, list);
         listView.setAdapter(adapter);
     }
+
+    void do3() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_custom, allclass);
+        ch.setAdapter(adapter);
+    }
+
     void setup() {
-        choose=findViewById(R.id.choose_no);
+        choose = findViewById(R.id.choose_no);
         today = Integer.toString(calendar.get(Calendar.YEAR));
         if (calendar.get(Calendar.MONTH) + 1 < 10)
             today += "0";
@@ -131,15 +141,45 @@ public void getdata(final int index)
             today += "0";
         today += Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
         ch = findViewById(R.id.auto_choose_class);
-        listView=findViewById(R.id.listview);
-        search=findViewById(R.id.search_btn);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.class_spinner, android.R.layout.simple_list_item_1);
-        ch.setAdapter(adapter);
+        listView = findViewById(R.id.listview);
+        search = findViewById(R.id.search_btn);
+        getallclass();
         databaseReference.setPriority(10);
+        ch.setThreshold(1);
+    }
+
+    void nofition(String data) {
+        Toast.makeText(this, data, Toast.LENGTH_LONG).show();
+    }
+
+    void getallclass() {
+        for (int i = 1; i <= 10; i++)
+            getclass(i);
+
 
     }
-    void nofition(String data)
-    {
-        Toast.makeText(this,data,Toast.LENGTH_LONG).show();
+
+    void getclass(final int index) {
+        databaseReference.child("no").child(String.valueOf(index)).child("class").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<String> temp = new ArrayList<>();
+                if (dataSnapshot.getValue() != null) {
+                    temp = (ArrayList<String>) dataSnapshot.getValue();
+                    for (int k1 = 0; k1 < temp.size(); k1++)
+                        if (allclass.indexOf(temp.get(k1)) == -1)
+                            allclass.add(temp.get(k1));
+                }
+                if (index == 10)
+                    do3();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
+
+
 }
