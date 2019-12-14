@@ -24,9 +24,7 @@ public class resign_screen extends AppCompatActivity {
     DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
     EditText account,repeat,nickname,password,no,truename;
     Button enter;
-    boolean ch=true;
     boolean result=false;
-    String temp="";
     Map<String,Object> worker=new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
