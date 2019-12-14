@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".search_socore"></activity>
+        <activity android:name=".ask_account"></activity>
+        <activity android:name=".search_socore" />
         <activity
             android:name=".enter_score_screen"
             android:screenOrientation="portrait" />

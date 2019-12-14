@@ -106,12 +106,12 @@ public class resign_screen extends AppCompatActivity {
                     if(do1(no.getText().toString()))
                     {
                         reference.child("account").child(account.getText().toString()).setValue(worker);
-                        reference.child("account").child("id").child(no.getText().toString());
+                        reference.child("account").child("id").child(no.getText().toString()).setValue(account.getText().toString());
                         nofition("successful");
                         resign_screen.this.finish();
                     }else
                     {
-
+                      openfragment();
                     }
 
                 }else
@@ -126,9 +126,14 @@ public class resign_screen extends AppCompatActivity {
 
     }
 
+    private void openfragment() {
+        ask_opeator fragment=new ask_opeator();
+        fragment.show(getSupportFragmentManager(),"test");
+    }
+
     private boolean do1(String no) {
         result=false;
-        reference.child("account").child("id").child(no).addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.child("id").child(no).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             if(dataSnapshot.getValue()==null)

@@ -5,12 +5,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_test">test</string>
     <string name="hello">hello</string>
-    <string-array name="class_spinner">
-        <item>請選擇</item>
-        <item>空調二</item>
-    </string-array>
-
-
 
 
 </resources>

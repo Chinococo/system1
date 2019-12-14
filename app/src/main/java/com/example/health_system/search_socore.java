@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
@@ -41,13 +43,32 @@ public class search_socore extends AppCompatActivity {
     ListView listView;
     Spinner choose;
     List<String> sp = new ArrayList<>();
+
     //String nowclass="no select";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_socore);
         setup();
+        ch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+             sp.clear();
+             list.clear();
+             do1();
+             do2();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         choose.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -57,8 +78,7 @@ public class search_socore extends AppCompatActivity {
                     databaseReference.child("no").child(sp.get(position)).child(today).child(ch.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if(dataSnapshot.getValue()!=null)
-                            {
+                            if (dataSnapshot.getValue() != null) {
                                 list = (List<Integer>) dataSnapshot.getValue();
                                 do2();
                             }
@@ -122,7 +142,7 @@ public class search_socore extends AppCompatActivity {
     }
 
     void do2() {
-        ListAdapter adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_list_item_1, list);
+        ListAdapter adapter = new ArrayAdapter<Integer>(this, R.layout.spinner_custom, list);
         listView.setAdapter(adapter);
     }
 
