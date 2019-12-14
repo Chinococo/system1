@@ -4,8 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -25,6 +29,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+   ConnectivityManager CM;
+    NetworkInfo info;
     Button resign_btn,enter,test;
     long first=0;
     EditText account,password;
@@ -134,10 +140,19 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this,data,Toast.LENGTH_SHORT).show();
 
     }
-    void quit_app()
+    Boolean check_interner()
     {
-
-
+         CM = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        info = CM.getActiveNetworkInfo();
+         if(info!=null)
+         {
+             if(info.isConnected())
+              return false;
+         }else
+         {
+             return false;
+         }
+     return false;
     }
 
 }

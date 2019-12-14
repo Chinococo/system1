@@ -24,8 +24,7 @@ public class resign_screen extends AppCompatActivity {
     DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
     EditText account,repeat,nickname,password,no,truename;
     Button enter;
-    boolean result=false;
-    Map<String,Object> worker=new HashMap<>();
+     HashMap<String,String> worker=new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,16 +102,30 @@ public class resign_screen extends AppCompatActivity {
                 String temp=dataSnapshot.getValue(String.class);
                 if(temp==null)
                 {
-                    if(do1(no.getText().toString()))
-                    {
-                        reference.child("account").child(account.getText().toString()).setValue(worker);
-                        reference.child("account").child("id").child(no.getText().toString()).setValue(account.getText().toString());
-                        nofition("successful");
-                        resign_screen.this.finish();
-                    }else
-                    {
-                      openfragment();
-                    }
+
+                    reference.child("id").child(no.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.getValue()==null)
+                            {
+                                reference.child("account").child(account.getText().toString()).setValue(worker);
+                                reference.child("id").child(no.getText().toString()).setValue(account.getText().toString());
+                                nofition("successful");
+                                resign_screen.this.finish();
+                            }else
+                            {
+                                openfragment();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+
 
                 }else
                 {
@@ -127,17 +140,18 @@ public class resign_screen extends AppCompatActivity {
     }
 
     private void openfragment() {
-        ask_opeator fragment=new ask_opeator();
-        fragment.show(getSupportFragmentManager(),"test");
-    }
-
-    private boolean do1(String no) {
-        result=false;
-        reference.child("id").child(no).addListenerForSingleValueEvent(new ValueEventListener() {
+        final ask_opeator fragment=new ask_opeator();
+        reference.child("id").child(no.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            if(dataSnapshot.getValue()==null)
-            result = true;
+             if(dataSnapshot.getValue()!=null)
+             {
+                 Bundle p=new Bundle();
+                 p.putString("account",dataSnapshot.getValue(String.class));
+                 p.putSerializable("worker",worker);
+                 fragment.setArguments(p);
+                 fragment.show(getSupportFragmentManager(),dataSnapshot.getValue(String.class));
+             }
             }
 
             @Override
@@ -145,6 +159,23 @@ public class resign_screen extends AppCompatActivity {
 
             }
         });
-            return result;
+
     }
+/*
+    private boolean do1(String no) {
+        result=false;
+        reference.child("id").child(no).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue()==null)
+                    result = true;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return result;
+    }*/
 }

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +29,9 @@ import java.util.Map;
 public class ask_opeator extends DialogFragment {
     EditText account, password;
     Button enter;
-    DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference();
-    String account_prev="",password_prev="";
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    String account_prev = "", password_prev = "";
+    HashMap<String, String> worker, worker2 = new HashMap<>();
 
     @Override
     public int show(@NonNull FragmentTransaction transaction, @Nullable String tag) {
@@ -38,16 +40,22 @@ public class ask_opeator extends DialogFragment {
     }
 
     @Override
+    public void onCancel(@NonNull DialogInterface dialog) {
+        super.onCancel(dialog);
+    }
+
+    @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        String temp=getArguments().getString("account");
+        String temp = getArguments().getString("account");
+        worker = (HashMap<String, String>) getArguments().getSerializable("worker");
         get(temp);
-        AlertDialog.Builder alertdialog = new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder alertdialog = new AlertDialog.Builder(getActivity());
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.activity_ask_account, null);
+        final View view = layoutInflater.inflate(R.layout.activity_ask_account, null);
         alertdialog.setView(view).setTitle("繼承").setCancelable(false).setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-             nofition("沒有成功繼承喔");
+                nofition("沒有成功繼承喔");
             }
         });
         account = view.findViewById(R.id.ask_account);
@@ -62,35 +70,36 @@ public class ask_opeator extends DialogFragment {
                     if (password.getText().toString().equals("")) {
                         nofition("你沒輸入密碼");
                     } else {
-                      if(account_prev.equals(account.getText().toString())&&password_prev.equals(password.getText().toString()))
-                      {
-                          nofition("succedful 繼承");
-                      }else
-                      {
-                          nofition("帳密有誤");
-                      }
+                        if (account_prev.equals(account.getText().toString()) && password_prev.equals(password.getText().toString())) {
+                            databaseReference.child("account").child(worker.get("account")).setValue(worker);
+                            databaseReference.child("id").child(worker.get("no")).setValue(worker.get("account"));
+                            Log.d("test", worker.get("account") + "123");
+                            nofition("succedful 繼承");
+                            getActivity().onBackPressed();
+                        } else {
+                            nofition("帳密有誤");
+                        }
                     }
                 }
             }
         });
         return alertdialog.create();
     }
+
     void nofition(String data) {
         Toast.makeText(getActivity(), data, Toast.LENGTH_LONG).show();
     }
-    void get(String tag)
-    {
+
+    void get(String tag) {
+
         databaseReference.child("account").child(tag).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue()!=null)
-                {
-                    Map<String,String> temp=new HashMap<>();
-                    temp=(Map<String, String>) dataSnapshot.getValue();
-                    account_prev=temp.get("account");
-                    password_prev=temp.get("password");
-                }else
-                {
+                worker2 = (HashMap<String, String>) dataSnapshot.getValue();
+                if (dataSnapshot.getValue() != null) {
+                    account_prev = worker2.get("account");
+                    password_prev = worker2.get("password");
+                } else {
                     nofition("no get");
                 }
             }
