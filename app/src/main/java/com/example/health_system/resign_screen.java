@@ -25,6 +25,7 @@ public class resign_screen extends AppCompatActivity {
     EditText account,repeat,nickname,password,no,truename;
     Button enter;
     boolean ch=true;
+    boolean result=false;
     String temp="";
     Map<String,Object> worker=new HashMap<>();
     @Override
@@ -104,9 +105,17 @@ public class resign_screen extends AppCompatActivity {
                 String temp=dataSnapshot.getValue(String.class);
                 if(temp==null)
                 {
-                    reference.child("account").child(account.getText().toString()).setValue(worker);
-                    nofition("successful");
-                    resign_screen.this.finish();
+                    if(do1(no.getText().toString()))
+                    {
+                        reference.child("account").child(account.getText().toString()).setValue(worker);
+                        reference.child("account").child("id").child(no.getText().toString());
+                        nofition("successful");
+                        resign_screen.this.finish();
+                    }else
+                    {
+
+                    }
+
                 }else
                 {
                     nofition(temp+"此帳已被註冊");
@@ -117,5 +126,22 @@ public class resign_screen extends AppCompatActivity {
             }
         });
 
+    }
+
+    private boolean do1(String no) {
+        result=false;
+        reference.child("account").child("id").child(no).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if(dataSnapshot.getValue()==null)
+            result = true;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+            return result;
     }
 }
