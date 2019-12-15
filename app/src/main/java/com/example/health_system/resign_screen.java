@@ -21,10 +21,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class resign_screen extends AppCompatActivity {
-    DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
-    EditText account,repeat,nickname,password,no,truename;
+    DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+    EditText account, repeat, nickname, password, no, truename;
     Button enter;
-     HashMap<String,String> worker=new HashMap<>();
+    HashMap<String, String> worker = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,87 +34,78 @@ public class resign_screen extends AppCompatActivity {
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            check();
+                check();
+            }
+
+        });
+
+
     }
 
-});
+    void input_data() {
+        worker.put("truename", truename.getText().toString());
+        worker.put("account", account.getText().toString());
+        worker.put("nickname", nickname.getText().toString());
+        worker.put("no", no.getText().toString());
+        worker.put("password", password.getText().toString());
+    }
 
+    void nofition(String data) {
+        Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
+    }
 
-    }
-    void input_data()
-    {
-        worker.put("truename",truename.getText().toString());
-        worker.put("account",account.getText().toString());
-        worker.put("nickname",nickname.getText().toString());
-        worker.put("no",no.getText().toString());
-        worker.put("password",password.getText().toString());
-    }
-    void nofition(String data)
-    {
-        Toast.makeText(this,data,Toast.LENGTH_SHORT).show();
-    }
-    void setup()
-    {
-        account=findViewById(R.id.account_editText);
-        repeat=findViewById(R.id.repeat_editText);
-        nickname=findViewById(R.id.nickname_editText);
-        password=findViewById(R.id.password_editText);
-        no=findViewById(R.id.no_edittext);
+    void setup() {
+        account = findViewById(R.id.account_editText);
+        repeat = findViewById(R.id.repeat_editText);
+        nickname = findViewById(R.id.nickname_editText);
+        password = findViewById(R.id.password_editText);
+        no = findViewById(R.id.no_edittext);
         enter = findViewById(R.id.enter_resign_btn);
         truename = findViewById(R.id.truename_editText);
 
     }
-    void check()
-    {
-        if(truename.getText().toString().equals(""))
-        {
+
+    void check() {
+        if (truename.getText().toString().equals("")) {
             nofition("你的真實名子沒輸入喔 ");
-            return ;
+            return;
         }
-        if(no.getText().toString().equals(""))
-        {
-            nofition("你的編號沒輸入喔 ");
-            return ;
+        if (no.getText().toString().equals("") && (Integer.parseInt(no.getText().toString()) <= 23) && (Integer.parseInt(no.getText().toString()) >= 1)) {
+            nofition("你的編號沒輸入喔或編號亂輸");
+            return;
         }
-        if(account.getText().toString().equals(""))
-        {
+        if (account.getText().toString().equals("")) {
             nofition("你的帳號沒輸入喔 ");
-            return ;
+            return;
         }
-        if(nickname.getText().toString().equals(""))
-        {
-            nofition("你的沒輸入喔 ");
-            return ;
+        if (nickname.getText().toString().equals("")) {
+            nofition("你的暱稱沒輸入喔 ");
+            return;
         }
-        if(password.getText().toString().equals(""))
-        {
+        if (password.getText().toString().equals("")) {
             nofition("你的密碼沒輸入喔 ");
-            return ;
+            return;
         }
-        if(!password.getText().toString().equals(repeat.getText().toString()))
-        {
+        if (!password.getText().toString().equals(repeat.getText().toString())) {
             nofition("你的密碼不相同 ");
-            return ;
+            return;
         }
         reference.child("account").child(account.getText().toString()).child("account").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 input_data();
-                String temp=dataSnapshot.getValue(String.class);
-                if(temp==null)
-                {
+                String temp = dataSnapshot.getValue(String.class);
+                if (temp == null) {
 
                     reference.child("id").child(no.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if(dataSnapshot.getValue()==null)
-                            {
+                            if (dataSnapshot.getValue() == null) {
                                 reference.child("account").child(account.getText().toString()).setValue(worker);
                                 reference.child("id").child(no.getText().toString()).setValue(account.getText().toString());
                                 nofition("successful");
                                 resign_screen.this.finish();
-                            }else
-                            {
+                            } else {
                                 openfragment();
                             }
                         }
@@ -125,13 +117,11 @@ public class resign_screen extends AppCompatActivity {
                     });
 
 
-
-
-                }else
-                {
-                    nofition(temp+"此帳已被註冊");
+                } else {
+                    nofition(temp + "此帳已被註冊");
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
@@ -140,18 +130,17 @@ public class resign_screen extends AppCompatActivity {
     }
 
     private void openfragment() {
-        final ask_opeator fragment=new ask_opeator();
+        final ask_opeator fragment = new ask_opeator();
         reference.child("id").child(no.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-             if(dataSnapshot.getValue()!=null)
-             {
-                 Bundle p=new Bundle();
-                 p.putString("account",dataSnapshot.getValue(String.class));
-                 p.putSerializable("worker",worker);
-                 fragment.setArguments(p);
-                 fragment.show(getSupportFragmentManager(),dataSnapshot.getValue(String.class));
-             }
+                if (dataSnapshot.getValue() != null) {
+                    Bundle p = new Bundle();
+                    p.putString("account", dataSnapshot.getValue(String.class));
+                    p.putSerializable("worker", worker);
+                    fragment.setArguments(p);
+                    fragment.show(getSupportFragmentManager(), dataSnapshot.getValue(String.class));
+                }
             }
 
             @Override
