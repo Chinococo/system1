@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,12 +27,13 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+    int l = 1;
     ConnectivityManager CM;
     NetworkInfo info;
     Button resign_btn, enter;
     TextView visistor;
     List<String> data = new ArrayList<>();
-    Map<Integer,String> test=new HashMap<>();
+    Map<Integer, String> test = new HashMap<>();
     Map<String, List> c = new HashMap<>();
     long first = 0;
     EditText account, password;
@@ -43,8 +45,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        upload();
-        upload_item();
+        //upload();
+        //insition();
+        //upload_item();
         setup();
         visistor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,29 +152,61 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
     private void upload_item() {
         String no = "18~24";
         db.child("no").child(no).child("item").child("1").setValue("    人工垃圾");
-        db.child("no").child(no).child("item").child("2").setValue("　落葉，塵土");
-        db.child("no").child(no).child("item").child("3").setValue("　草地上落葉");
-        db.child("no").child(no).child("item").child("4").setValue("    大的樹葉");
-        db.child("no").child(no).child("item").child("5").setValue("　　　　其他");
+        db.child("no").child(no).child("item").child("2").setValue("    塵土樹葉");
+        db.child("no").child(no).child("item").child("3").setValue("　  草地落葉");
+        db.child("no").child(no).child("item").child("4").setValue("      大樹葉");
+        db.child("no").child(no).child("item").child("5").setValue("        其他");
+    //                                                                          1
     }//上傳程式
+
     private void upload() {
-        String no = "24";
+        String no = "1";
         data.add("請選擇");
-        data.add("電二甲");
-        data.add("汽三甲");
+        data.add("空調二");
         data.add("電二乙");
-        data.add("化二丙");
-        data.add("製圖三");
-        data.add("機二甲");
-        data.add("機三乙");
-        data.add("機三甲");
-        data.add("綜二甲");
-        data.add("綜二乙");
+        data.add("電修一");
+        data.add("塗裝三");
+        data.add("汽美一");
+        //data.add("機二甲");
+        //data.add("機三乙");
+        //data.add("機三甲");
+        //data.add("綜二甲");
+        //data.add("綜二乙");
         //data.add("裝潢三");
         c.put("class", data);
         db.child("no").child(no).setValue(c);
     }//上傳程式
+
+    void clear_d(final int no1) {
+        Log.d("jjjj", String.valueOf(no1));
+        db.child("no").child(String.valueOf(no1)).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    Log.d("jjjj", String.valueOf(no1));
+                    HashMap<Object, Object> insition = (HashMap<Object, Object>) dataSnapshot.getValue();
+                    db.child("no").child(String.valueOf(no1)).setValue(null);
+                    db.child("no").child(String.valueOf(no1)).child("class").setValue(insition.get("class"));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    void insition() {
+        //clear_d(8);
+
+        for (l = 1; l <= 24; l++) {
+            Log.d("fwa", String.valueOf(l));
+            clear_d(l);
+        }
+    }
 }
