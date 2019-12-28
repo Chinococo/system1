@@ -49,7 +49,7 @@ public class enter_score_screen extends AppCompatActivity {
     Spinner opeator;
     List<String> test = new ArrayList<>();
     score_struct[] score_s1 = new score_struct[20];
-    EditText enter1, enter2, enter3, enter4, enter5;
+    EditText enter1, enter2, enter3, enter4, enter5,enter6;
     Button enter;
     Calendar calendar = Calendar.getInstance();
     String today, account_name;
@@ -78,6 +78,7 @@ public class enter_score_screen extends AppCompatActivity {
                 if (!no.equals("請選擇")) {
                     clear_Alldata();
                     getdata(no);
+                    getnowdata(no);
                     getitem(no);
                 } else {
                     do2();
@@ -92,6 +93,7 @@ public class enter_score_screen extends AppCompatActivity {
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Log.d("test1", String.valueOf(score_s1[0].getScore().size()));
                 for (int i = 0; i < get.size(); i++)
                     databaseReference.child("no").child(no).child(today).child(score_s1[i].getName()).setValue(score_s1[i].getScore());
@@ -135,7 +137,7 @@ public class enter_score_screen extends AppCompatActivity {
         enter3.setText("");
         enter4.setText("");
         enter5.setText("");
-
+        enter6.setText("");
     }
 
     void do1() {
@@ -145,8 +147,8 @@ public class enter_score_screen extends AppCompatActivity {
         for (int i = 0; i < get.size(); i++) {
             Log.d("re", get.get(i));
             score_s1[i].setName(get.get(i));
-            if (score_s1[0].getScore().size() <= 5)
-                for (int x = 0; x < 5; x++) {
+            if (score_s1[i].getScore().size() <= 5)
+                for (int x = 0; x <= 5; x++) {
                     score_s1[i].score.add(0.0);
                 }
             Log.d("test1", String.valueOf(score_s1[0].getScore().size()));
@@ -169,6 +171,7 @@ public class enter_score_screen extends AppCompatActivity {
     }//上傳程式
 
     void setup() {
+
         grade1 = findViewById(R.id.grade1);
         grade2 = findViewById(R.id.grade2);
         grade3 = findViewById(R.id.grade3);
@@ -197,8 +200,6 @@ public class enter_score_screen extends AppCompatActivity {
         if (calendar.get(Calendar.DAY_OF_MONTH) < 10)
             today += "0";
         today += Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
-
-
         nofition("登入成功");
         //nofition(no);//測試
         for (int i = 0; i < 20; i++)
@@ -210,6 +211,7 @@ public class enter_score_screen extends AppCompatActivity {
         enter3 = findViewById(R.id.enter_score_edit3);
         enter4 = findViewById(R.id.enter_score_edit4);
         enter5 = findViewById(R.id.enter_score_edit5);
+        enter6 = findViewById(R.id.enter_score_edit6);
     }//初始化變數
 
     private void getitem(String no) {
@@ -252,9 +254,16 @@ public class enter_score_screen extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.getValue() == null) {
+                    for(int k=0;k<get.size();k++)
+                        for(int x=0;x<=5;x++)
+                            score_s1[k].score.set(x,0.0);
                 } else {
                     for (int i = 0; i < get.size(); i++)
-                        score_s1[i].SETSCORE((List<Double>) dataSnapshot.child(get.get(i)).getValue());
+                    {
+                        Log.d("fewf",String.valueOf(i));
+                    score_s1[i].SETSCORE((ArrayList<Object>) dataSnapshot.child(get.get(i)).getValue());
+                }
+
                 }
             }
 
@@ -275,12 +284,13 @@ public class enter_score_screen extends AppCompatActivity {
                 pos = position;
                 //Log.d("ERROR",String.valueOf(pos));
                 if (position - 1 >= 0) {
-                    List<Double> temp = score_s1[pos].getScore();
+                    List<Object> temp = score_s1[pos].getScore();
                     enter1.setText(String.valueOf(temp.get(0)));
                     enter2.setText(String.valueOf(temp.get(1)));
                     enter3.setText(String.valueOf(temp.get(2)));
                     enter4.setText(String.valueOf(temp.get(3)));
                     enter5.setText(String.valueOf(temp.get(4)));
+                    enter6.setText(String.valueOf(temp.get(5)));
                 }
 
 
@@ -301,8 +311,8 @@ public class enter_score_screen extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 if (!enter1.getText().toString().equals("") && pos >= 0) {
-                    score_s1[pos].setScore(0, Double.valueOf(enter1.getText().toString()));
-                    if (enter1.getText().toString().equals("0.0"))
+                    score_s1[pos].setScore(0,enter1.getText().toString());
+                    if (enter1.getText().toString().equals("0.0")||enter1.getText().toString().equals("0"))
                         enter1.setText("");
                 }
 
@@ -322,8 +332,8 @@ public class enter_score_screen extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 if (!enter2.getText().toString().equals("") && pos >= 0) {
-                    score_s1[pos].setScore(1, Double.valueOf(enter2.getText().toString()));
-                    if (enter2.getText().toString().equals("0.0")) enter2.setText("");
+                    score_s1[pos].setScore(1, enter2.getText().toString());
+                    if (enter2.getText().toString().equals("0.0")||enter2.getText().toString().equals("0")) enter2.setText("");
                 }
 
             }
@@ -342,8 +352,8 @@ public class enter_score_screen extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 if (!enter3.getText().toString().equals("") && pos >= 0) {
-                    score_s1[pos].setScore(2, Double.valueOf(enter3.getText().toString()));
-                    if (enter3.getText().toString().equals("0.0"))
+                    score_s1[pos].setScore(2, enter3.getText().toString());
+                    if (enter3.getText().toString().equals("0.0")||enter3.getText().toString().equals("0"))
                         enter3.setText("");
                 }
 
@@ -363,8 +373,8 @@ public class enter_score_screen extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 if (!enter4.getText().toString().equals("") && pos >= 0) {
-                    score_s1[pos].setScore(3, Double.valueOf(enter4.getText().toString()));
-                    if (enter4.getText().toString().equals("0.0"))
+                    score_s1[pos].setScore(3, enter4.getText().toString());
+                    if (enter4.getText().toString().equals("0.0")||enter4.getText().toString().equals("0"))
                         enter4.setText("");
                 }
 
@@ -384,11 +394,31 @@ public class enter_score_screen extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 if (!enter5.getText().toString().equals("") && pos >= 0) {
-                    score_s1[pos].setScore(4, Double.valueOf(enter5.getText().toString()));
-                    if (enter5.getText().toString().equals("0.0"))
+                    score_s1[pos].setScore(4, enter5.getText().toString());
+                    if (enter5.getText().toString().equals("0.0")||enter5.getText().toString().equals("0"))
                         enter5.setText("");
                 }
 
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        enter6.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!enter6.getText().toString().equals("") && pos >= 0) {
+                    score_s1[pos].setScore(5, enter6.getText().toString());
+                    if (enter6.getText().toString().equals("0.0")||enter6.getText().toString().equals("0"))
+                        enter6.setText("");
+                }
             }
 
             @Override
