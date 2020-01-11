@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class score_struct {
-     String name;
-    List<Integer> score=new ArrayList<>();
-    public void SETSCORE(List<Integer> t)
-    {
-        this.score=t;
+    String name;
+    List<Object> score = new ArrayList<>();
+
+    public void SETSCORE(List<Object> t) {
+        this.score = t;
     }
+
     public String getName() {
         return name;
     }
@@ -18,11 +19,11 @@ public class score_struct {
         this.name = name;
     }
 
-    public List<Integer> getScore() {
+    public List<Object> getScore() {
         return score;
     }
 
-    public void setScore(int index,int data) {
-        this.score.set(index,data);
+    public void setScore(int index,Object data) {
+        this.score.set(index, data);
     }
 }

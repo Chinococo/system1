@@ -1,9 +1,14 @@
 package com.example.health_system;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -28,55 +33,30 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     int l = 1;
-    ConnectivityManager CM;
-    NetworkInfo info;
+    ConnectivityManager CM;//日曆
+    NetworkInfo info;//網路狀態
     Button resign_btn, enter;
     TextView visistor;
-    List<String> data = new ArrayList<>();
-    Map<Integer, String> test = new HashMap<>();
-    Map<String, List> c = new HashMap<>();
-    long first = 0;
+    List<String> data = new ArrayList<>();//上傳所需物件
+    Map<Integer, String> test = new HashMap<>();//上傳所需物件
+    Map<String, List> c = new HashMap<>();//上傳所需物件
+    long first = 0;//退出指令所需物件
     EditText account, password;
-    String no;
-    DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-    boolean ch;
-
+    String no;//編號
+    DatabaseReference db = FirebaseDatabase.getInstance().getReference();//網路資料庫
+    boolean ch;//檢查帳號狀態的bool
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) //main()
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //upload();
-        //insition();
-        //upload_item();
+        testfragment("你好","你是智障");
         setup();
-        visistor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, search_socore.class);
-                startActivity(intent);
-            }
-        });
-        enter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                check();
-            }
-
-
-        });
-        resign_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, resign_screen.class);
-                startActivity(intent);
-            }
-        });
-
-
+        event();
     }
-
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()  //退出事件
+    {
         if (System.currentTimeMillis() - first < 2000) {
             super.onBackPressed();
         } else {
@@ -84,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
             first = System.currentTimeMillis();
         }
     }
-
-    void check() {
+    void check() //檢查是否有此帳，並登入
+    {
         ch = true;
         if (account.getText().toString().equals("")) {
             nofition("你沒有輸入帳號");
@@ -126,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-    void setup() {
+    void setup() //基本資料設置，變數
+    {
 
         resign_btn = findViewById(R.id.resign_btn);
         enter = findViewById(R.id.enter_main_btn);
@@ -135,25 +115,24 @@ public class MainActivity extends AppCompatActivity {
         password = findViewById(R.id.password_main_edittext);
         visistor = findViewById(R.id.visitor);
     }
-
-    void nofition(String data) {
+    void nofition(String data)//顯示泡泡資料
+    {
         Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
 
     }
+    void upload_class_positinn()//上船班及掃區位置
+    {
 
-    Boolean check_interner() {
-        CM = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        info = CM.getActiveNetworkInfo();
-        if (info != null) {
-            if (info.isConnected())
-                return false;
-        } else {
-            return false;
-        }
-        return false;
+        db.child("no").child("position").child("10").child("建二甲").setValue("囊螢樓東女廁");
+        db.child("no").child("position").child("10").child("製圖二").setValue("囊螢樓西女廁");
+        db.child("no").child("position").child("10").child("室一甲").setValue("囊螢樓西女廁");
+        db.child("no").child("position").child("10").child("綜一丁").setValue("囊螢樓東女廁");
+        db.child("no").child("position").child("10").child("製圖一").setValue("囊螢樓東女廁");
+        db.child("no").child("position").child("10").child("子一乙").setValue("囊螢樓西女廁");
+
     }
-
-    private void upload_item() {
+    private void upload_item()//上傳掃區基本資料
+    {
         String no = "18~24";
         db.child("no").child(no).child("item").child("1").setValue("    人工垃圾");
         db.child("no").child(no).child("item").child("2").setValue("    塵土樹葉");
@@ -161,9 +140,9 @@ public class MainActivity extends AppCompatActivity {
         db.child("no").child(no).child("item").child("4").setValue("      大樹葉");
         db.child("no").child(no).child("item").child("5").setValue("        其他");
     //                                                                          1
-    }//上傳程式
-
-    private void upload() {
+    }
+    private void upload()//上傳班級
+    {
         String no = "1";
         data.add("請選擇");
         data.add("空調二");
@@ -179,34 +158,65 @@ public class MainActivity extends AppCompatActivity {
         //data.add("裝潢三");
         c.put("class", data);
         db.child("no").child(no).setValue(c);
-    }//上傳程式
-
-    void clear_d(final int no1) {
+    }
+    void clear_d(final int no1)//初始化no1變數編號的班機基本資料
+    {
         Log.d("jjjj", String.valueOf(no1));
         db.child("no").child(String.valueOf(no1)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
-                    Log.d("jjjj", String.valueOf(no1));
                     HashMap<Object, Object> insition = (HashMap<Object, Object>) dataSnapshot.getValue();
                     db.child("no").child(String.valueOf(no1)).setValue(null);
                     db.child("no").child(String.valueOf(no1)).child("class").setValue(insition.get("class"));
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }
-
-    void insition() {
+    void insition()//初始化全部基本資料(班級)
+    {
         //clear_d(8);
-
         for (l = 1; l <= 24; l++) {
             Log.d("fwa", String.valueOf(l));
             clear_d(l);
         }
+    }
+    void event()//all listner
+    {
+        visistor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, search_socore.class);
+                startActivity(intent);
+            }
+        });
+        enter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check();
+            }
+
+
+        });
+        resign_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, resign_screen.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+    void testfragment(String title,String message)
+    {
+        final AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setMessage(message).setTitle(title).setCancelable(false).setPositiveButton("我了解了", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        }).show();
     }
 }

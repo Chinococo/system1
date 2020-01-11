@@ -35,7 +35,6 @@ public class ask_opeator extends DialogFragment {
 
     @Override
     public int show(@NonNull FragmentTransaction transaction, @Nullable String tag) {
-
         return super.show(transaction, tag);
     }
 
@@ -75,7 +74,7 @@ public class ask_opeator extends DialogFragment {
                             databaseReference.child("id").child(worker.get("no")).setValue(worker.get("account"));
                             Log.d("test", worker.get("account") + "123");
                             nofition("succedful 繼承");
-                            getActivity().onBackPressed();
+                            getDialog().dismiss();
                         } else {
                             nofition("帳密有誤");
                         }

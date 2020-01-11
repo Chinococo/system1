@@ -25,24 +25,16 @@ public class resign_screen extends AppCompatActivity {
     EditText account, repeat, nickname, password, no, truename;
     Button enter;
     HashMap<String, String> worker = new HashMap<>();
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) //main()
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resign_screen);
         setup();
-        enter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                check();
-            }
-
-        });
-
-
+        event();
     }
-
-    void input_data() {
+    void input_data()//設置所輸入資料
+    {
         worker.put("truename", truename.getText().toString());
         worker.put("account", account.getText().toString());
         worker.put("nickname", nickname.getText().toString());
@@ -50,11 +42,12 @@ public class resign_screen extends AppCompatActivity {
         worker.put("password", password.getText().toString());
     }
 
-    void nofition(String data) {
+    void nofition(String data)//顯示泡泡資訊
+    {
         Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
     }
-
-    void setup() {
+    void setup() //基本設定，變數
+    {
         account = findViewById(R.id.account_editText);
         repeat = findViewById(R.id.repeat_editText);
         nickname = findViewById(R.id.nickname_editText);
@@ -65,7 +58,8 @@ public class resign_screen extends AppCompatActivity {
 
     }
 
-    void check() {
+    void check()//檢查所有是否輸入正確
+    {
         if (truename.getText().toString().equals("")) {
             nofition("你的真實名子沒輸入喔 ");
             return;
@@ -128,8 +122,18 @@ public class resign_screen extends AppCompatActivity {
         });
 
     }
+    void event()//all listner
+    {
+        enter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check();
+            }
 
-    private void openfragment() {
+        });
+    }
+    private void openfragment()//開啟繼承畫面
+    {
         final ask_opeator fragment = new ask_opeator();
         reference.child("id").child(no.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -150,21 +154,5 @@ public class resign_screen extends AppCompatActivity {
         });
 
     }
-/*
-    private boolean do1(String no) {
-        result=false;
-        reference.child("id").child(no).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue()==null)
-                    result = true;
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        return result;
-    }*/
 }

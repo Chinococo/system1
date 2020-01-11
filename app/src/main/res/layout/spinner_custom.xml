@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:text="hello"
     android:textColor="#C52525"
-
     android:textSize="30sp">
 
 </TextView>
