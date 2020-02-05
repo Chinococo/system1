@@ -65,10 +65,24 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        just_test();
+
+
+
+
+
         requestpermission();
         getallclass();
         setup();
         event();
+
+    }
+
+    private void just_test() {
+        Intent intent = new Intent(this,ouput.class);
+        startActivity(intent);
     }
 
     @Override
@@ -273,6 +287,7 @@ public class MainActivity extends AppCompatActivity {
           }
       }
     }
+
     void _class(final String no)
     {
         db.child("no").child(no).child("class").addListenerForSingleValueEvent(new ValueEventListener() {

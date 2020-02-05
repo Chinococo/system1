@@ -49,7 +49,7 @@ public class enter_score_screen extends AppCompatActivity {
     Spinner opeator;
     List<String> test = new ArrayList<>();
     score_struct[] score_s1 = new score_struct[20];
-    EditText enter1, enter2, enter3, enter4, enter5,enter6;
+    EditText enter1, enter2, enter3, enter4, enter5, enter6;
     Button enter;
     Calendar calendar = Calendar.getInstance();
     String today, account_name;
@@ -73,7 +73,6 @@ public class enter_score_screen extends AppCompatActivity {
         opeator.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                 no = op.get(position);
                 if (!no.equals("請選擇")) {
                     clear_Alldata();
@@ -254,15 +253,14 @@ public class enter_score_screen extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.getValue() == null) {
-                    for(int k=0;k<get.size();k++)
-                        for(int x=0;x<=5;x++)
-                            score_s1[k].score.set(x,0.0);
+                    for (int k = 0; k < get.size(); k++)
+                        for (int x = 0; x <= 5; x++)
+                            score_s1[k].score.set(x, 0.0);
                 } else {
-                    for (int i = 0; i < get.size(); i++)
-                    {
-                        Log.d("fewf",String.valueOf(i));
-                    score_s1[i].SETSCORE((ArrayList<Object>) dataSnapshot.child(get.get(i)).getValue());
-                }
+                    for (int i = 0; i < get.size(); i++) {
+                        Log.d("fewf", String.valueOf(i));
+                        score_s1[i].SETSCORE((ArrayList<Object>) dataSnapshot.child(get.get(i)).getValue());
+                    }
 
                 }
             }
@@ -311,8 +309,8 @@ public class enter_score_screen extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 if (!enter1.getText().toString().equals("") && pos >= 0) {
-                    score_s1[pos].setScore(0,enter1.getText().toString());
-                    if (enter1.getText().toString().equals("0.0")||enter1.getText().toString().equals("0"))
+                    score_s1[pos].setScore(0, enter1.getText().toString());
+                    if (enter1.getText().toString().equals("0.0") || enter1.getText().toString().equals("0"))
                         enter1.setText("");
                 }
 
@@ -333,7 +331,8 @@ public class enter_score_screen extends AppCompatActivity {
 
                 if (!enter2.getText().toString().equals("") && pos >= 0) {
                     score_s1[pos].setScore(1, enter2.getText().toString());
-                    if (enter2.getText().toString().equals("0.0")||enter2.getText().toString().equals("0")) enter2.setText("");
+                    if (enter2.getText().toString().equals("0.0") || enter2.getText().toString().equals("0"))
+                        enter2.setText("");
                 }
 
             }
@@ -353,7 +352,7 @@ public class enter_score_screen extends AppCompatActivity {
 
                 if (!enter3.getText().toString().equals("") && pos >= 0) {
                     score_s1[pos].setScore(2, enter3.getText().toString());
-                    if (enter3.getText().toString().equals("0.0")||enter3.getText().toString().equals("0"))
+                    if (enter3.getText().toString().equals("0.0") || enter3.getText().toString().equals("0"))
                         enter3.setText("");
                 }
 
@@ -374,7 +373,7 @@ public class enter_score_screen extends AppCompatActivity {
 
                 if (!enter4.getText().toString().equals("") && pos >= 0) {
                     score_s1[pos].setScore(3, enter4.getText().toString());
-                    if (enter4.getText().toString().equals("0.0")||enter4.getText().toString().equals("0"))
+                    if (enter4.getText().toString().equals("0.0") || enter4.getText().toString().equals("0"))
                         enter4.setText("");
                 }
 
@@ -395,7 +394,7 @@ public class enter_score_screen extends AppCompatActivity {
 
                 if (!enter5.getText().toString().equals("") && pos >= 0) {
                     score_s1[pos].setScore(4, enter5.getText().toString());
-                    if (enter5.getText().toString().equals("0.0")||enter5.getText().toString().equals("0"))
+                    if (enter5.getText().toString().equals("0.0") || enter5.getText().toString().equals("0"))
                         enter5.setText("");
                 }
 
@@ -416,7 +415,7 @@ public class enter_score_screen extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!enter6.getText().toString().equals("") && pos >= 0) {
                     score_s1[pos].setScore(5, enter6.getText().toString());
-                    if (enter6.getText().toString().equals("0.0")||enter6.getText().toString().equals("0"))
+                    if (enter6.getText().toString().equals("0.0") || enter6.getText().toString().equals("0"))
                         enter6.setText("");
                 }
             }

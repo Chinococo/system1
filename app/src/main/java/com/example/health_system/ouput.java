@@ -34,7 +34,7 @@ public class ouput extends AppCompatActivity {
     Date date2 = new Date();
     ArrayList<score_struct> output = new ArrayList<>();
     score_struct put = new score_struct();
-   
+
 
 
     @Override

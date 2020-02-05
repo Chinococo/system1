@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="72dp"
-        android:background="#2B2B2B"
+        android:background="#3100FFFF"
         android:enabled="true"
         android:text="送出"
         android:textColor="#FFFFFF"

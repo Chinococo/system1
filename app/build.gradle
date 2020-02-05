@@ -6,7 +6,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.health_system"
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -35,4 +35,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'com.google.firebase:firebase-storage:16.0.5'
 }

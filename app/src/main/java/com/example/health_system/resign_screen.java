@@ -64,7 +64,8 @@ public class resign_screen extends AppCompatActivity {
             nofition("你的真實名子沒輸入喔 ");
             return;
         }
-        if (no.getText().toString().equals("") && (Integer.parseInt(no.getText().toString()) <= 23) && (Integer.parseInt(no.getText().toString()) >= 1)) {
+        //if(!no.getText().toString().equals("30"))//老師特別避免指令
+        if (no.getText().toString().equals("") || (Integer.parseInt(no.getText().toString()) > 24) || (Integer.parseInt(no.getText().toString()) <=0)) {
             nofition("你的編號沒輸入喔或編號亂輸");
             return;
         }
