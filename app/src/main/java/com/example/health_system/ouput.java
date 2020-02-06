@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,13 +36,17 @@ public class ouput extends AppCompatActivity {
     Date date2 = new Date();
     ArrayList<score_struct> output = new ArrayList<>();
     score_struct put = new score_struct();
-
-
+    int max = 1, now = 0;
+    String message = "Loging.";
+    //String no="1",date="20191225";
+    HashMap<String, HashMap<String, ArrayList<String>>> out = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ouput);
+
+
         setid();
 
 
@@ -59,6 +65,32 @@ public class ouput extends AppCompatActivity {
         test3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                now = 0;
+                max = 10000;
+                Thread doing = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int i = now; i < max; i++)
+                            test("1", "20191225");
+                    }
+                });
+                porcess(doing);
+                /*
+                delay delay =new delay(3000);
+                delay.start();
+                try {
+                  delay.join();
+                }catch (Exception e)
+                {
+
+                }*/
+
+
+
+
+
+                /*
                 if (!preview1.getText().toString().equals("") && !preview2.getText().toString().equals("")) {
                     long first = Math.min(date1.getTime() / (60 * 60 * 24 * 1000), date2.getTime() / (60 * 60 * 24 * 1000));
                     long end = Math.max(date1.getTime() / (60 * 60 * 24 * 1000), date2.getTime() / (60 * 60 * 24 * 1000));
@@ -72,9 +104,10 @@ public class ouput extends AppCompatActivity {
 
                 } else
                     Log.e("你沒輸入", "input is empty");
-
+                */
             }
         });
+
     }
 
     void setid() {
@@ -129,6 +162,101 @@ public class ouput extends AppCompatActivity {
         }, year, month, day).show();
     }
 
+    void test(final String no, final String date) {
+        final CountDownLatch count = new CountDownLatch(1);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DB.child(no).child(date).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            HashMap<String, ArrayList<String>> temp = new HashMap<>();
+                            temp.put(date, (ArrayList<String>) snapshot.getValue());
+                            out.put(snapshot.getKey(), temp);
+                        }
+                        now++;
+                        count.countDown();
+                    }
 
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                try {
+                    count.await();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        });
+        thread.setPriority(5);
+        thread.start();
+        Log.e("123", "finish-thread" + thread.getId());
+
+    }
+
+    void porcess(final Thread doing) {
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setCanceledOnTouchOutside(false);
+        final Handler handler = new Handler();
+        progressDialog.setMax(max);
+        progressDialog.setMessage(message);
+        progressDialog.setTitle("正在抓資料");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setProgress(now);
+        progressDialog.show();
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                doing.start();
+                while (true) {
+                    if (message.equals("Loging.")) {
+                        progressDialog.setMessage("Loging..");
+                        message = "Loging..";
+                    } else if (message.equals("Loging..")) {
+                        progressDialog.setMessage("Loging...");
+                        message = "Loging...";
+                    } else {
+                        progressDialog.setMessage("Loging...");
+                        message = "Loging.";
+                    }
+                    if (progressDialog.getProgress() < progressDialog.getMax()) {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.setProgress(now);
+                            }
+                        });
+                    } else {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.dismiss();
+                            }
+                        });
+                        break;
+                    }
+
+                    delay delay = new delay(30);
+                    delay.start();
+                    try {
+                        delay.join();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+        });
+        thread.setPriority(10);
+        thread.start();
+    }
 
 }
