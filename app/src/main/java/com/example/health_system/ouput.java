@@ -88,7 +88,7 @@ public class ouput extends AppCompatActivity {
                             long end = Math.max(date1.getTime() / (60 * 60 * 24 * 1000), date2.getTime() / (60 * 60 * 24 * 1000));
                             all_date = new ArrayList<>();
                             for (long k = first; k <= end; k++) {
-                                Date temp = new Date((k+1) * 60 * 60 * 24 * 1000);
+                                Date temp = new Date((k + 1) * 60 * 60 * 24 * 1000);
                                 String output = ("" + (temp.getYear() + 1900));
                                 output += (temp.getMonth() + 1) < 11 ? "0" + (temp.getMonth() + 1) : "" + (temp.getMonth() + 1);
                                 output += (temp.getDate()) < 11 ? "0" + temp.getDate() : "" + temp.getDate();
@@ -99,8 +99,7 @@ public class ouput extends AppCompatActivity {
                                 //Log.e("123", output);
                             }
 
-                        } else
-                        {
+                        } else {
                             //Log.e("你沒輸入", "input is empty");
                         }
 
@@ -181,13 +180,12 @@ public class ouput extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         ArrayList<String> arrayList = (ArrayList<String>) dataSnapshot.child("class").getValue();
-                        if(all_date.get(0).equals(date))
-                        for(int i=0;i<arrayList.size();i++)
-                        {
-                            if(!out.containsKey(arrayList.get(i)))
-                            out.put(arrayList.get(i)+"-"+no,new HashMap<String, ArrayList<String>>());
-                        }
-                        if(dataSnapshot.child(date).getValue()!=null) {
+                        if (all_date.get(0).equals(date))
+                            for (int i = 0; i < arrayList.size(); i++) {
+                                if (!out.containsKey(arrayList.get(i)))
+                                    out.put(arrayList.get(i) + "-" + no, new HashMap<String, ArrayList<String>>());
+                            }
+                        if (dataSnapshot.child(date).getValue() != null) {
                             Log.e("n", "有資料");
                             for (DataSnapshot dataSnapshot1 : dataSnapshot.child(date).getChildren()) {
                                 //Log.e("12", "13");
@@ -299,26 +297,23 @@ public class ouput extends AppCompatActivity {
             for (String key : out.keySet()) {
                 sb.append(key + ",");
                 for (int i = 0; i < all_date.size(); i++) {
-                    Log.e("123",all_date.get(i));
-                    Double sum=0.0;
+                    Log.e("123", all_date.get(i));
+                    Double sum = 0.0;
                     ArrayList<String> t = out.get(key).get(all_date.get(i));
-                    if(t!=null)
-                    {
-                        Log.e("error",key+"-"+all_date.get(i));
-                        for(int k=0;k<t.size()-1;k++)
-                            sum+=Double.parseDouble(String.valueOf(t.get(k)));
-                        Log.e("out",""+sum);
+                    if (t != null) {
+                        Log.e("error", key + "-" + all_date.get(i));
+                        for (int k = 0; k < t.size() - 1; k++)
+                            sum += Double.parseDouble(String.valueOf(t.get(k)));
+                        Log.e("out", "" + sum);
                     }
 
 
+                    //Log.e("1",""+t)  ;
 
 
-                            //Log.e("1",""+t)  ;
-
-
-                     //sum+=Integer.valueOf(out.get(key).get(all_date.get(i)).get(count));
+                    //sum+=Integer.valueOf(out.get(key).get(all_date.get(i)).get(count));
                     if (i != all_date.size() - 1) {
-                        sb.append(sum+ ",");
+                        sb.append(sum + ",");
                     } else {
                         sb.append(sum);
                     }
