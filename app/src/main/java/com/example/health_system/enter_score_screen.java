@@ -92,7 +92,7 @@ public class enter_score_screen extends AppCompatActivity {
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+               //today = "20200208";
                 Log.d("test1", String.valueOf(score_s1[0].getScore().size()));
                 for (int i = 0; i < get.size(); i++)
                     databaseReference.child("no").child(no).child(today).child(score_s1[i].getName()).setValue(score_s1[i].getScore());
