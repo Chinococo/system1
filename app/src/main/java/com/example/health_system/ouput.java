@@ -47,13 +47,17 @@ public class ouput extends AppCompatActivity {
     //String no="1",date="20191225";
     HashMap<String, HashMap<String, ArrayList<String>>> out = new HashMap<>();
     ArrayList<String> all_date;
+    StringBuilder sb = new StringBuilder();
+    FileOutputStream os;
+    ArrayList<String> all_class=new ArrayList<>();
+    int s = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ouput);
         requestpermission();
-
+        //nofition("hello");
         setid();
 
 
@@ -84,6 +88,7 @@ public class ouput extends AppCompatActivity {
                     @Override
                     public void run() {
                         if (!preview1.getText().toString().equals("") && !preview2.getText().toString().equals("")) {
+                            getallclass();
                             long first = Math.min(date1.getTime() / (60 * 60 * 24 * 1000), date2.getTime() / (60 * 60 * 24 * 1000));
                             long end = Math.max(date1.getTime() / (60 * 60 * 24 * 1000), date2.getTime() / (60 * 60 * 24 * 1000));
                             all_date = new ArrayList<>();
@@ -108,10 +113,10 @@ public class ouput extends AppCompatActivity {
                 final Thread output_csv = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        outfile("test");
+
                     }
                 });
-                porcess(doing, "get data", output_csv);
+                porcess(doing, "get data");
 
 
             }
@@ -220,7 +225,7 @@ public class ouput extends AppCompatActivity {
 
     }
 
-    void porcess(final Thread doing, final String title, final Thread last) {
+    void porcess(final Thread doing, final String title) {
         if (max != 0) {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setCanceledOnTouchOutside(false);
@@ -231,13 +236,12 @@ public class ouput extends AppCompatActivity {
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.setProgress(now);
             progressDialog.show();
-
+            s = 0;
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     doing.start();
                     while (true) {
-
                         if (progressDialog.getProgress() < progressDialog.getMax()) {
                             handler.post(new Runnable() {
                                 @Override
@@ -249,10 +253,30 @@ public class ouput extends AppCompatActivity {
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    progressDialog.dismiss();
+                                    Log.e("s", "" + s);
+                                    if (s == 0) {
+                                        now = 0;
+                                        max = all_date.size() + (out.keySet().size() * all_date.size());
+                                        progressDialog.setTitle("create_csv");
+                                        progressDialog.setProgress(now);
+                                        s = 1;
+                                        outfile("test");
+                                    } else {
+                                        progressDialog.dismiss();
+
+                                    }
+
+
                                 }
                             });
-                            break;
+                            if (s == 1) {
+
+                                //nofition("fininsh");
+                                Log.e("fin-2", "fin-2");
+                                break;
+                            }
+
+
                         }
 
                         delay delay = new delay(30);
@@ -265,12 +289,13 @@ public class ouput extends AppCompatActivity {
 
 
                     }
-                    last.start();
-
                 }
             });
             thread.setPriority(10);
             thread.start();
+
+            Log.e("fin-1", "fin-1");
+
         }
 
     }
@@ -283,58 +308,125 @@ public class ouput extends AppCompatActivity {
             File file = new File(directory, "test.csv");
             if (!file.exists())
                 file.createNewFile();
-            FileOutputStream os = new FileOutputStream(file);
-            StringBuilder sb = new StringBuilder();
+            os = new FileOutputStream(file);
+            sb = new StringBuilder();
             sb.append(",");
-            for (int i = 0; i < all_date.size(); i++) {
-                if (i != all_date.size() - 1) {
-                    sb.append(all_date.get(i) + ",");
-                } else {
-                    sb.append(all_date.get(i));
+            //以上為目錄創建
+
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.e("hello", "" + max);
+                            for (int i = 0; i < all_date.size(); i++) {
+                                if (i != all_date.size() - 1) {
+                                    sb.append(all_date.get(i) + ",");
+                                } else {
+                                    sb.append(all_date.get(i));
+                                }
+                                now++;
+                            }
+                            sb.append("\n");
+                            for (int cl=0;cl<all_class.size();cl++) {
+                                sb.append(all_class.get(cl).substring(0,3)+ ",");
+                                for (int i = 0; i < all_date.size(); i++) {
+                                    Log.e("123", all_date.get(i));
+                                    Double sum = 0.0;
+                                    ArrayList<String> t = out.get(all_class.get(cl) ).get(all_date.get(i));
+                                    if (t != null) {
+                                        Log.e("error", all_class.get(cl)  + "-" + all_date.get(i));
+                                        for (int k = 0; k < t.size() - 1; k++)
+                                            sum += Double.parseDouble(String.valueOf(t.get(k)));
+                                        Log.e("out", "" + sum);
+                                    }
+
+
+                                    //Log.e("1",""+t)  ;
+
+
+                                    //sum+=Integer.valueOf(out.get(key).get(all_date.get(i)).get(count));
+                                    if (i != all_date.size() - 1) {
+                                        sb.append(sum + ",");
+                                    } else {
+                                        sb.append(sum);
+                                    }
+                                    now++;
+                                }
+                                sb.append("\n");
+
+                            }
+                            try {
+                                os.write(sb.toString().getBytes());
+                                os.flush();
+                                os.close();
+                                //nofition("finish");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }).start();
+
                 }
-            }
-            sb.append("\n");
-            for (String key : out.keySet()) {
-                sb.append(key + ",");
-                for (int i = 0; i < all_date.size(); i++) {
-                    Log.e("123", all_date.get(i));
-                    Double sum = 0.0;
-                    ArrayList<String> t = out.get(key).get(all_date.get(i));
-                    if (t != null) {
-                        Log.e("error", key + "-" + all_date.get(i));
-                        for (int k = 0; k < t.size() - 1; k++)
-                            sum += Double.parseDouble(String.valueOf(t.get(k)));
-                        Log.e("out", "" + sum);
-                    }
+            });
+            thread.setPriority(10);
+            thread.start();
 
 
-                    //Log.e("1",""+t)  ;
-
-
-                    //sum+=Integer.valueOf(out.get(key).get(all_date.get(i)).get(count));
-                    if (i != all_date.size() - 1) {
-                        sb.append(sum + ",");
-                    } else {
-                        sb.append(sum);
-                    }
-                }
-                sb.append("\n");
-
-            }
-            os.write(sb.toString().getBytes());
-            os.flush();
-            os.close();
             Log.e("successful", "successful");
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     int requestpermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
         return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    }
+
+    void set(final int i)
+    {
+        if(i==25)
+            DB.child("no").child("all_class").setValue(all_class);
+        DB.child("no").child(String.valueOf(i)).child("class").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(i==25)
+                {
+                    Log.e("no"+"-"+i+"-"+"class",dataSnapshot.getValue()+"");
+                }else
+                {
+                    Log.e("no"+"-"+i+"-"+"class",dataSnapshot.getValue()+"");
+                    ArrayList<Object> t =(ArrayList<Object>) dataSnapshot.getValue();
+                    for(int k=1;k<t.size();k++)
+                    all_class.add(t.get(k).toString()+"-"+i);
+                    set(i+1);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }//此為整理所有班級
+    void getallclass()
+    {
+        all_class=new ArrayList<>();
+        DB.child("no").child("all_class").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                all_class=(ArrayList<String>) dataSnapshot.getValue();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
