@@ -43,9 +43,9 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     int l = 1;
-    String Floder= Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator+"class";
-    File directry=new File(Floder);
-    File output=new File(directry,"all_class.csv");
+    String Floder = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "class";
+    File directry = new File(Floder);
+    File output = new File(directry, "all_class.csv");
     ConnectivityManager CM;//日曆
     NetworkInfo info;//網路狀態
     Button resign_btn, enter;
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     Map<String, List> c = new HashMap<>();//上傳所需物件
     long first = 0;//退出指令所需物件
     EditText account, password;
-    StringBuilder stringBuilder=new StringBuilder();
+    StringBuilder stringBuilder = new StringBuilder();
     String no;//編號
     DatabaseReference db = FirebaseDatabase.getInstance().getReference();//網路資料庫
     boolean ch;//檢查帳號狀態的bool
@@ -65,24 +65,10 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        just_test();
-
-
-
-
-
         requestpermission();
         getallclass();
         setup();
         event();
-
-    }
-
-    private void just_test() {
-        Intent intent = new Intent(this,ouput.class);
-        startActivity(intent);
     }
 
     @Override
@@ -252,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void testfragment(String title, String message)
+    void testfragment(String title, String message)//繼承畫面
     {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message).setTitle(title).setCancelable(false).setPositiveButton("我了解了", new DialogInterface.OnClickListener() {
@@ -262,54 +248,50 @@ public class MainActivity extends AppCompatActivity {
         }).show();
     }
 
-    int requestpermission()
+    int requestpermission()//索取權限
     {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
         return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
-    void getallclass()
+    void getallclass()//老師指令
     {
-      if(requestpermission()!=0)
-      {
-          stringBuilder=new StringBuilder();
-          try {
-              if(!directry.exists())
-                  directry.mkdirs();
-              if(!output.exists())
-                  output.createNewFile();
-              for(int i=1;i<=24;i++)
-                  _class(String.valueOf(i));
-          }catch (Exception e)
-          {
-              e.printStackTrace();
-          }
-      }
+        if (requestpermission() != 0) {
+            stringBuilder = new StringBuilder();
+            try {
+                if (!directry.exists())
+                    directry.mkdirs();
+                if (!output.exists())
+                    output.createNewFile();
+                for (int i = 1; i <= 24; i++)
+                    _class(String.valueOf(i));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    void _class(final String no)
+    void _class(final String no)//拿資料副程式
     {
         db.child("no").child(no).child("class").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                try{
-                    ArrayList<Object> get=(ArrayList<Object>)dataSnapshot.getValue() ;
-                    for(int i=1;i<get.size();i++)
-                    if(i!=get.size()-1)
-                    stringBuilder.append(get.get(i) +",");
-                    else
-                    stringBuilder.append(get.get(i) +"\n");
+                try {
+                    ArrayList<Object> get = (ArrayList<Object>) dataSnapshot.getValue();
+                    for (int i = 1; i < get.size(); i++)
+                        if (i != get.size() - 1)
+                            stringBuilder.append(get.get(i) + ",");
+                        else
+                            stringBuilder.append(get.get(i) + "\n");
 
-                    if(no.equals("24"))
-                    {
-                        OutputStream outputStream=new FileOutputStream(output);
+                    if (no.equals("24")) {
+                        OutputStream outputStream = new FileOutputStream(output);
                         outputStream.write(stringBuilder.toString().getBytes());
                         outputStream.flush();
                         outputStream.close();
                     }
-                }catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 

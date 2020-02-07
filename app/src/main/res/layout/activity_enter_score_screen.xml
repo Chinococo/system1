@@ -189,7 +189,7 @@
         android:id="@+id/opeator"
         android:layout_width="102dp"
         android:layout_height="44dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="16dp"
         android:background="#FFFFFF"
         android:visibility="invisible"
@@ -206,6 +206,19 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/grade5"
         app:layout_constraintTop_toBottomOf="@+id/grade5" />
+
+    <TextView
+        android:id="@+id/out_csv_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="4dp"
+        android:text="輸出檔案"
+        android:textColor="#BEFAFAFA"
+        android:textSize="25sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/opeator"
+        app:layout_constraintTop_toBottomOf="@+id/opeator" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

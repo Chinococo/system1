@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,7 +48,7 @@ public class ouput extends AppCompatActivity {
     ArrayList<String> all_date;
     StringBuilder sb = new StringBuilder();
     FileOutputStream os;
-    ArrayList<String> all_class=new ArrayList<>();
+    ArrayList<String> all_class = new ArrayList<>();
     int s = 0;
 
     @Override
@@ -130,7 +129,7 @@ public class ouput extends AppCompatActivity {
         test3 = findViewById(R.id.test3);
         preview1 = findViewById(R.id.preview1);
         preview2 = findViewById(R.id.preview2);
-    }
+    }//設定id
 
     public void datePicker1(View v) {
         Calendar calendar = Calendar.getInstance();
@@ -152,7 +151,7 @@ public class ouput extends AppCompatActivity {
             }
 
         }, year, month, day).show();
-    }
+    }//日期選擇器１
 
     public void datePicker2(View v) {
         Calendar calendar = Calendar.getInstance();
@@ -174,7 +173,7 @@ public class ouput extends AppCompatActivity {
             }
 
         }, year, month, day).show();
-    }
+    }//日期選擇器２
 
     void test(final String no, final String date) {
         final CountDownLatch count = new CountDownLatch(1);
@@ -223,7 +222,7 @@ public class ouput extends AppCompatActivity {
         thread.start();
         Log.e("123", "finish-thread" + thread.getId());
 
-    }
+    }//拿網路資料副程式
 
     void porcess(final Thread doing, final String title) {
         if (max != 0) {
@@ -298,7 +297,7 @@ public class ouput extends AppCompatActivity {
 
         }
 
-    }
+    }//進度調
 
     void outfile(String name) {
         try {
@@ -329,14 +328,14 @@ public class ouput extends AppCompatActivity {
                                 now++;
                             }
                             sb.append("\n");
-                            for (int cl=0;cl<all_class.size();cl++) {
-                                sb.append(all_class.get(cl).substring(0,3)+ ",");
+                            for (int cl = 0; cl < all_class.size(); cl++) {
+                                sb.append(all_class.get(cl).substring(0, 3) + ",");
                                 for (int i = 0; i < all_date.size(); i++) {
                                     Log.e("123", all_date.get(i));
                                     Double sum = 0.0;
-                                    ArrayList<String> t = out.get(all_class.get(cl) ).get(all_date.get(i));
+                                    ArrayList<String> t = out.get(all_class.get(cl)).get(all_date.get(i));
                                     if (t != null) {
-                                        Log.e("error", all_class.get(cl)  + "-" + all_date.get(i));
+                                        Log.e("error", all_class.get(cl) + "-" + all_date.get(i));
                                         for (int k = 0; k < t.size() - 1; k++)
                                             sum += Double.parseDouble(String.valueOf(t.get(k)));
                                         Log.e("out", "" + sum);
@@ -379,31 +378,28 @@ public class ouput extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }//輸出檔案
 
     int requestpermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
         return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-    }
+    }//索取權限
 
-    void set(final int i)
-    {
-        if(i==25)
+    void set(final int i) {
+        if (i == 25)
             DB.child("no").child("all_class").setValue(all_class);
         DB.child("no").child(String.valueOf(i)).child("class").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(i==25)
-                {
-                    Log.e("no"+"-"+i+"-"+"class",dataSnapshot.getValue()+"");
-                }else
-                {
-                    Log.e("no"+"-"+i+"-"+"class",dataSnapshot.getValue()+"");
-                    ArrayList<Object> t =(ArrayList<Object>) dataSnapshot.getValue();
-                    for(int k=1;k<t.size();k++)
-                    all_class.add(t.get(k).toString()+"-"+i);
-                    set(i+1);
+                if (i == 25) {
+                    Log.e("no" + "-" + i + "-" + "class", dataSnapshot.getValue() + "");
+                } else {
+                    Log.e("no" + "-" + i + "-" + "class", dataSnapshot.getValue() + "");
+                    ArrayList<Object> t = (ArrayList<Object>) dataSnapshot.getValue();
+                    for (int k = 1; k < t.size(); k++)
+                        all_class.add(t.get(k).toString() + "-" + i);
+                    set(i + 1);
                 }
 
             }
@@ -414,13 +410,13 @@ public class ouput extends AppCompatActivity {
             }
         });
     }//此為整理所有班級
-    void getallclass()
-    {
-        all_class=new ArrayList<>();
+
+    void getallclass() {
+        all_class = new ArrayList<>();
         DB.child("no").child("all_class").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                all_class=(ArrayList<String>) dataSnapshot.getValue();
+                all_class = (ArrayList<String>) dataSnapshot.getValue();
             }
 
             @Override
@@ -428,5 +424,5 @@ public class ouput extends AppCompatActivity {
 
             }
         });
-    }
+    }//拿所有班級３
 }

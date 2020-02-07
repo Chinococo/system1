@@ -1,27 +1,18 @@
 package com.example.health_system;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,9 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -42,7 +31,7 @@ import java.util.Map;
 
 public class enter_score_screen extends AppCompatActivity {
     List<String> item = new ArrayList<>();
-    TextView grade1, grade2, grade3, grade4, grade5;
+    TextView grade1, grade2, grade3, grade4, grade5, out_csv;
     int pos = -1;
     String no;
     List<String> op = new ArrayList<>();
@@ -92,7 +81,7 @@ public class enter_score_screen extends AppCompatActivity {
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               //today = "20200208";
+                //today = "20200208";
                 Log.d("test1", String.valueOf(score_s1[0].getScore().size()));
                 for (int i = 0; i < get.size(); i++)
                     databaseReference.child("no").child(no).child(today).child(score_s1[i].getName()).setValue(score_s1[i].getScore());
@@ -176,6 +165,7 @@ public class enter_score_screen extends AppCompatActivity {
         grade3 = findViewById(R.id.grade3);
         grade4 = findViewById(R.id.grade4);
         grade5 = findViewById(R.id.grade5);
+        out_csv = findViewById(R.id.out_csv_btn);
         opeator = findViewById(R.id.opeator);
         no = intent.getStringExtra("no");
         account_name = intent.getStringExtra("account");
@@ -185,6 +175,7 @@ public class enter_score_screen extends AppCompatActivity {
             op.add(String.valueOf(j));
             if (j == 24) {
                 if (account_name.equals("teacher")) {
+                    out_csv.setVisibility(View.VISIBLE);
                     opeator.setVisibility(View.VISIBLE);
                     ArrayAdapter<String> op_adpart = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, op);
                     opeator.setAdapter(op_adpart);
@@ -237,7 +228,6 @@ public class enter_score_screen extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }
@@ -275,6 +265,13 @@ public class enter_score_screen extends AppCompatActivity {
     }
 
     private void event() {
+        out_csv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(enter_score_screen.this, ouput.class);
+                startActivity(intent);
+            }
+        });
         choose.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -290,14 +287,10 @@ public class enter_score_screen extends AppCompatActivity {
                     enter5.setText(String.valueOf(temp.get(4)));
                     enter6.setText(String.valueOf(temp.get(5)));
                 }
-
-
             }
-
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
         enter1.addTextChangedListener(new TextWatcher() {
@@ -307,18 +300,15 @@ public class enter_score_screen extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
                 if (!enter1.getText().toString().equals("") && pos >= 0) {
                     score_s1[pos].setScore(0, enter1.getText().toString());
                     if (enter1.getText().toString().equals("0.0") || enter1.getText().toString().equals("0"))
                         enter1.setText("");
                 }
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
         enter2.addTextChangedListener(new TextWatcher() {
@@ -328,18 +318,15 @@ public class enter_score_screen extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
                 if (!enter2.getText().toString().equals("") && pos >= 0) {
                     score_s1[pos].setScore(1, enter2.getText().toString());
                     if (enter2.getText().toString().equals("0.0") || enter2.getText().toString().equals("0"))
                         enter2.setText("");
                 }
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
         enter3.addTextChangedListener(new TextWatcher() {
@@ -349,18 +336,15 @@ public class enter_score_screen extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
                 if (!enter3.getText().toString().equals("") && pos >= 0) {
                     score_s1[pos].setScore(2, enter3.getText().toString());
                     if (enter3.getText().toString().equals("0.0") || enter3.getText().toString().equals("0"))
                         enter3.setText("");
                 }
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
         enter4.addTextChangedListener(new TextWatcher() {
@@ -370,18 +354,15 @@ public class enter_score_screen extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
                 if (!enter4.getText().toString().equals("") && pos >= 0) {
                     score_s1[pos].setScore(3, enter4.getText().toString());
                     if (enter4.getText().toString().equals("0.0") || enter4.getText().toString().equals("0"))
                         enter4.setText("");
                 }
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
         enter5.addTextChangedListener(new TextWatcher() {
@@ -391,7 +372,6 @@ public class enter_score_screen extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
                 if (!enter5.getText().toString().equals("") && pos >= 0) {
                     score_s1[pos].setScore(4, enter5.getText().toString());
                     if (enter5.getText().toString().equals("0.0") || enter5.getText().toString().equals("0"))
@@ -402,13 +382,11 @@ public class enter_score_screen extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
         enter6.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -422,7 +400,6 @@ public class enter_score_screen extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
     }
