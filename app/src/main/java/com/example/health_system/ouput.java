@@ -88,8 +88,8 @@ public class ouput extends AppCompatActivity {
                             for (long k = first; k <= end; k++) {
                                 Date temp = new Date((k + 1) * 60 * 60 * 24 * 1000);
                                 String output = ("" + (temp.getYear() + 1900));
-                                output += (temp.getMonth() + 1) < 11 ? "0" + (temp.getMonth() + 1) : "" + (temp.getMonth() + 1);
-                                output += (temp.getDate()) < 11 ? "0" + temp.getDate() : "" + temp.getDate();
+                                output += (temp.getMonth() + 1) < 10 ? "0" + (temp.getMonth() + 1) : "" + (temp.getMonth() + 1);
+                                output += (temp.getDate()) < 10 ? "0" + temp.getDate() : "" + temp.getDate();
                                 all_date.add(output);
                                 for (int index = 1; index <= 24; index++) {
                                     test(index + "", output);

@@ -35,9 +35,9 @@
                 android:enabled="true"
                 android:text="送出"
                 android:textColor="#FFFFFF"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/imageView3"
                 app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/imageView3"
                 app:layout_constraintTop_toBottomOf="@+id/text" />
 
             <ImageView
@@ -207,12 +207,11 @@
                 android:id="@+id/opeator"
                 android:layout_width="102dp"
                 android:layout_height="44dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
-                android:background="#FFFFFF"
+                android:layout_marginTop="12dp"
+                android:background="#75E040FB"
                 android:visibility="invisible"
-                app:layout_constraintStart_toEndOf="@+id/enter_scorce_btn"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+                app:layout_constraintEnd_toEndOf="@+id/date_picker_enter_score"
+                app:layout_constraintTop_toBottomOf="@+id/date_picker_enter_score" />
 
             <TextView
                 android:id="@+id/text"
@@ -230,6 +229,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:background="#4818FFFF"
                 android:text="輸出檔案"
                 android:textColor="#BEFAFAFA"
                 android:textSize="25sp"
@@ -245,6 +245,17 @@
                 android:textColor="#FF0000"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+            <Button
+                android:id="@+id/date_picker_enter_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#4769F0AE"
+                android:text="日期"
+                android:textSize="20sp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@+id/imageView3"
                 app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

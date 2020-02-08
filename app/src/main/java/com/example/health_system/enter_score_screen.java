@@ -3,6 +3,7 @@ package com.example.health_system;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -38,7 +41,7 @@ public class enter_score_screen extends AppCompatActivity {
     List<String> test = new ArrayList<>();
     score_struct[] score_s1 = new score_struct[20];
     EditText enter1, enter2, enter3, enter4, enter5, enter6;
-    Button enter;
+    Button enter,date_pick;
     Calendar calendar = Calendar.getInstance();
     String today, account_name, no;//今天日期//登入時的帳號名//登入者的編號
     Intent intent;//拿過去資料的元件
@@ -143,6 +146,7 @@ public class enter_score_screen extends AppCompatActivity {
         enter4 = findViewById(R.id.enter_score_edit4);
         enter5 = findViewById(R.id.enter_score_edit5);
         enter6 = findViewById(R.id.enter_score_edit6);
+        date_pick=findViewById(R.id.date_picker_enter_score);
         no = intent.getStringExtra("no");//拿登入時的編號
         account_name = intent.getStringExtra("account");//拿登入時的帳號名
         getitem(no); //拿評分項目
@@ -153,6 +157,7 @@ public class enter_score_screen extends AppCompatActivity {
                 if (account_name.equals("teacher")) {
                     out_csv.setVisibility(View.VISIBLE);
                     opeator.setVisibility(View.VISIBLE);
+                    date_pick.setVisibility(View.VISIBLE);
                     ArrayAdapter<String> op_adpart = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, op);
                     opeator.setAdapter(op_adpart);
                 }//老師特別權限加載區
@@ -395,6 +400,12 @@ public class enter_score_screen extends AppCompatActivity {
 
             }
         });
+        date_pick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             datePicker1(v);
+            }
+        });
     }//所有事件
 
     void setToday() {
@@ -412,8 +423,7 @@ public class enter_score_screen extends AppCompatActivity {
         getnowdata(no);
     }//拿網路資料
 
-    void setNow_score()
-    {
+    void setNow_score() {
         //Log.e("enter1",enter1.getText().toString());
         double now=0;
         if(!enter1.getText().toString().equals(""))
@@ -428,4 +438,21 @@ public class enter_score_screen extends AppCompatActivity {
         now+=Double.parseDouble(enter5.getText().toString());
         now_score.setText("目前總分:"+String.valueOf(now));
     }
+
+    public void datePicker1(View v) {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                today = ("" + year);
+                today += month < 10 ? "0" + (month + 1) : "" + (month + 1);
+                today += (day) < 10 ? "0" + day : "" + day;
+                Log.e("123",today);
+            }
+
+        }, year, month, day).show();
+    }//日期選擇器１
 }

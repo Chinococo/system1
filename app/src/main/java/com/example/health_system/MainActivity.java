@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        upload_class_positinn();
         requestpermission();
         getallclass();
         setup();
@@ -143,12 +144,14 @@ public class MainActivity extends AppCompatActivity {
     void upload_class_positinn()//上船班及掃區位置
     {
 
-        db.child("no").child("position").child("10").child("建二甲").setValue("囊螢樓東女廁");
-        db.child("no").child("position").child("10").child("製圖二").setValue("囊螢樓西女廁");
-        db.child("no").child("position").child("10").child("室一甲").setValue("囊螢樓西女廁");
-        db.child("no").child("position").child("10").child("綜一丁").setValue("囊螢樓東女廁");
-        db.child("no").child("position").child("10").child("製圖一").setValue("囊螢樓東女廁");
-        db.child("no").child("position").child("10").child("子一乙").setValue("囊螢樓西女廁");
+        db.child("no").child("position").child("17").child("子二乙").setValue("行政大樓(中)1F中廊、電梯");
+        db.child("no").child("position").child("17").child("電三乙").setValue("行政大樓(東)1F走廊、中間和東側、地下室～1F樓梯");
+        db.child("no").child("position").child("17").child("化三乙").setValue("行政大樓(東)2F走廊、中間和東側、1F～2F樓梯");
+        db.child("no").child("position").child("17").child("子三甲").setValue("行政大樓(東)3F走廊、中間和東側、2F～3F樓梯");
+        db.child("no").child("position").child("17").child("綜三乙").setValue("行政大樓(東)4F走廊、中間和東側、3F～4F樓梯");
+        db.child("no").child("position").child("17").child("綜三丙").setValue("行政大樓(東)5F走廊、4F~6F樓梯");
+        db.child("no").child("position").child("17").child("電修三").setValue("行政大樓(中)5F中廊、4F~6F樓梯(公共)");
+        //db.child("no").child("position").child("13").child("空調三").setValue("中興樓(中)中廊電梯(3F)");
 
     }
 
