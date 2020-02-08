@@ -42,7 +42,7 @@ public class search_socore extends AppCompatActivity {
     List<String> allclass = new ArrayList<>();
     String today;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    ListView score_listView,item_listview;
+    ListView item_listview;
     Spinner choose;
     List<String> sp = new ArrayList<>();
 
@@ -62,8 +62,9 @@ public class search_socore extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 sp.clear();
                 score_list.clear();
+                item_list.clear();
                 do1();
-                do2();
+                do5();
             }
 
             @Override
@@ -117,6 +118,8 @@ public class search_socore extends AppCompatActivity {
     private void do4() {
         item_list.remove(0);
         item_list.add("            備註");
+        for(int i=0;i<item_list.size();i++)
+        item_list.set(i,item_list.get(i)+":"+score_list.get(i));
         ListAdapter adapter = new ArrayAdapter<>(this, R.layout.spinner_custom, item_list);
         item_listview.setAdapter(adapter);
     }
@@ -167,7 +170,6 @@ public class search_socore extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
                     score_list = (List<Object>) dataSnapshot.getValue();
-                    do2();
                 }
             }
             @Override
@@ -203,12 +205,12 @@ public class search_socore extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_custom, sp);
         choose.setAdapter(adapter);
     }
-
+/*
     void do2() {
         ListAdapter adapter = new ArrayAdapter<>(this, R.layout.spinner_custom, score_list);
         score_listView.setAdapter(adapter);
     }
-
+*/
     void do3() {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_custom, allclass);
         ch.setAdapter(adapter);
@@ -225,7 +227,6 @@ public class search_socore extends AppCompatActivity {
             today += "0";
         today += Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
         ch = findViewById(R.id.auto_choose_class);
-        score_listView = findViewById(R.id.score_listview);
         search = findViewById(R.id.search_btn);
         getallclass();
         databaseReference.setPriority(10);

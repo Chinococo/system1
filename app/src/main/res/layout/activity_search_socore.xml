@@ -21,7 +21,7 @@
             <ImageView
                 android:id="@+id/imageView5"
                 android:layout_width="0dp"
-                android:layout_height="650dp"
+                android:layout_height="550dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:background="#95000000"
@@ -52,7 +52,7 @@
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="82dp"
-                android:layout_height="57dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="36dp"
                 android:background="#BEFFE604"
@@ -80,34 +80,22 @@
 
             <ListView
                 android:id="@+id/item_listview"
-                android:layout_width="160dp"
-                android:layout_height="251dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="40dp"
-                android:background="#4A91F7F7"
-                android:visibility="visible"
-                app:layout_constraintStart_toStartOf="@+id/imageView5"
-                app:layout_constraintTop_toBottomOf="@+id/choose_no" />
-
-            <ListView
-                android:id="@+id/score_listview"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="20dp"
+                android:layout_height="251dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="30dp"
                 android:background="#4A91F7F7"
                 android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="@+id/item_listview"
                 app:layout_constraintEnd_toEndOf="@+id/imageView5"
-                app:layout_constraintStart_toEndOf="@+id/item_listview"
-                app:layout_constraintTop_toTopOf="@+id/item_listview"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintStart_toStartOf="@+id/imageView5"
+                app:layout_constraintTop_toBottomOf="@+id/choose_no" />
 
             <Spinner
                 android:id="@+id/choose_no"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="24dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="30dp"
                 android:background="#C37DA4F3"
