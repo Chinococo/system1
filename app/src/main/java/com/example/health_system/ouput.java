@@ -34,48 +34,42 @@ import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 
 public class ouput extends AppCompatActivity {
-    DatabaseReference DB = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference DB = FirebaseDatabase.getInstance().getReference();//網路資料庫
     Button test1, test2, test3;
     TextView preview1, preview2;
-    String dateTime;
-    Date date1 = new Date();
-    Date date2 = new Date();
-    score_struct put = new score_struct();
-    int max = 0, now = 0;
-    String message = "Loging.";
-    //String no="1",date="20191225";
-    HashMap<String, HashMap<String, ArrayList<String>>> out = new HashMap<>();
-    ArrayList<String> all_date;
-    StringBuilder sb = new StringBuilder();
-    FileOutputStream os;
-    ArrayList<String> all_class = new ArrayList<>();
-    int s = 0;
+    String dateTime;//輸出時間的暫存
+    Date date1 = new Date();//第一個日期的載入地
+    Date date2 = new Date();//第二個日期的載入地
+    int max = 0, now = 0;//進度調的啟始值和目標值
+    String message = "Loging.";//進度調的訊息
+    HashMap<String, HashMap<String, ArrayList<String>>> out = new HashMap<>();//輸出的所有資料
+    ArrayList<String> all_date;//拿所有的日期
+    StringBuilder sb = new StringBuilder();//輸出資料的佔存器
+    FileOutputStream os;//輸出的匯流
+    ArrayList<String> all_class = new ArrayList<>();//所有班級的陣列
+    int s = 0;//紀錄目前狀態，0=拿資料，1=繪出資料
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ouput);
-        requestpermission();
-        //nofition("hello");
-        setid();
-
-
+        requestpermission();//索取權限
+        setid();//設定id
         test1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 datePicker1(v);
             }
-        });
+        });//第一顆按鈕被按的事件
         test2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 datePicker2(v);
             }
-        });
+        });//第二顆按鈕被按的事件
         test3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 now = 0;
                 if (!preview1.getText().toString().equals("") && !preview2.getText().toString().equals("")) {
                     long first = Math.min(date1.getTime() / (60 * 60 * 24 * 1000), date2.getTime() / (60 * 60 * 24 * 1000));
@@ -109,15 +103,7 @@ public class ouput extends AppCompatActivity {
 
                     }
                 });
-                final Thread output_csv = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                });
-                porcess(doing, "get data");
-
-
+                porcess(doing, "get data");//觸發進度調指令
             }
         });
 
