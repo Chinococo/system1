@@ -4,99 +4,117 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/common_google_signin_btn_text_dark_disabled"
+    android:background="@drawable/customer_picture"
     tools:context=".search_socore">
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="330dp"
-        android:layout_height="650dp"
-        android:background="#95000000"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.060000002"
-        app:srcCompat="@color/common_google_signin_btn_text_dark_disabled" />
 
-    <AutoCompleteTextView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        android:id="@+id/auto_choose_class"
-        android:layout_width="201dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="20dp"
-        android:background="#C88763FF"
-        android:textColor="#DC36D60B"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.38"
-        app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toTopOf="@+id/textView9"
-        app:layout_constraintVertical_bias="1.0" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/common_google_signin_btn_text_dark_disabled"
+            tools:context=".search_socore">
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="82dp"
-        android:layout_height="57dp"
-        android:layout_marginStart="45dp"
-        android:layout_marginTop="36dp"
-        android:background="#BEFFE604"
-        android:text="班級"
-        android:textColor="#EE077E5C"
-        android:textSize="40sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="0dp"
+                android:layout_height="650dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="#95000000"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.060000002"
+                app:srcCompat="@color/common_google_signin_btn_text_dark_disabled" />
 
-    <Button
-        android:id="@+id/search_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#B42326E2"
-        android:text="搜尋"
-        android:textColor="#FFFFFF"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_listview"
-        app:layout_constraintVertical_bias="0.39" />
+            <AutoCompleteTextView
 
-    <ListView
-        android:id="@+id/item_listview"
-        android:layout_width="160dp"
-        android:layout_height="251dp"
-        android:layout_marginStart="44dp"
-        android:background="#4A91F7F7"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/choose_no"
-        app:layout_constraintVertical_bias="0.147" />
+                android:id="@+id/auto_choose_class"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="30dp"
+                android:background="#C88763FF"
+                android:textColor="#DC36D60B"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView9"
+                app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                app:layout_constraintStart_toEndOf="@+id/textView9"
+                app:layout_constraintTop_toTopOf="@+id/textView9"
+                app:layout_constraintVertical_bias="1.0" />
 
-    <ListView
-        android:id="@+id/score_listview"
-        android:layout_width="120dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:background="#4A91F7F7"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/item_listview"
-        app:layout_constraintStart_toEndOf="@+id/item_listview"
-        app:layout_constraintTop_toTopOf="@+id/item_listview"
-        app:layout_constraintVertical_bias="0.0" />
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="82dp"
+                android:layout_height="57dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="36dp"
+                android:background="#BEFFE604"
+                android:text="班級"
+                android:textColor="#EE077E5C"
+                android:textSize="40sp"
+                app:layout_constraintStart_toStartOf="@+id/imageView5"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/choose_no"
-        android:layout_width="280dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="60dp"
-        android:background="#C37DA4F3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            <Button
+                android:id="@+id/search_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="#B42326E2"
+                android:text="搜尋"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                app:layout_constraintStart_toStartOf="@+id/imageView5"
+                app:layout_constraintTop_toBottomOf="@+id/item_listview"
+                app:layout_constraintVertical_bias="0.39" />
 
+            <ListView
+                android:id="@+id/item_listview"
+                android:layout_width="160dp"
+                android:layout_height="251dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="40dp"
+                android:background="#4A91F7F7"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="@+id/imageView5"
+                app:layout_constraintTop_toBottomOf="@+id/choose_no" />
+
+            <ListView
+                android:id="@+id/score_listview"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="30dp"
+                android:background="#4A91F7F7"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/item_listview"
+                app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                app:layout_constraintStart_toEndOf="@+id/item_listview"
+                app:layout_constraintTop_toTopOf="@+id/item_listview"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Spinner
+                android:id="@+id/choose_no"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="30dp"
+                android:background="#C37DA4F3"
+                app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                app:layout_constraintStart_toStartOf="@+id/imageView5"
+                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

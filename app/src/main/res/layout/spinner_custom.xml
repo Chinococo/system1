@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:text="hello"
-    android:textColor="#C52525"
-    android:textSize="30sp">
+    android:textColor="#40C4FF"
+    android:textSize="25sp">
 
 </TextView>

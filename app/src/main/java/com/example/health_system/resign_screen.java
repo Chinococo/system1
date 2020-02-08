@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -102,6 +103,7 @@ public class resign_screen extends AppCompatActivity {
                                 resign_screen.this.finish();
                             } else {
                                 openfragment();
+                                Log.e("end","end");
                             }
                         }
 

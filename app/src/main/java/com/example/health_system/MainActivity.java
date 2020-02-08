@@ -104,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
                     if (account.getText().toString().equals(account1) && password.getText().toString().equals(password1)) {
                         Intent intent = new Intent(MainActivity.this, enter_score_screen.class);
                         no = temp.get("no").toString();
-
                         intent.putExtra("account", account1);
                         intent.putExtra("no", no);
                         startActivity(intent);

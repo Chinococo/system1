@@ -7,189 +7,201 @@
     android:background="@drawable/resign_picture"
     tools:context=".resign_screen">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="0dp"
-        android:layout_height="520dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="#8F2C2C2C"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/nickname_editText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nickname_editText"
-        app:srcCompat="@color/common_google_signin_btn_text_dark_disabled" />
 
-    <TextView
-        android:id="@+id/truename"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="28dp"
-        android:text="本名"
-        android:textColor="#DAFFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="密碼"
-        android:textColor="#DAFFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/nickname"
-        app:layout_constraintTop_toBottomOf="@+id/nickname" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".resign_screen">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="註冊系統"
-        android:textColor="#DAFFFFFF"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="0dp"
+                android:layout_height="520dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="#8F2C2C2C"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/nickname_editText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/nickname_editText"
+                app:srcCompat="@color/common_google_signin_btn_text_dark_disabled" />
 
-    <EditText
-        android:id="@+id/nickname_editText"
-        android:layout_width="150dp"
-        android:layout_height="0dp"
-        android:background="#BA8A8989"
-        android:ems="10"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="@+id/nickname"
-        app:layout_constraintStart_toStartOf="@+id/account_editText"
-        app:layout_constraintTop_toTopOf="@+id/nickname"
-        app:layout_constraintVertical_bias="0.0" />
+            <TextView
+                android:id="@+id/truename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="28dp"
+                android:text="本名"
+                android:textColor="#DAFFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title" />
 
-    <EditText
-        android:id="@+id/password_editText"
-        android:layout_width="150dp"
-        android:layout_height="0dp"
-        android:background="#BA8A8989"
-        android:ems="10"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="@+id/password"
-        app:layout_constraintStart_toStartOf="@+id/nickname_editText"
-        app:layout_constraintTop_toTopOf="@+id/password"
-        app:layout_constraintVertical_bias="0.555" />
+            <TextView
+                android:id="@+id/password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="密碼"
+                android:textColor="#DAFFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/nickname"
+                app:layout_constraintTop_toBottomOf="@+id/nickname" />
 
-    <Button
-        android:id="@+id/enter_resign_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:background="#805F378A"
-        android:text="送出"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repeat_Edittext" />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="註冊系統"
+                android:textColor="#DAFFFFFF"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/account_editText"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:background="#BA8A8989"
-        android:ems="10"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="@+id/account"
-        app:layout_constraintStart_toStartOf="@+id/no_edittext"
-        app:layout_constraintTop_toTopOf="@+id/account"
-        app:layout_constraintVertical_bias="0.0" />
+            <EditText
+                android:id="@+id/nickname_editText"
+                android:layout_width="150dp"
+                android:layout_height="0dp"
+                android:background="#BA8A8989"
+                android:ems="10"
+                android:inputType="text"
+                app:layout_constraintBottom_toBottomOf="@+id/nickname"
+                app:layout_constraintStart_toStartOf="@+id/account_editText"
+                app:layout_constraintTop_toTopOf="@+id/nickname"
+                app:layout_constraintVertical_bias="0.0" />
 
-    <EditText
-        android:id="@+id/no_edittext"
-        android:layout_width="150dp"
-        android:layout_height="0dp"
-        android:background="#BA8A8989"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="@+id/no"
-        app:layout_constraintStart_toStartOf="@+id/truename_editText"
-        app:layout_constraintTop_toTopOf="@+id/no"
-        app:layout_constraintVertical_bias="0.0" />
+            <EditText
+                android:id="@+id/password_editText"
+                android:layout_width="150dp"
+                android:layout_height="0dp"
+                android:background="#BA8A8989"
+                android:ems="10"
+                android:inputType="textPassword"
+                app:layout_constraintBottom_toBottomOf="@+id/password"
+                app:layout_constraintStart_toStartOf="@+id/nickname_editText"
+                app:layout_constraintTop_toTopOf="@+id/password"
+                app:layout_constraintVertical_bias="0.555" />
 
-    <TextView
-        android:id="@+id/repeat_Edittext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="32dp"
-        android:text="重複密碼"
-        android:textColor="#DAFFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/password"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_editText" />
+            <Button
+                android:id="@+id/enter_resign_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
+                android:background="#805F378A"
+                android:text="送出"
+                android:textColor="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/repeat_Edittext" />
 
-    <TextView
-        android:id="@+id/account"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="帳號"
-        android:textColor="#DAFFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/no"
-        app:layout_constraintTop_toBottomOf="@+id/no" />
+            <EditText
+                android:id="@+id/account_editText"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="#BA8A8989"
+                android:ems="10"
+                android:inputType="text"
+                app:layout_constraintBottom_toBottomOf="@+id/account"
+                app:layout_constraintStart_toStartOf="@+id/no_edittext"
+                app:layout_constraintTop_toTopOf="@+id/account"
+                app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/nickname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="暱稱"
-        android:textColor="#DAFFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/account"
-        app:layout_constraintTop_toBottomOf="@+id/account" />
+            <EditText
+                android:id="@+id/no_edittext"
+                android:layout_width="150dp"
+                android:layout_height="0dp"
+                android:background="#BA8A8989"
+                android:ems="10"
+                android:inputType="number"
+                app:layout_constraintBottom_toBottomOf="@+id/no"
+                app:layout_constraintStart_toStartOf="@+id/truename_editText"
+                app:layout_constraintTop_toTopOf="@+id/no"
+                app:layout_constraintVertical_bias="0.0" />
 
-    <EditText
-        android:id="@+id/repeat_editText"
-        android:layout_width="150dp"
-        android:layout_height="0dp"
-        android:background="#BA8A8989"
-        android:ems="10"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="@+id/repeat_Edittext"
-        app:layout_constraintStart_toStartOf="@+id/password_editText"
-        app:layout_constraintTop_toTopOf="@+id/repeat_Edittext"
-        app:layout_constraintVertical_bias="0.478" />
+            <TextView
+                android:id="@+id/repeat_Edittext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="32dp"
+                android:text="重複密碼"
+                android:textColor="#DAFFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/password"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/password_editText" />
 
-    <TextView
-        android:id="@+id/no"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="編號"
-        android:textColor="#DAFFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/truename"
-        app:layout_constraintTop_toBottomOf="@+id/truename" />
+            <TextView
+                android:id="@+id/account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="帳號"
+                android:textColor="#DAFFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/no"
+                app:layout_constraintTop_toBottomOf="@+id/no" />
 
-    <EditText
-        android:id="@+id/truename_editText"
-        android:layout_width="150dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="30dp"
-        android:background="#BA8A8989"
-        android:ems="10"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="@+id/truename"
-        app:layout_constraintEnd_toEndOf="@+id/imageView2"
-        app:layout_constraintStart_toEndOf="@+id/truename"
-        app:layout_constraintTop_toTopOf="@+id/truename"
-        app:layout_constraintVertical_bias="0.0" />
+            <TextView
+                android:id="@+id/nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="暱稱"
+                android:textColor="#DAFFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/account"
+                app:layout_constraintTop_toBottomOf="@+id/account" />
 
+            <EditText
+                android:id="@+id/repeat_editText"
+                android:layout_width="150dp"
+                android:layout_height="0dp"
+                android:background="#BA8A8989"
+                android:ems="10"
+                android:inputType="textPassword"
+                app:layout_constraintBottom_toBottomOf="@+id/repeat_Edittext"
+                app:layout_constraintStart_toStartOf="@+id/password_editText"
+                app:layout_constraintTop_toTopOf="@+id/repeat_Edittext"
+                app:layout_constraintVertical_bias="0.478" />
+
+            <TextView
+                android:id="@+id/no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="編號"
+                android:textColor="#DAFFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/truename"
+                app:layout_constraintTop_toBottomOf="@+id/truename" />
+
+            <EditText
+                android:id="@+id/truename_editText"
+                android:layout_width="150dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="30dp"
+                android:background="#BA8A8989"
+                android:ems="10"
+                android:inputType="text"
+                app:layout_constraintBottom_toBottomOf="@+id/truename"
+                app:layout_constraintEnd_toEndOf="@+id/imageView2"
+                app:layout_constraintStart_toEndOf="@+id/truename"
+                app:layout_constraintTop_toTopOf="@+id/truename"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.example.health_system;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,12 +49,7 @@ public class ask_opeator extends DialogFragment {
         final AlertDialog.Builder alertdialog = new AlertDialog.Builder(getActivity());
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
         final View view = layoutInflater.inflate(R.layout.activity_ask_account, null);
-        alertdialog.setView(view).setTitle("繼承").setCancelable(false).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                nofition("沒有成功繼承喔");
-            }
-        });
+        alertdialog.setView(view).setCancelable(false);
         account = view.findViewById(R.id.ask_account);
         password = view.findViewById(R.id.ask_password);
         enter = view.findViewById(R.id.ask_enter);
@@ -67,10 +63,13 @@ public class ask_opeator extends DialogFragment {
                         nofition("你沒輸入密碼");
                     } else {
                         if (account_prev.equals(account.getText().toString()) && password_prev.equals(password.getText().toString())) {
+                            databaseReference.child("account").child(account_prev).removeValue();
                             databaseReference.child("account").child(worker.get("account")).setValue(worker);
                             databaseReference.child("id").child(worker.get("no")).setValue(worker.get("account"));
                             Log.d("test", worker.get("account") + "123");
                             nofition("succedful 繼承");
+                            //Log.e("fin","fin");
+                            getActivity().finish();
                             getDialog().dismiss();
                         } else {
                             nofition("帳密有誤");
