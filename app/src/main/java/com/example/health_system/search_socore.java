@@ -3,6 +3,8 @@ package com.example.health_system;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,9 +13,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -94,15 +99,8 @@ public class search_socore extends AppCompatActivity {
                 score_list.clear();
                 item_list.clear();
                 do5();
+                opendialogclander();
 
-                if (allclass.indexOf(ch.getText().toString()) != -1) {
-                    int l = 1;
-                    sp.clear();
-                    sp.add("請選擇");
-                    for (k = 1; k <= 24; k++)
-                        getdata(k);
-                } else
-                    nofition("沒有此班級");
 
             }
 
@@ -265,6 +263,33 @@ public class search_socore extends AppCompatActivity {
             }
         });
     }
+    void opendialogclander()
+    {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                today = Integer.toString(year);
+                if (month + 1 < 10)
+                    today += "0";
+                today += Integer.toString(month + 1);
+                if (day < 10)
+                    today += "0";
+                today += Integer.toString(day);
+                System.out.println(today);
+                if (allclass.indexOf(ch.getText().toString()) != -1) {
+                    int l = 1;
+                    sp.clear();
+                    sp.add("請選擇");
+                    for (k = 1; k <= 24; k++)
+                        getdata(k);
+                } else
+                    nofition("沒有此班級");
+            }
 
+        }, year, month, day).show(); }
 
 }
