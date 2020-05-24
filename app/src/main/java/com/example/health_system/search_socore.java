@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -26,6 +29,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,8 +41,12 @@ import java.util.List;
 import java.util.Map;
 
 public class search_socore extends AppCompatActivity {
+    TextView total_score;
+    HashMap<String,ArrayList<String>> importantdata = new HashMap<>();
+    ArrayList<String> workplace = new ArrayList<>();
     int k;
     String item_get;
+    HashMap<String,Integer> no=new HashMap<>();
     List<String> c = new ArrayList<>();
     List<String> temp = new ArrayList<>();
     List<Object> score_list = new ArrayList<>();
@@ -43,7 +54,7 @@ public class search_socore extends AppCompatActivity {
     Calendar calendar = Calendar.getInstance();
     AutoCompleteTextView ch;
     Button search;
-    Map<String,Integer>class_position=new HashMap<>();
+    HashMap<String,ArrayList<Integer>>class_position=new HashMap<>();
     List<String> allclass = new ArrayList<>();
     String today;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -81,9 +92,37 @@ public class search_socore extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (!sp.get(position).equals("請選擇")) {
-                    nofition(String.valueOf(class_position.get(sp.get(position).toString())));
-                get_position(class_position.get(sp.get(position)));
+                  item_list.clear();
+                  databaseReference.child("no").child(no.get(sp.get(position))+"").child(today).child(ch.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                      @Override
+                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                          if(dataSnapshot.getValue()!=null)
+                          {
+                              double total=0.0f;
+                              if(no.get(sp.get(position))<=12)
+                              workplace=importantdata.get("1~12");
+                              else if((no.get(sp.get(position))>=18))
+                              workplace=importantdata.get("18~24");
+                              else
+                              workplace=importantdata.get("13~17");
+                              workplace.add("備註");
+                              ArrayList<String> score =(ArrayList<String>) dataSnapshot.getValue();
+                              for(int i=0;i<6;i++)
+                              {
+                                if(i!=5)
+                                total+=Double.parseDouble(score.get(i));
+                                  item_list.add(workplace.get(i)+score.get(i));
+                              }
+                              total_score.setText("總分:"+total);
+                              do5();
+                          }
+                      }
 
+                      @Override
+                      public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                      }
+                  });
                 }
             }
 
@@ -121,100 +160,22 @@ public class search_socore extends AppCompatActivity {
         ListAdapter adapter = new ArrayAdapter<>(this, R.layout.spinner_custom, item_list);
         item_listview.setAdapter(adapter);
     }
-    void get_sp(final int index)
-    {
-        databaseReference.child("no").child("position").child(String.valueOf(index)).child(ch.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue()!=null)
-                {
-                    class_position.put(dataSnapshot.getValue().toString(),index);
-                    nofition(String.valueOf(index));
-                    sp.add(dataSnapshot.getValue().toString());
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-    public void getdata(final int index) {
-
-        databaseReference.child("no").child(String.valueOf(index)).child(today).child(ch.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null)
-                    get_sp(index);
-                if (index == 24)
-                    do1();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
 
-    }
-    void get_position(final int position)
-    {
-        databaseReference.child("no").child(String.valueOf(position)).child(today).child(ch.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
-                    score_list = (List<Object>) dataSnapshot.getValue();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
 
-        if(position>=1&&position<=12)
-            item_get="1~12";
-        else if(position>=13&&position<=17)
-            item_get="13~17";
-        else if(position>=18&&position<=24)
-            item_get="18~24";
-        nofition(item_get);
-        databaseReference.child("no").child(item_get).child("item").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue()!=null)
-                {
-                    item_list=(ArrayList<String>)dataSnapshot.getValue();
-                    do4();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
     void do1() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_custom, sp);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.spinner_custom , sp);
         choose.setAdapter(adapter);
     }
-/*
-    void do2() {
-        ListAdapter adapter = new ArrayAdapter<>(this, R.layout.spinner_custom, score_list);
-        score_listView.setAdapter(adapter);
-    }
-*/
+
     void do3() {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_custom, allclass);
         ch.setAdapter(adapter);
     }
 
     void setup() {
+        importdata();
+        total_score=findViewById(R.id.total_score);
         item_listview=findViewById(R.id.item_listview);
         choose = findViewById(R.id.choose_no);
         today = Integer.toString(calendar.get(Calendar.YEAR));
@@ -236,33 +197,12 @@ public class search_socore extends AppCompatActivity {
     }
 
     void getallclass() {
-        for (int i = 1; i <= 24; i++)
-            getclass(i);
-
+        allclass = importantdata.get("all_class");
+        do3();
 
     }
 
-    void getclass(final int index) {
-        databaseReference.child("no").child(String.valueOf(index)).child("class").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if (dataSnapshot.getValue() != null) {
-                    temp = (ArrayList<String>) dataSnapshot.getValue();
-                    for (int k1 = 0; k1 < temp.size(); k1++)
-                        if (allclass.indexOf(temp.get(k1)) == -1)
-                            allclass.add(temp.get(k1));
-                }
-                if (index == 10)
-                    do3();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
     void opendialogclander()
     {
         Calendar calendar = Calendar.getInstance();
@@ -281,15 +221,73 @@ public class search_socore extends AppCompatActivity {
                 today += Integer.toString(day);
                 System.out.println(today);
                 if (allclass.indexOf(ch.getText().toString()) != -1) {
-                    int l = 1;
-                    sp.clear();
                     sp.add("請選擇");
-                    for (k = 1; k <= 24; k++)
-                        getdata(k);
+                    do1();
+                    no.clear();
+                    for(int i=1;i<=24;i++)
+                    {
+                        excute(i);
+                    }
                 } else
                     nofition("沒有此班級");
             }
 
         }, year, month, day).show(); }
+        void excute(final int index)
+        {
+            databaseReference.child("no").child(""+index).child(today).child(ch.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                 if(dataSnapshot.getValue()!=null)
+                 {
+                     int l=-1;
+                     for(int i=0;i<importantdata.get("position-"+index).size();i++)
+                     if(importantdata.get("position-"+index).get(i).contains(ch.getText().toString()))
+                     {
+                         sp.add(importantdata.get("position-"+index).get(i).replaceAll(ch.getText().toString()+"=",""));
+                         no.put(importantdata.get("position-"+index).get(i).replaceAll(ch.getText().toString()+"=",""),index);
+                         l=i;
+                     }
 
+                     class_position.put(importantdata.get("position-"+index).get(l).replaceAll(ch.getText().toString()+"=",""),(ArrayList<Integer>)dataSnapshot.getValue());
+                 }
+                    if(index==24)
+                        do1();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+    void importdata() {
+        importantdata = new HashMap<>();
+        File dir = Environment.getExternalStorageDirectory();
+        File csv= new File(dir,"important_data.csv");
+        StringBuilder data = new StringBuilder();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(
+                    new FileInputStream(csv), "utf-8"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] temp =line.split(",");
+                ArrayList<String> t= new ArrayList<>();
+                for(int i=1;i<temp.length;i++)
+                    t.add(temp[i]);
+                importantdata.put(temp[0],t);
+                //data.append(line);
+            }
+        } catch (Exception e) {
+            ;
+        } finally {
+            try {
+                reader.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
 }

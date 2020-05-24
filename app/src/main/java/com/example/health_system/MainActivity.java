@@ -17,6 +17,7 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
@@ -31,17 +32,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.security.Permission;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 
 public class MainActivity extends AppCompatActivity {
+    HashMap<String, ArrayList<String>> importantdata;
+    StringBuilder g_sb = new StringBuilder();
     int l = 1;
     String Floder = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "class";
     File directry = new File(Floder);
@@ -65,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        insition();
+        getsheet();
+        //insition();
         requestpermission();
         getallclass();
         setup();
@@ -141,49 +151,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void upload_class_positinn()//上船班及掃區位置
-    {
-
-        db.child("no").child("position").child("17").child("子二乙").setValue("行政大樓(中)1F中廊、電梯");
-        db.child("no").child("position").child("17").child("電三乙").setValue("行政大樓(東)1F走廊、中間和東側、地下室～1F樓梯");
-        db.child("no").child("position").child("17").child("化三乙").setValue("行政大樓(東)2F走廊、中間和東側、1F～2F樓梯");
-        db.child("no").child("position").child("17").child("子三甲").setValue("行政大樓(東)3F走廊、中間和東側、2F～3F樓梯");
-        db.child("no").child("position").child("17").child("綜三乙").setValue("行政大樓(東)4F走廊、中間和東側、3F～4F樓梯");
-        db.child("no").child("position").child("17").child("綜三丙").setValue("行政大樓(東)5F走廊、4F~6F樓梯");
-        db.child("no").child("position").child("17").child("電修三").setValue("行政大樓(中)5F中廊、4F~6F樓梯(公共)");
-        //db.child("no").child("position").child("13").child("空調三").setValue("中興樓(中)中廊電梯(3F)");
-
-    }
-
-    private void upload_item()//上傳掃區基本資料
-    {
-        String no = "18~24";
-        db.child("no").child(no).child("item").child("1").setValue("    人工垃圾");
-        db.child("no").child(no).child("item").child("2").setValue("    塵土樹葉");
-        db.child("no").child(no).child("item").child("3").setValue("　  草地落葉");
-        db.child("no").child(no).child("item").child("4").setValue("      大樹葉");
-        db.child("no").child(no).child("item").child("5").setValue("        其他");
-        //                                                                          1
-    }
-
-    private void upload()//上傳班級
-    {
-        String no = "1";
-        data.add("請選擇");
-        data.add("空調二");
-        data.add("電二乙");
-        data.add("電修一");
-        data.add("塗裝三");
-        data.add("汽美一");
-        //data.add("機二甲");
-        //data.add("機三乙");
-        //data.add("機三甲");
-        //data.add("綜二甲");
-        //data.add("綜二乙");
-        //data.add("裝潢三");
-        c.put("class", data);
-        db.child("no").child(no).setValue(c);
-    }
 
     void clear_d(final int no1)//初始化no1變數編號的班機基本資料
     {
@@ -194,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                 if (dataSnapshot.getValue() != null) {
                     HashMap<Object, Object> insition = (HashMap<Object, Object>) dataSnapshot.getValue();
                     db.child("no").child(String.valueOf(no1)).setValue(null);
-                    db.child("no").child(String.valueOf(no1)).child("class").setValue(insition.get("class"));
+                    //db.child("no").child(String.valueOf(no1)).child("class").setValue(insition.get("class"));
                 }
             }
 
@@ -305,5 +272,64 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    void getsheet() {
+        get_html getHtml = new get_html("https://docs.google.com/spreadsheets/d/e/2PACX-1vTSUjx6g2eiKzdFzBE6xiCdSUMo8ugZDW1LN_eXZ_wFb_1x3cv0-P1TgewZJB4WvhX7u82DGV4-OWQ1/pub?output=csv", "just_getdata");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getHtml.start();
+                try {
+                    getHtml.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                outfile("important_data", new StringBuilder(getHtml.returndata()));
+                importdata();
+            }
+        }).start();
+    }
+
+    void outfile(String name, StringBuilder sb) {
+        output_csv outputCsv = new output_csv(MainActivity.this);
+        outputCsv.WriteFileExample(name, sb);
+
+    }
+
+    void importdata() {
+        importantdata = new HashMap<>();
+        File dir = Environment.getExternalStorageDirectory();
+        File csv= new File(dir,"important_data.csv");
+        StringBuilder data = new StringBuilder();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(
+                    new FileInputStream(csv), "utf-8"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] temp =line.split(",");
+                ArrayList<String> t= new ArrayList<>();
+                for(int i=1;i<temp.length;i++)
+                t.add(temp[i]);
+                importantdata.put(temp[0],t);
+                //data.append(line);
+            }
+        } catch (Exception e) {
+            ;
+        } finally {
+            try {
+                reader.close();
+            } catch (Exception e) {
+                ;
+            }
+        }
+        StringBuilder sb= new StringBuilder();
+        for(int i=1;i<=24;i++)
+        for(int k=0;k<importantdata.get(i+"").size();k++)
+        sb.append("max score - "+importantdata.get(i+"").get(k)+" - "+i+"\n");
+        outfile("max_score",sb);
+        for(String name:importantdata.keySet())
+            Log.e(name,importantdata.get(name).toString());
     }
 }

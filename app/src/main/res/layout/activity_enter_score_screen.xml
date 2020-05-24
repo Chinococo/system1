@@ -241,7 +241,7 @@
                 android:id="@+id/now_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="39dp"
+                android:layout_marginTop="80dp"
                 android:textColor="#FF0000"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -257,6 +257,15 @@
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="@+id/imageView3"
                 app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+            <Button
+                android:id="@+id/auto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="滿分"
+                app:layout_constraintBottom_toBottomOf="@+id/enter_scorce_btn"
+                app:layout_constraintEnd_toStartOf="@+id/enter_scorce_btn"
+                app:layout_constraintTop_toTopOf="@+id/enter_scorce_btn" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -25,6 +26,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,19 +38,21 @@ import java.util.List;
 import java.util.Map;
 
 public class enter_score_screen extends AppCompatActivity {
+    Button full;
+    HashMap<String, ArrayList<String>> importantdata;
     List<String> item = new ArrayList<>();
-    TextView grade1, grade2, grade3, grade4, grade5, out_csv,now_score;
-    int pos = -1;
+    TextView grade1, grade2, grade3, grade4, grade5, out_csv, now_score;
+    int pos = 0;
     List<String> op = new ArrayList<>();//老師可選任意號碼spinner的資料放置區
     Spinner opeator;
     List<String> test = new ArrayList<>();
     score_struct[] score_s1 = new score_struct[20];
     EditText enter1, enter2, enter3, enter4, enter5, enter6;
-    Button enter,date_pick;
+    Button enter, date_pick;
     Calendar calendar = Calendar.getInstance();
     String today, account_name, no;//今天日期//登入時的帳號名//登入者的編號
     Intent intent;//拿過去資料的元件
-    List<String> get = new ArrayList<>();
+    ArrayList<String> get = new ArrayList<>();
     Spinner choose;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     Map<String, List> c = new HashMap<>();
@@ -70,24 +77,11 @@ public class enter_score_screen extends AppCompatActivity {
     }//沒啥意義
 
     private void getdata(String no) {
-        databaseReference.child("no").child(no).child("class").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
-                    get = (List<String>) dataSnapshot.getValue();
-                    do1();
-                }
-
-                //choose.setAdapter();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
+        Log.e("no", "" + no);
+        if (!no.equals("30")) {
+            get = importantdata.get(no);
+            do1();
+        }
     }//拿班級資料
 
     void clear_Alldata() {
@@ -130,7 +124,9 @@ public class enter_score_screen extends AppCompatActivity {
     }//上傳程式
 
     void setup() {
-        now_score=findViewById(R.id.now_score);
+        importdata();
+        full = findViewById(R.id.auto);
+        now_score = findViewById(R.id.now_score);
         grade1 = findViewById(R.id.grade1);
         grade2 = findViewById(R.id.grade2);
         grade3 = findViewById(R.id.grade3);
@@ -146,7 +142,7 @@ public class enter_score_screen extends AppCompatActivity {
         enter4 = findViewById(R.id.enter_score_edit4);
         enter5 = findViewById(R.id.enter_score_edit5);
         enter6 = findViewById(R.id.enter_score_edit6);
-        date_pick=findViewById(R.id.date_picker_enter_score);
+        date_pick = findViewById(R.id.date_picker_enter_score);
         no = intent.getStringExtra("no");//拿登入時的編號
         account_name = intent.getStringExtra("account");//拿登入時的帳號名
         getitem(no); //拿評分項目
@@ -171,31 +167,24 @@ public class enter_score_screen extends AppCompatActivity {
     }//初始化變數
 
     private void getitem(String no) {
+        String select;
         if (Integer.parseInt(no) >= 1 && Integer.parseInt(no) <= 12)
-            no = "1~12";
+            select = "1~12";
         else if (Integer.parseInt(no) >= 13 && Integer.parseInt(no) <= 17)
-            no = "13~17";
+            select = "13~17";
         else if (Integer.parseInt(no) >= 18 && Integer.parseInt(no) <= 24)
-            no = "18~24";
+            select = "18~24";
         else
-            no = "opeator";
-        databaseReference.child("no").child(no).child("item").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
-                    item = (ArrayList<String>) dataSnapshot.getValue();
-                    grade1.setText(item.get(1));
-                    grade2.setText(item.get(2));
-                    grade3.setText(item.get(3));
-                    grade4.setText(item.get(4));
-                    grade5.setText(item.get(5));
-                }
-            }
+            select = "opeator";
+        if (!select.equals("opeator")) {
+            grade1.setText(importantdata.get(select).get(0));
+            grade2.setText(importantdata.get(select).get(1));
+            grade3.setText(importantdata.get(select).get(2));
+            grade4.setText(importantdata.get(select).get(3));
+            grade5.setText(importantdata.get(select).get(4));
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
+
     }//老師特別指令
 
     void nofition(String data) {
@@ -215,9 +204,19 @@ public class enter_score_screen extends AppCompatActivity {
                     for (int i = 0; i < get.size(); i++) {
                         Log.d("fewf", String.valueOf(i));
                         score_s1[i].SETSCORE((ArrayList<Object>) dataSnapshot.child(get.get(i)).getValue());
+                        List<Object> temp = score_s1[pos].getScore();
+                        enter1.setText(String.valueOf(temp.get(0)));
+                        enter2.setText(String.valueOf(temp.get(1)));
+                        enter3.setText(String.valueOf(temp.get(2)));
+                        enter4.setText(String.valueOf(temp.get(3)));
+                        enter5.setText(String.valueOf(temp.get(4)));
+                        enter6.setText(String.valueOf(temp.get(5)));
+                        setNow_score();
                     }
 
                 }//還原網路上的設定
+
+
             }
 
             @Override
@@ -228,6 +227,12 @@ public class enter_score_screen extends AppCompatActivity {
     }//拿是否有資料
 
     private void event() {
+        full.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                autoinput();
+            }
+        });
         out_csv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -241,7 +246,7 @@ public class enter_score_screen extends AppCompatActivity {
                 //nofition(Integer.toString(position));
                 pos = position;
                 //Log.d("ERROR",String.valueOf(pos));
-                if (position - 1 >= 0) {
+                if (position >= 0) {
                     List<Object> temp = score_s1[pos].getScore();
                     enter1.setText(String.valueOf(temp.get(0)));
                     enter2.setText(String.valueOf(temp.get(1)));
@@ -250,7 +255,7 @@ public class enter_score_screen extends AppCompatActivity {
                     enter5.setText(String.valueOf(temp.get(4)));
                     enter6.setText(String.valueOf(temp.get(5)));
                     setNow_score();
-                }else
+                } else
                     clear_Alldata();
             }
 
@@ -265,7 +270,7 @@ public class enter_score_screen extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!enter1.getText().toString().equals("") && pos >= 0) {
+                if (!enter1.getText().toString().equals("")) {
                     score_s1[pos].setScore(0, enter1.getText().toString());
                     if (enter1.getText().toString().equals("0.0") || enter1.getText().toString().equals("0"))
                         enter1.setText("");
@@ -284,7 +289,7 @@ public class enter_score_screen extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!enter2.getText().toString().equals("") && pos >= 0) {
+                if (!enter2.getText().toString().equals("")) {
                     score_s1[pos].setScore(1, enter2.getText().toString());
                     if (enter2.getText().toString().equals("0.0") || enter2.getText().toString().equals("0"))
                         enter2.setText("");
@@ -303,7 +308,7 @@ public class enter_score_screen extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!enter3.getText().toString().equals("") && pos >= 0) {
+                if (!enter3.getText().toString().equals("")) {
                     score_s1[pos].setScore(2, enter3.getText().toString());
                     if (enter3.getText().toString().equals("0.0") || enter3.getText().toString().equals("0"))
                         enter3.setText("");
@@ -322,7 +327,7 @@ public class enter_score_screen extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!enter4.getText().toString().equals("") && pos >= 0) {
+                if (!enter4.getText().toString().equals("")) {
                     score_s1[pos].setScore(3, enter4.getText().toString());
                     if (enter4.getText().toString().equals("0.0") || enter4.getText().toString().equals("0"))
                         enter4.setText("");
@@ -341,7 +346,7 @@ public class enter_score_screen extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!enter5.getText().toString().equals("") && pos >= 0) {
+                if (!enter5.getText().toString().equals("")) {
                     score_s1[pos].setScore(4, enter5.getText().toString());
                     if (enter5.getText().toString().equals("0.0") || enter5.getText().toString().equals("0"))
                         enter5.setText("");
@@ -361,7 +366,7 @@ public class enter_score_screen extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!enter6.getText().toString().equals("") && pos >= 0) {
+                if (!enter6.getText().toString().equals("")) {
                     score_s1[pos].setScore(5, enter6.getText().toString());
                     if (enter6.getText().toString().equals("0.0") || enter6.getText().toString().equals("0"))
                         enter6.setText("");
@@ -385,11 +390,19 @@ public class enter_score_screen extends AppCompatActivity {
         opeator.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                for (int i = 0; i < 20; i++)//宣告記憶體
+                    score_s1[i] = new score_struct();
+                clear_Alldata();
+                for (int i = 0; i < 20; i++)//宣告記憶體
+                    score_s1[i] = new score_struct();
                 no = op.get(position);
                 if (!no.equals("請選擇")) {
                     clear_Alldata();//清除顯示框
                     readDataOnInternet();
                     getitem(no);
+                    getnowdata(no);
+                    pos = 0;
+
                 } else {
                     do2();//我不知道為什麼我加這東西
                 }
@@ -403,7 +416,7 @@ public class enter_score_screen extends AppCompatActivity {
         date_pick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             datePicker1(v);
+                datePicker1(v);
             }
         });
     }//所有事件
@@ -425,18 +438,18 @@ public class enter_score_screen extends AppCompatActivity {
 
     void setNow_score() {
         //Log.e("enter1",enter1.getText().toString());
-        double now=0;
-        if(!enter1.getText().toString().equals(""))
-        now+=Double.parseDouble(enter1.getText().toString());
-        if(!enter2.getText().toString().equals(""))
-        now+=Double.parseDouble(enter2.getText().toString());
-        if(!enter3.getText().toString().equals(""))
-        now+=Double.parseDouble(enter3.getText().toString());
-        if(!enter4.getText().toString().equals(""))
-        now+=Double.parseDouble(enter4.getText().toString());
-        if(!enter5.getText().toString().equals(""))
-        now+=Double.parseDouble(enter5.getText().toString());
-        now_score.setText("目前總分:"+String.valueOf(now));
+        double now = 0;
+        if (!enter1.getText().toString().equals(""))
+            now += Double.parseDouble(enter1.getText().toString());
+        if (!enter2.getText().toString().equals(""))
+            now += Double.parseDouble(enter2.getText().toString());
+        if (!enter3.getText().toString().equals(""))
+            now += Double.parseDouble(enter3.getText().toString());
+        if (!enter4.getText().toString().equals(""))
+            now += Double.parseDouble(enter4.getText().toString());
+        if (!enter5.getText().toString().equals(""))
+            now += Double.parseDouble(enter5.getText().toString());
+        now_score.setText("目前總分:" + String.valueOf(now));
     }
 
     public void datePicker1(View v) {
@@ -450,9 +463,71 @@ public class enter_score_screen extends AppCompatActivity {
                 today = ("" + year);
                 today += month < 10 ? "0" + (month + 1) : "" + (month + 1);
                 today += (day) < 10 ? "0" + day : "" + day;
-                Log.e("123",today);
+                Log.e("123", today);
+                getdata(no);
+                getnowdata(no);
             }
 
         }, year, month, day).show();
     }//日期選擇器１
+
+    void importdata() {
+        importantdata = new HashMap<>();
+        File dir = Environment.getExternalStorageDirectory();
+        File csv = new File(dir, "important_data.csv");
+        StringBuilder data = new StringBuilder();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(
+                    new FileInputStream(csv), "utf-8"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] temp = line.split(",");
+                ArrayList<String> t = new ArrayList<>();
+                for (int i = 1; i < temp.length; i++)
+                    t.add(temp[i]);
+                importantdata.put(temp[0].replaceAll("\\s+", ""), t);
+                //data.append(line);
+            }
+        } catch (Exception e) {
+            ;
+        } finally {
+            try {
+                reader.close();
+            } catch (Exception e) {
+
+            }
+        }
+        for (String t : importantdata.keySet())
+            Log.e(t, t);
+
+    }
+
+    void autoinput() {
+
+        Log.e("no", no);
+        if (Integer.parseInt(no) != 30) {
+            Log.e("size", importantdata.get(no).size() + "");
+            for (int i = 0; i < importantdata.get(no).size(); i++) {
+                ArrayList<Object> t = new ArrayList<>();
+                Log.e(i + "", i + "");
+                Log.e("123", importantdata.get("maxscore-" + importantdata.get(no).get(i) + "-" + no + "") + "1");
+                for (int k = 0; k < importantdata.get("maxscore-" + importantdata.get(no).get(i) + "-" + no + "").size(); k++)
+                    t.add(importantdata.get("maxscore-" + importantdata.get(no).get(i) + "-" + no + "").get(k));
+                t.add("無");
+                score_s1[i].SETSCORE(t);
+            }
+            List<Object> temp = score_s1[pos].getScore();
+            enter1.setText(String.valueOf(temp.get(0)));
+            enter2.setText(String.valueOf(temp.get(1)));
+            enter3.setText(String.valueOf(temp.get(2)));
+            enter4.setText(String.valueOf(temp.get(3)));
+            enter5.setText(String.valueOf(temp.get(4)));
+            enter6.setText(String.valueOf(temp.get(5)));
+            setNow_score();
+
+
+        }
+
+    }
 }
