@@ -47,6 +47,7 @@ public class resign_screen extends AppCompatActivity {
     {
         Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
     }
+
     void setup() //基本設定，變數
     {
         account = findViewById(R.id.account_editText);
@@ -66,7 +67,7 @@ public class resign_screen extends AppCompatActivity {
             return;
         }
         //if(!no.getText().toString().equals("30"))//老師特別避免指令
-        if (no.getText().toString().equals("") || (Integer.parseInt(no.getText().toString()) > 24) || (Integer.parseInt(no.getText().toString()) <=0)) {
+        if (no.getText().toString().equals("") || (Integer.parseInt(no.getText().toString()) > 30) || (Integer.parseInt(no.getText().toString()) <=0)) {
             nofition("你的編號沒輸入喔或編號亂輸");
             return;
         }
@@ -125,6 +126,7 @@ public class resign_screen extends AppCompatActivity {
         });
 
     }
+
     void event()//all listner
     {
         enter.setOnClickListener(new View.OnClickListener() {
@@ -135,6 +137,7 @@ public class resign_screen extends AppCompatActivity {
 
         });
     }
+
     private void openfragment()//開啟繼承畫面
     {
         final ask_opeator fragment = new ask_opeator();

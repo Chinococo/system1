@@ -68,6 +68,7 @@ public class enter_score_screen extends AppCompatActivity {
         readDataOnInternet();
         //clear_Alldata();//清除所有資料
         event();//所有事件
+        Log.e("no", no.equals("30") + "");
     }
 
     private void do2() {
@@ -199,6 +200,7 @@ public class enter_score_screen extends AppCompatActivity {
                     for (int k = 0; k < get.size(); k++)
                         for (int x = 0; x <= 5; x++)
                             score_s1[k].score.set(x, 0.0);
+                    clear_Alldata();
                 } //如果沒有之前的資料的情況
                 else {
                     for (int i = 0; i < get.size(); i++) {
@@ -270,12 +272,15 @@ public class enter_score_screen extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!enter1.getText().toString().equals("")) {
-                    score_s1[pos].setScore(0, enter1.getText().toString());
-                    if (enter1.getText().toString().equals("0.0") || enter1.getText().toString().equals("0"))
-                        enter1.setText("");
-                    setNow_score();
-                }
+                if (!(no.equals("請選擇")))
+                    if (!enter1.getText().toString().equals("")) {
+                        score_s1[pos].setScore(0, enter1.getText().toString());
+                        if (enter1.getText().toString().equals("0.0"))
+                            enter1.setText("");
+                        setNow_score();
+                    }
+
+
             }
 
             @Override
@@ -289,12 +294,13 @@ public class enter_score_screen extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!enter2.getText().toString().equals("")) {
-                    score_s1[pos].setScore(1, enter2.getText().toString());
-                    if (enter2.getText().toString().equals("0.0") || enter2.getText().toString().equals("0"))
-                        enter2.setText("");
-                    setNow_score();
-                }
+                if (!(no.equals("請選擇")))
+                    if (!enter2.getText().toString().equals("")) {
+                        score_s1[pos].setScore(1, enter2.getText().toString());
+                        if (enter2.getText().toString().equals("0.0"))
+                            enter2.setText("");
+                        setNow_score();
+                    }
             }
 
             @Override
@@ -308,12 +314,13 @@ public class enter_score_screen extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!enter3.getText().toString().equals("")) {
-                    score_s1[pos].setScore(2, enter3.getText().toString());
-                    if (enter3.getText().toString().equals("0.0") || enter3.getText().toString().equals("0"))
-                        enter3.setText("");
-                    setNow_score();
-                }
+                if (!(no.equals("請選擇")))
+                    if (!enter3.getText().toString().equals("")) {
+                        score_s1[pos].setScore(2, enter3.getText().toString());
+                        if (enter3.getText().toString().equals("0.0"))
+                            enter3.setText("");
+                        setNow_score();
+                    }
             }
 
             @Override
@@ -327,12 +334,13 @@ public class enter_score_screen extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!enter4.getText().toString().equals("")) {
-                    score_s1[pos].setScore(3, enter4.getText().toString());
-                    if (enter4.getText().toString().equals("0.0") || enter4.getText().toString().equals("0"))
-                        enter4.setText("");
-                    setNow_score();
-                }
+                if (!(no.equals("請選擇")))
+                    if (!enter4.getText().toString().equals("")) {
+                        score_s1[pos].setScore(3, enter4.getText().toString());
+                        if (enter4.getText().toString().equals("0.0"))
+                            enter4.setText("");
+                        setNow_score();
+                    }
             }
 
             @Override
@@ -346,12 +354,13 @@ public class enter_score_screen extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!enter5.getText().toString().equals("")) {
-                    score_s1[pos].setScore(4, enter5.getText().toString());
-                    if (enter5.getText().toString().equals("0.0") || enter5.getText().toString().equals("0"))
-                        enter5.setText("");
-                    setNow_score();
-                }
+                if (!(no.equals("請選擇")))
+                    if (!enter5.getText().toString().equals("")) {
+                        score_s1[pos].setScore(4, enter5.getText().toString());
+                        if (enter5.getText().toString().equals("0.0"))
+                            enter5.setText("");
+                        setNow_score();
+                    }
 
             }
 
@@ -366,11 +375,12 @@ public class enter_score_screen extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!enter6.getText().toString().equals("")) {
-                    score_s1[pos].setScore(5, enter6.getText().toString());
-                    if (enter6.getText().toString().equals("0.0") || enter6.getText().toString().equals("0"))
-                        enter6.setText("");
-                }
+                if (!(no.equals("請選擇")))
+                    if (!enter6.getText().toString().equals("")) {
+                        score_s1[pos].setScore(5, enter6.getText().toString());
+                        if (enter6.getText().toString().equals("0.0"))
+                            enter6.setText("");
+                    }
             }
 
             @Override
@@ -507,6 +517,18 @@ public class enter_score_screen extends AppCompatActivity {
 
         Log.e("no", no);
         if (Integer.parseInt(no) != 30) {
+            ArrayList<Object> t = new ArrayList<>();
+            Log.e("123", choose.getSelectedItem() + "");
+            for (int i = 0; i < 5; i++)
+                t.add(importantdata.get("maxscore-" + choose.getSelectedItem() + "-" + no + "").get(i));
+            t.add("無");
+            enter1.setText(String.valueOf(t.get(0)));
+            enter2.setText(String.valueOf(t.get(1)));
+            enter3.setText(String.valueOf(t.get(2)));
+            enter4.setText(String.valueOf(t.get(3)));
+            enter5.setText(String.valueOf(t.get(4)));
+            enter6.setText(String.valueOf(t.get(5)));
+            /*
             Log.e("size", importantdata.get(no).size() + "");
             for (int i = 0; i < importantdata.get(no).size(); i++) {
                 ArrayList<Object> t = new ArrayList<>();
@@ -525,7 +547,7 @@ public class enter_score_screen extends AppCompatActivity {
             enter5.setText(String.valueOf(temp.get(4)));
             enter6.setText(String.valueOf(temp.get(5)));
             setNow_score();
-
+               */
 
         }
 

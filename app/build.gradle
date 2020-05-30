@@ -60,3 +60,15 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.13.1'
 }
 
+dependencies {
+    implementation 'androidx.appcompat:appcompat:+'
+    implementation 'com.google.android.material:material:+'
+    implementation 'androidx.constraintlayout:constraintlayout:+'
+    implementation 'androidx.navigation:navigation-fragment:+'
+    implementation 'androidx.navigation:navigation-ui:+'
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:+'
+    implementation 'androidx.constraintlayout:constraintlayout:+'
+}

@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
                         no = temp.get("no").toString();
                         intent.putExtra("account", account1);
                         intent.putExtra("no", no);
+                        getsheet();
                         startActivity(intent);
                     } else
                         nofition("帳號或密碼錯誤");
@@ -155,26 +156,20 @@ public class MainActivity extends AppCompatActivity {
     void clear_d(final int no1)//初始化no1變數編號的班機基本資料
     {
         Log.d("jjjj", String.valueOf(no1));
-        db.child("no").child(String.valueOf(no1)).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
-                    HashMap<Object, Object> insition = (HashMap<Object, Object>) dataSnapshot.getValue();
-                    db.child("no").child(String.valueOf(no1)).setValue(null);
-                    //db.child("no").child(String.valueOf(no1)).child("class").setValue(insition.get("class"));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
+        db.child("id").child(String.valueOf(no1)).setValue(null);
     }
 
     void insition()//初始化全部基本資料(班級)
     {
-        //clear_d(8);
-        for (l = 1; l <= 24; l++) {
+        db.child("account").setValue(null);
+        HashMap<String, String> worker = new HashMap<>();
+        worker.put("truename", "teacher");
+        worker.put("account", "teacher");
+        worker.put("nickname", "teacher");
+        worker.put("no", "30");
+        worker.put("password","0000");
+        db.child("account").child("teacher").setValue(worker);
+        for (l = 1; l <= 29; l++) {
             Log.d("fwa", String.valueOf(l));
             clear_d(l);
         }
@@ -333,3 +328,4 @@ public class MainActivity extends AppCompatActivity {
             Log.e(name,importantdata.get(name).toString());
     }
 }
+
