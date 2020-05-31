@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        startActivity(new Intent(this,classroom.class));
         getsheet();
         //insition();
         requestpermission();
@@ -117,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                         no = temp.get("no").toString();
                         intent.putExtra("account", account1);
                         intent.putExtra("no", no);
-                        getsheet();
+                        //getsheet();
                         startActivity(intent);
                     } else
                         nofition("帳號或密碼錯誤");
@@ -319,13 +320,6 @@ public class MainActivity extends AppCompatActivity {
                 ;
             }
         }
-        StringBuilder sb= new StringBuilder();
-        for(int i=1;i<=24;i++)
-        for(int k=0;k<importantdata.get(i+"").size();k++)
-        sb.append("max score - "+importantdata.get(i+"").get(k)+" - "+i+"\n");
-        outfile("max_score",sb);
-        for(String name:importantdata.keySet())
-            Log.e(name,importantdata.get(name).toString());
     }
 }
 

@@ -30,7 +30,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -126,23 +125,23 @@ public class enter_score_screen extends AppCompatActivity {
 
     void setup() {
         importdata();
-        full = findViewById(R.id.auto);
-        now_score = findViewById(R.id.now_score);
-        grade1 = findViewById(R.id.grade1);
-        grade2 = findViewById(R.id.grade2);
-        grade3 = findViewById(R.id.grade3);
-        grade4 = findViewById(R.id.grade4);
-        grade5 = findViewById(R.id.grade5);
+        full = findViewById(R.id.auto_class);
+        now_score = findViewById(R.id.now_score_class);
+        grade1 = findViewById(R.id.floor_t);
+        grade2 = findViewById(R.id.window_t);
+        grade3 = findViewById(R.id.garbage_t);
+        grade4 = findViewById(R.id.desk_chair_t);
+        grade5 = findViewById(R.id.blackboard_t);
         out_csv = findViewById(R.id.out_csv_btn);//老師特別權限
         opeator = findViewById(R.id.opeator);//老師特別權限
-        choose = findViewById(R.id.enter_score_spinner);
-        enter = findViewById(R.id.enter_scorce_btn);
-        enter1 = findViewById(R.id.enter_score_edit1);
-        enter2 = findViewById(R.id.enter_score_edit2);
-        enter3 = findViewById(R.id.enter_score_edit3);
-        enter4 = findViewById(R.id.enter_score_edit4);
-        enter5 = findViewById(R.id.enter_score_edit5);
-        enter6 = findViewById(R.id.enter_score_edit6);
+        choose = findViewById(R.id.position_spinner);
+        enter = findViewById(R.id.enter_scorce_btn_class);
+        enter1 = findViewById(R.id.floor);
+        enter2 = findViewById(R.id.window);
+        enter3 = findViewById(R.id.garbage);
+        enter4 = findViewById(R.id.desk_chair);
+        enter5 = findViewById(R.id.blackboard);
+        enter6 = findViewById(R.id.grade7);
         date_pick = findViewById(R.id.date_picker_enter_score);
         no = intent.getStringExtra("no");//拿登入時的編號
         account_name = intent.getStringExtra("account");//拿登入時的帳號名

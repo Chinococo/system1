@@ -27,7 +27,7 @@
             tools:context=".enter_score_screen">
 
             <Button
-                android:id="@+id/enter_scorce_btn"
+                android:id="@+id/enter_scorce_btn_class"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="72dp"
@@ -38,7 +38,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/imageView3"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/text" />
+                app:layout_constraintTop_toBottomOf="@+id/othert_t" />
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -56,7 +56,7 @@
                 app:srcCompat="@color/common_google_signin_btn_text_dark_disabled" />
 
             <EditText
-                android:id="@+id/enter_score_edit6"
+                android:id="@+id/grade7"
                 android:layout_width="75dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="16dp"
@@ -64,13 +64,13 @@
                 android:ems="10"
                 android:inputType="text"
                 android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="@+id/text"
-                app:layout_constraintStart_toEndOf="@+id/text"
-                app:layout_constraintTop_toTopOf="@+id/text"
+                app:layout_constraintBottom_toBottomOf="@+id/othert_t"
+                app:layout_constraintStart_toEndOf="@+id/othert_t"
+                app:layout_constraintTop_toTopOf="@+id/othert_t"
                 app:layout_constraintVertical_bias="0.0" />
 
             <Spinner
-                android:id="@+id/enter_score_spinner"
+                android:id="@+id/position_spinner"
                 android:layout_width="232dp"
                 android:layout_height="43dp"
                 android:layout_marginTop="48dp"
@@ -80,7 +80,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/grade1"
+                android:id="@+id/floor_t"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
@@ -89,56 +89,56 @@
                 android:text="評1"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/enter_score_edit1"
+                app:layout_constraintEnd_toStartOf="@+id/floor"
                 app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/enter_score_spinner" />
+                app:layout_constraintTop_toBottomOf="@+id/position_spinner" />
 
             <TextView
-                android:id="@+id/grade2"
+                android:id="@+id/window_t"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
                 android:text="評2"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/grade1"
-                app:layout_constraintTop_toBottomOf="@+id/grade1" />
+                app:layout_constraintEnd_toEndOf="@+id/floor_t"
+                app:layout_constraintTop_toBottomOf="@+id/floor_t" />
 
             <TextView
-                android:id="@+id/grade3"
+                android:id="@+id/garbage_t"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
                 android:text="評3"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/grade2"
-                app:layout_constraintTop_toBottomOf="@+id/grade2" />
+                app:layout_constraintEnd_toEndOf="@+id/window_t"
+                app:layout_constraintTop_toBottomOf="@+id/window_t" />
 
             <TextView
-                android:id="@+id/grade4"
+                android:id="@+id/desk_chair_t"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
                 android:text="評4"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/grade3"
-                app:layout_constraintTop_toBottomOf="@+id/grade3" />
+                app:layout_constraintEnd_toEndOf="@+id/garbage_t"
+                app:layout_constraintTop_toBottomOf="@+id/garbage_t" />
 
             <TextView
-                android:id="@+id/grade5"
+                android:id="@+id/blackboard_t"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
                 android:text="評5"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/grade4"
-                app:layout_constraintTop_toBottomOf="@+id/grade4" />
+                app:layout_constraintEnd_toEndOf="@+id/desk_chair_t"
+                app:layout_constraintTop_toBottomOf="@+id/desk_chair_t" />
 
             <EditText
-                android:id="@+id/enter_score_edit1"
+                android:id="@+id/floor"
                 android:layout_width="75dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="16dp"
@@ -146,61 +146,61 @@
                 android:ems="10"
                 android:inputType="numberDecimal"
                 android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="@+id/grade1"
-                app:layout_constraintStart_toEndOf="@+id/grade1"
-                app:layout_constraintTop_toTopOf="@+id/grade1"
+                app:layout_constraintBottom_toBottomOf="@+id/floor_t"
+                app:layout_constraintStart_toEndOf="@+id/floor_t"
+                app:layout_constraintTop_toTopOf="@+id/floor_t"
                 app:layout_constraintVertical_bias="0.0" />
 
             <EditText
-                android:id="@+id/enter_score_edit2"
+                android:id="@+id/window"
                 android:layout_width="75dp"
                 android:layout_height="40dp"
                 android:background="#A9C2BFBF"
                 android:ems="10"
                 android:inputType="numberDecimal"
                 android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="@+id/grade2"
-                app:layout_constraintEnd_toEndOf="@+id/enter_score_edit1"
-                app:layout_constraintTop_toTopOf="@+id/grade2"
+                app:layout_constraintBottom_toBottomOf="@+id/window_t"
+                app:layout_constraintEnd_toEndOf="@+id/floor"
+                app:layout_constraintTop_toTopOf="@+id/window_t"
                 app:layout_constraintVertical_bias="0.615" />
 
             <EditText
-                android:id="@+id/enter_score_edit3"
+                android:id="@+id/garbage"
                 android:layout_width="75dp"
                 android:layout_height="40dp"
                 android:background="#A9C2BFBF"
                 android:ems="10"
                 android:inputType="numberDecimal"
                 android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="@+id/grade3"
-                app:layout_constraintEnd_toEndOf="@+id/enter_score_edit2"
-                app:layout_constraintTop_toTopOf="@+id/grade3"
+                app:layout_constraintBottom_toBottomOf="@+id/garbage_t"
+                app:layout_constraintEnd_toEndOf="@+id/window"
+                app:layout_constraintTop_toTopOf="@+id/garbage_t"
                 app:layout_constraintVertical_bias="0.692" />
 
             <EditText
-                android:id="@+id/enter_score_edit4"
+                android:id="@+id/desk_chair"
                 android:layout_width="75dp"
                 android:layout_height="40dp"
                 android:background="#A9C2BFBF"
                 android:ems="10"
                 android:inputType="numberDecimal"
                 android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="@+id/grade4"
-                app:layout_constraintEnd_toEndOf="@+id/enter_score_edit3"
-                app:layout_constraintTop_toTopOf="@+id/grade4"
+                app:layout_constraintBottom_toBottomOf="@+id/desk_chair_t"
+                app:layout_constraintEnd_toEndOf="@+id/garbage"
+                app:layout_constraintTop_toTopOf="@+id/desk_chair_t"
                 app:layout_constraintVertical_bias="0.384" />
 
             <EditText
-                android:id="@+id/enter_score_edit5"
+                android:id="@+id/blackboard"
                 android:layout_width="75dp"
                 android:layout_height="40dp"
                 android:background="#A9C2BFBF"
                 android:ems="10"
                 android:inputType="numberDecimal"
                 android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="@+id/grade5"
-                app:layout_constraintEnd_toEndOf="@+id/enter_score_edit4"
-                app:layout_constraintTop_toTopOf="@+id/grade5"
+                app:layout_constraintBottom_toBottomOf="@+id/blackboard_t"
+                app:layout_constraintEnd_toEndOf="@+id/desk_chair"
+                app:layout_constraintTop_toTopOf="@+id/blackboard_t"
                 app:layout_constraintVertical_bias="0.0" />
 
             <Spinner
@@ -214,15 +214,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/date_picker_enter_score" />
 
             <TextView
-                android:id="@+id/text"
+                android:id="@+id/othert_t"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
                 android:text="備註"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/grade5"
-                app:layout_constraintTop_toBottomOf="@+id/grade5" />
+                app:layout_constraintEnd_toEndOf="@+id/blackboard_t"
+                app:layout_constraintTop_toBottomOf="@+id/blackboard_t" />
 
             <TextView
                 android:id="@+id/out_csv_btn"
@@ -238,7 +238,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/opeator" />
 
             <TextView
-                android:id="@+id/now_score"
+                android:id="@+id/now_score_class"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="80dp"
@@ -259,13 +259,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
             <Button
-                android:id="@+id/auto"
+                android:id="@+id/auto_class"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="滿分"
-                app:layout_constraintBottom_toBottomOf="@+id/enter_scorce_btn"
-                app:layout_constraintEnd_toStartOf="@+id/enter_scorce_btn"
-                app:layout_constraintTop_toTopOf="@+id/enter_scorce_btn" />
+                app:layout_constraintBottom_toBottomOf="@+id/enter_scorce_btn_class"
+                app:layout_constraintEnd_toStartOf="@+id/enter_scorce_btn_class"
+                app:layout_constraintTop_toTopOf="@+id/enter_scorce_btn_class" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
