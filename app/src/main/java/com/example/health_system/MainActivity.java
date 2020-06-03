@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startActivity(new Intent(this,classroom.class));
         getsheet();
         //insition();
         requestpermission();
@@ -114,12 +113,24 @@ public class MainActivity extends AppCompatActivity {
                     account1 = temp.get("account").toString();
                     password1 = temp.get("password").toString();
                     if (account.getText().toString().equals(account1) && password.getText().toString().equals(password1)) {
-                        Intent intent = new Intent(MainActivity.this, enter_score_screen.class);
+                        Intent intent2 = new Intent(MainActivity.this, classroom.class);
                         no = temp.get("no").toString();
-                        intent.putExtra("account", account1);
-                        intent.putExtra("no", no);
+                        intent2.putExtra("account", account1);
+                        intent2.putExtra("no", no);
+                        Intent intent1 = new Intent(MainActivity.this, enter_score_screen.class);
+                        no = temp.get("no").toString();
+                        intent1.putExtra("account", account1);
+                        intent1.putExtra("no", no);
                         //getsheet();
-                        startActivity(intent);
+                        if(Integer.parseInt(no)>29)
+                        {
+                            final choose fragment = new choose();
+                            fragment.show(getSupportFragmentManager(),null);
+                        }
+                        else if(Integer.parseInt(no)>24)
+                            startActivity(intent2);
+                            else
+                            startActivity(intent1);
                     } else
                         nofition("帳號或密碼錯誤");
                 } else {

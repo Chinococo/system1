@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 public class enter_score_screen extends AppCompatActivity {
+
     Button full;
     HashMap<String, ArrayList<String>> importantdata;
     List<String> item = new ArrayList<>();
@@ -151,7 +152,7 @@ public class enter_score_screen extends AppCompatActivity {
             op.add(String.valueOf(j));//老師特別權限
             if (j == 24) {
                 if (account_name.equals("teacher")) {
-                    out_csv.setVisibility(View.VISIBLE);
+                    //out_csv.setVisibility(View.VISIBLE);
                     opeator.setVisibility(View.VISIBLE);
                     date_pick.setVisibility(View.VISIBLE);
                     ArrayAdapter<String> op_adpart = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, op);
@@ -401,12 +402,12 @@ public class enter_score_screen extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 for (int i = 0; i < 20; i++)//宣告記憶體
                     score_s1[i] = new score_struct();
-                clear_Alldata();
-                for (int i = 0; i < 20; i++)//宣告記憶體
-                    score_s1[i] = new score_struct();
+                //clear_Alldata();
+               // for (int i = 0; i < 20; i++)//宣告記憶體
+                    //score_s1[i] = new score_struct();
                 no = op.get(position);
                 if (!no.equals("請選擇")) {
-                    clear_Alldata();//清除顯示框
+                    //clear_Alldata();//清除顯示框
                     readDataOnInternet();
                     getitem(no);
                     getnowdata(no);
@@ -459,6 +460,8 @@ public class enter_score_screen extends AppCompatActivity {
         if (!enter5.getText().toString().equals(""))
             now += Double.parseDouble(enter5.getText().toString());
         now_score.setText("目前總分:" + String.valueOf(now));
+        for (int i = 0; i < get.size(); i++)
+            databaseReference.child("no").child(no).child(today).child(score_s1[i].getName()).setValue(score_s1[i].getScore());
     }
 
     public void datePicker1(View v) {

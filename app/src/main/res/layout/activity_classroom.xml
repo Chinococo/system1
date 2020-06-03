@@ -66,7 +66,7 @@
                 app:layout_constraintTop_toTopOf="@+id/enter_scorce_btn_class" />
 
             <Spinner
-                android:id="@+id/enter_score_spinner2"
+                android:id="@+id/class_spinner"
                 android:layout_width="232dp"
                 android:layout_height="43dp"
                 android:layout_marginStart="36dp"
@@ -86,6 +86,7 @@
                 android:enabled="true"
                 android:text="送出"
                 android:textColor="#FFFFFF"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="@+id/imageView3"
                 app:layout_constraintHorizontal_bias="0.532"
                 app:layout_constraintStart_toStartOf="@+id/imageView3"
@@ -97,7 +98,7 @@
                 android:layout_height="40dp"
                 android:background="#A9C2BFBF"
                 android:ems="10"
-                android:inputType="text"
+                android:inputType="numberDecimal"
                 android:textColor="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="@+id/garde7_t"
                 app:layout_constraintEnd_toEndOf="@+id/other"
@@ -109,7 +110,7 @@
                 android:layout_height="40dp"
                 android:background="#A9C2BFBF"
                 android:ems="10"
-                android:inputType="text"
+                android:inputType="numberDecimal"
                 android:textColor="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="@+id/othert_t"
                 app:layout_constraintEnd_toEndOf="@+id/blackboard"
@@ -139,7 +140,7 @@
                 android:textSize="20sp"
                 app:layout_constraintEnd_toStartOf="@+id/floor"
                 app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/enter_score_spinner2" />
+                app:layout_constraintTop_toBottomOf="@+id/class_spinner" />
 
             <TextView
                 android:id="@+id/window_t"
