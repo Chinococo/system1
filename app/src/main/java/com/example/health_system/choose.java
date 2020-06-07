@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 public class choose extends DialogFragment {
-    Button b1,b2;
+    Button b1,b2,b3;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +30,7 @@ public class choose extends DialogFragment {
         alertdialog.setView(view).setCancelable(false);
         b1=view.findViewById(R.id.button123);
         b2=view.findViewById(R.id.button321);
+        b3=view.findViewById(R.id.button567);
         Intent intent2 = new Intent(view.getContext(), classroom.class);
         intent2.putExtra("no", "30");
         Intent intent1 = new Intent(view.getContext(), enter_score_screen.class);
@@ -46,6 +47,14 @@ public class choose extends DialogFragment {
             @Override
             public void onClick(View v) {
                 startActivity(intent1);
+                getActivity().finish();
+                getDialog().dismiss();
+            }
+        });
+        b3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(view.getContext(), ouput.class));
                 getActivity().finish();
                 getDialog().dismiss();
             }

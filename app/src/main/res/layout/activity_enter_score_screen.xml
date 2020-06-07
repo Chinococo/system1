@@ -27,7 +27,7 @@
             tools:context=".enter_score_screen">
 
             <Button
-                android:id="@+id/enter_scorce_btn_class"
+                android:id="@+id/enter_scorce_btn_class1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="72dp"
@@ -39,7 +39,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/imageView3"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/othert_t" />
+                app:layout_constraintTop_toBottomOf="@+id/enter6_t" />
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -51,13 +51,13 @@
                 android:background="#C6000000"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.488"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@color/common_google_signin_btn_text_dark_disabled" />
 
             <EditText
-                android:id="@+id/grade7"
+                android:id="@+id/enter6"
                 android:layout_width="75dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="16dp"
@@ -65,23 +65,24 @@
                 android:ems="10"
                 android:inputType="text"
                 android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="@+id/othert_t"
-                app:layout_constraintStart_toEndOf="@+id/othert_t"
-                app:layout_constraintTop_toTopOf="@+id/othert_t"
+                app:layout_constraintBottom_toBottomOf="@+id/enter6_t"
+                app:layout_constraintStart_toEndOf="@+id/enter6_t"
+                app:layout_constraintTop_toTopOf="@+id/enter6_t"
                 app:layout_constraintVertical_bias="0.0" />
 
             <Spinner
-                android:id="@+id/position_spinner"
-                android:layout_width="232dp"
+                android:id="@+id/position_spinner_enter_score"
+                android:layout_width="150dp"
                 android:layout_height="43dp"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="28dp"
                 android:background="#BE0B7485"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
             <TextView
-                android:id="@+id/floor_t"
+                android:id="@+id/enter1_t"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
@@ -90,56 +91,56 @@
                 android:text="評1"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/floor"
+                app:layout_constraintEnd_toStartOf="@+id/enter1"
                 app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/position_spinner" />
+                app:layout_constraintTop_toBottomOf="@+id/position_spinner_enter_score" />
 
             <TextView
-                android:id="@+id/window_t"
+                android:id="@+id/enter2_t"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
                 android:text="評2"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/floor_t"
-                app:layout_constraintTop_toBottomOf="@+id/floor_t" />
+                app:layout_constraintEnd_toEndOf="@+id/enter1_t"
+                app:layout_constraintTop_toBottomOf="@+id/enter1_t" />
 
             <TextView
-                android:id="@+id/garbage_t"
+                android:id="@+id/enter3_t"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
                 android:text="評3"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/window_t"
-                app:layout_constraintTop_toBottomOf="@+id/window_t" />
+                app:layout_constraintEnd_toEndOf="@+id/enter2_t"
+                app:layout_constraintTop_toBottomOf="@+id/enter2_t" />
 
             <TextView
-                android:id="@+id/desk_chair_t"
+                android:id="@+id/enter4_t"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
                 android:text="評4"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/garbage_t"
-                app:layout_constraintTop_toBottomOf="@+id/garbage_t" />
+                app:layout_constraintEnd_toEndOf="@+id/enter3_t"
+                app:layout_constraintTop_toBottomOf="@+id/enter3_t" />
 
             <TextView
-                android:id="@+id/blackboard_t"
+                android:id="@+id/enter5_t"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
                 android:text="評5"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/desk_chair_t"
-                app:layout_constraintTop_toBottomOf="@+id/desk_chair_t" />
+                app:layout_constraintEnd_toEndOf="@+id/enter4_t"
+                app:layout_constraintTop_toBottomOf="@+id/enter4_t" />
 
             <EditText
-                android:id="@+id/floor"
+                android:id="@+id/enter1"
                 android:layout_width="75dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="16dp"
@@ -147,86 +148,86 @@
                 android:ems="10"
                 android:inputType="numberDecimal"
                 android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="@+id/floor_t"
-                app:layout_constraintStart_toEndOf="@+id/floor_t"
-                app:layout_constraintTop_toTopOf="@+id/floor_t"
+                app:layout_constraintBottom_toBottomOf="@+id/enter1_t"
+                app:layout_constraintStart_toEndOf="@+id/enter1_t"
+                app:layout_constraintTop_toTopOf="@+id/enter1_t"
                 app:layout_constraintVertical_bias="0.0" />
 
             <EditText
-                android:id="@+id/window"
+                android:id="@+id/enter2"
                 android:layout_width="75dp"
                 android:layout_height="40dp"
                 android:background="#A9C2BFBF"
                 android:ems="10"
                 android:inputType="numberDecimal"
                 android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="@+id/window_t"
-                app:layout_constraintEnd_toEndOf="@+id/floor"
-                app:layout_constraintTop_toTopOf="@+id/window_t"
+                app:layout_constraintBottom_toBottomOf="@+id/enter2_t"
+                app:layout_constraintEnd_toEndOf="@+id/enter1"
+                app:layout_constraintTop_toTopOf="@+id/enter2_t"
                 app:layout_constraintVertical_bias="0.615" />
 
             <EditText
-                android:id="@+id/garbage"
+                android:id="@+id/enter3"
                 android:layout_width="75dp"
                 android:layout_height="40dp"
                 android:background="#A9C2BFBF"
                 android:ems="10"
                 android:inputType="numberDecimal"
                 android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="@+id/garbage_t"
-                app:layout_constraintEnd_toEndOf="@+id/window"
-                app:layout_constraintTop_toTopOf="@+id/garbage_t"
+                app:layout_constraintBottom_toBottomOf="@+id/enter3_t"
+                app:layout_constraintEnd_toEndOf="@+id/enter2"
+                app:layout_constraintTop_toTopOf="@+id/enter3_t"
                 app:layout_constraintVertical_bias="0.692" />
 
             <EditText
-                android:id="@+id/desk_chair"
+                android:id="@+id/enter4"
                 android:layout_width="75dp"
                 android:layout_height="40dp"
                 android:background="#A9C2BFBF"
                 android:ems="10"
                 android:inputType="numberDecimal"
                 android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="@+id/desk_chair_t"
-                app:layout_constraintEnd_toEndOf="@+id/garbage"
-                app:layout_constraintTop_toTopOf="@+id/desk_chair_t"
+                app:layout_constraintBottom_toBottomOf="@+id/enter4_t"
+                app:layout_constraintEnd_toEndOf="@+id/enter3"
+                app:layout_constraintTop_toTopOf="@+id/enter4_t"
                 app:layout_constraintVertical_bias="0.384" />
 
             <EditText
-                android:id="@+id/blackboard"
+                android:id="@+id/enter5"
                 android:layout_width="75dp"
                 android:layout_height="40dp"
                 android:background="#A9C2BFBF"
                 android:ems="10"
                 android:inputType="numberDecimal"
                 android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="@+id/blackboard_t"
-                app:layout_constraintEnd_toEndOf="@+id/desk_chair"
-                app:layout_constraintTop_toTopOf="@+id/blackboard_t"
+                app:layout_constraintBottom_toBottomOf="@+id/enter5_t"
+                app:layout_constraintEnd_toEndOf="@+id/enter4"
+                app:layout_constraintTop_toTopOf="@+id/enter5_t"
                 app:layout_constraintVertical_bias="0.0" />
 
             <Spinner
-                android:id="@+id/opeator"
+                android:id="@+id/opeator2"
                 android:layout_width="102dp"
                 android:layout_height="44dp"
                 android:layout_marginTop="12dp"
                 android:background="#75E040FB"
                 android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="@+id/date_picker_enter_score"
-                app:layout_constraintTop_toBottomOf="@+id/date_picker_enter_score" />
+                app:layout_constraintEnd_toEndOf="@+id/date_picker2"
+                app:layout_constraintTop_toBottomOf="@+id/date_picker2" />
 
             <TextView
-                android:id="@+id/othert_t"
+                android:id="@+id/enter6_t"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
                 android:text="備註"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/blackboard_t"
-                app:layout_constraintTop_toBottomOf="@+id/blackboard_t" />
+                app:layout_constraintEnd_toEndOf="@+id/enter5_t"
+                app:layout_constraintTop_toBottomOf="@+id/enter5_t" />
 
             <TextView
-                android:id="@+id/out_csv_btn"
+                android:id="@+id/out_csv_btn2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -235,11 +236,11 @@
                 android:textColor="#BEFAFAFA"
                 android:textSize="25sp"
                 android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="@+id/opeator"
-                app:layout_constraintTop_toBottomOf="@+id/opeator" />
+                app:layout_constraintEnd_toEndOf="@+id/opeator2"
+                app:layout_constraintTop_toBottomOf="@+id/opeator2" />
 
             <TextView
-                android:id="@+id/now_score_class"
+                android:id="@+id/now_score_class1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="80dp"
@@ -249,7 +250,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
             <Button
-                android:id="@+id/date_picker_enter_score"
+                android:id="@+id/date_picker2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#4769F0AE"
@@ -260,13 +261,33 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
             <Button
-                android:id="@+id/auto_class"
+                android:id="@+id/auto_enter_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="滿分"
-                app:layout_constraintBottom_toBottomOf="@+id/enter_scorce_btn_class"
-                app:layout_constraintEnd_toStartOf="@+id/enter_scorce_btn_class"
-                app:layout_constraintTop_toTopOf="@+id/enter_scorce_btn_class" />
+                app:layout_constraintBottom_toBottomOf="@+id/enter_scorce_btn_class1"
+                app:layout_constraintEnd_toStartOf="@+id/enter_scorce_btn_class1"
+                app:layout_constraintTop_toTopOf="@+id/enter_scorce_btn_class1" />
+
+            <Button
+                android:id="@+id/next_enter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="next"
+                app:layout_constraintBottom_toBottomOf="@+id/position_spinner_enter_score"
+                app:layout_constraintStart_toEndOf="@+id/position_spinner_enter_score"
+                app:layout_constraintTop_toTopOf="@+id/position_spinner_enter_score" />
+
+            <Button
+                android:id="@+id/prev_enter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:text="prev"
+                app:layout_constraintBottom_toBottomOf="@+id/position_spinner_enter_score"
+                app:layout_constraintEnd_toStartOf="@+id/position_spinner_enter_score"
+                app:layout_constraintTop_toTopOf="@+id/position_spinner_enter_score" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

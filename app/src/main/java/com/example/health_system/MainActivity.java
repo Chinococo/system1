@@ -150,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
 
     void setup() //基本資料設置，變數
     {
-
         resign_btn = findViewById(R.id.resign_btn);
         enter = findViewById(R.id.enter_main_btn);
         account = findViewById(R.id.account_main_edittext);
@@ -185,6 +184,8 @@ public class MainActivity extends AppCompatActivity {
             Log.d("fwa", String.valueOf(l));
             clear_d(l);
         }
+        db.child("no").setValue(null);
+        db.child("class").setValue(null);
     }
 
     void event()//all listner
@@ -211,7 +212,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     void testfragment(String title, String message)//繼承畫面

@@ -20,7 +20,7 @@ public class output_csv {
         StringBuilder content = message;
 
        try{
-     File sdcard = Environment.getExternalStorageDirectory();
+           File sdcard = Environment.getExternalStorageDirectory();
             file = new File(sdcard, filename+".csv"); //輸出檔案位置
             Log.i("Write File:", file + "");
             fop = new FileOutputStream(file);

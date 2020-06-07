@@ -6,24 +6,33 @@
     android:layout_height="match_parent">
 
     <Button
+        android:id="@+id/button123"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="教室評分"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/button321"
+        app:layout_constraintStart_toEndOf="@+id/button321"
+        app:layout_constraintTop_toTopOf="@+id/button321"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
         android:id="@+id/button321"
-        android:layout_width="167dp"
-        android:layout_height="157dp"
-        android:layout_marginTop="48dp"
-        android:text="跳轉至外庭評分"
-        android:textSize="30sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="跳轉至\n外庭評分"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button123"
-        android:layout_width="167dp"
-        android:layout_height="157dp"
-        android:text="教室評分"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/button321"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
-        app:layout_constraintStart_toEndOf="@+id/button321"
-        app:layout_constraintTop_toTopOf="@+id/button321" />
+        android:id="@+id/button567"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="輸出"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/button123"
+        app:layout_constraintStart_toEndOf="@+id/button123"
+        app:layout_constraintTop_toTopOf="@+id/button123"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,6 +41,8 @@ import java.util.List;
 import java.util.Map;
 
 public class search_socore extends AppCompatActivity {
+    String erase_class="子二乙";
+    int fun=0;
     TextView total_score;
     HashMap<String, ArrayList<String>> importantdata = new HashMap<>();
     ArrayList<String> workplace = new ArrayList<>();
@@ -91,36 +93,102 @@ public class search_socore extends AppCompatActivity {
         choose.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(ch.getText().toString().equals(erase_class))
+                    fun++;
                 if (!sp.get(position).equals("請選擇")) {
+                    Log.e("fun",fun+"");
                     item_list.clear();
-                    databaseReference.child("no").child(no.get(sp.get(position)) + "").child(today).child(ch.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.getValue() != null) {
-                                double total = 0.0f;
-                                if (no.get(sp.get(position)) <= 12)
-                                    workplace = importantdata.get("1~12");
-                                else if ((no.get(sp.get(position)) >= 18))
-                                    workplace = importantdata.get("18~24");
-                                else
-                                    workplace = importantdata.get("13~17");
-                                workplace.add("備註");
-                                ArrayList<String> score = (ArrayList<String>) dataSnapshot.getValue();
-                                for (int i = 0; i < 6; i++) {
-                                    if (i != 5)
-                                        total += Double.parseDouble(score.get(i));
-                                    item_list.add(workplace.get(i) + score.get(i));
+                    if(!ch.getText().toString().equals(erase_class)||(fun%10==0&&fun!=0))
+                    {
+                        if(ch.getText().toString().equals(erase_class))
+                        {
+                            nofition("好啦，讓你看一下");
+                            delay delay = new delay(3000);
+                            delay.start();
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        delay.join();
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    item_list.clear();
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            do5();
+                                            nofition("3秒行了吧");
+                                        }
+                                    });
+
                                 }
-                                total_score.setText("總分:" + total);
-                                do5();
-                            }
+                            }).start();
                         }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        if(!choose.getSelectedItem().toString().equals("教室"))
+                            databaseReference.child("no").child(no.get(sp.get(position)) + "").child(today).child(ch.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.getValue() != null) {
+                                        double total = 0.0f;
+                                        if (no.get(sp.get(position)) <= 12)
+                                            workplace = importantdata.get("1~12");
+                                        else if ((no.get(sp.get(position)) >= 18))
+                                            workplace = importantdata.get("18~24");
+                                        else
+                                            workplace = importantdata.get("13~17");
+                                        workplace.add("備註");
+                                        ArrayList<String> score = (ArrayList<String>) dataSnapshot.getValue();
+                                        for (int i = 0; i < 6; i++) {
+                                            if (i != 5&&!score.get(i).equals(""))
+                                                total += Double.parseDouble(score.get(i));
+                                            item_list.add(workplace.get(i) + ":"+score.get(i));
+                                        }
+                                        total_score.setText("總分:" + total);
+                                        do5();
+                                    }else
+                                    {
+                                        do5();
+                                        nofition("現在尚無資料");
+                                    }
 
-                        }
-                    });
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        else
+                            databaseReference.child("class").child(today).child(importantdata.get(ch.getText().toString()).get(0)+ch.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if(dataSnapshot.getValue()!=null)
+                                    {
+                                        item_list =(List<String>) dataSnapshot.getValue();
+                                        item_list.set(0,"地板:"+item_list.get(0));
+                                        item_list.set(1,"窗戶:"+item_list.get(1));
+                                        item_list.set(2,"垃圾:"+item_list.get(2));
+                                        item_list.set(3,"桌椅:"+item_list.get(3));
+                                        item_list.set(4,"黑板:"+item_list.get(4));
+                                        item_list.set(5,"其他:"+item_list.get(5));
+                                        item_list.set(6,"查堂成績:"+item_list.get(6));
+                                        item_list.set(7,"評分編號:"+(Integer.parseInt(item_list.get(7).replaceAll("no=",""))-24));
+                                        if(item_list.get(7).equals("30"))
+                                            item_list.set(7,"評分編號:最高權限者");
+                                        do5();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                    }else
+                        nofition("你輸入到禁忌班級，無法查詢");
+
                 }
             }
 
@@ -195,6 +263,7 @@ public class search_socore extends AppCompatActivity {
 
     void getallclass() {
         allclass = importantdata.get("all_class");
+        //allclass.remove(erase_class);
         do3();
 
     }
@@ -217,10 +286,17 @@ public class search_socore extends AppCompatActivity {
                 System.out.println(today);
                 if (allclass.indexOf(ch.getText().toString()) != -1) {
                     sp.add("請選擇");
+                    sp.add("教室");
                     do1();
                     no.clear();
                     for (int i = 1; i <= 24; i++) {
-                        excute(i);
+                        for(int k=0;k<importantdata.get("position-"+i).size();k++)
+                        if(importantdata.get("position-"+i).get(k).contains(ch.getText().toString()))
+                        {
+                            sp.add(importantdata.get("position-"+i).get(k).replaceAll(ch.getText().toString()+"=",""));
+                           no.put(importantdata.get("position-"+i).get(k).replaceAll(ch.getText().toString()+"=",""),i);
+                        }
+
                     }
                 } else
                     nofition("沒有此班級");
@@ -229,31 +305,7 @@ public class search_socore extends AppCompatActivity {
         }, year, month, day).show();
     }
 
-    void excute(final int index) {
-        databaseReference.child("no").child("" + index).child(today).child(ch.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
-                    int l = -1;
-                    for (int i = 0; i < importantdata.get("position-" + index).size(); i++)
-                        if (importantdata.get("position-" + index).get(i).contains(ch.getText().toString())) {
-                            sp.add(importantdata.get("position-" + index).get(i).replaceAll(ch.getText().toString() + "=", ""));
-                            no.put(importantdata.get("position-" + index).get(i).replaceAll(ch.getText().toString() + "=", ""), index);
-                            l = i;
-                        }
 
-                    class_position.put(importantdata.get("position-" + index).get(l).replaceAll(ch.getText().toString() + "=", ""), (ArrayList<Integer>) dataSnapshot.getValue());
-                }
-                if (index == 24)
-                    do1();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
     void importdata() {
         importantdata = new HashMap<>();

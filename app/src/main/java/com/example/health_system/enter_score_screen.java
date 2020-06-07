@@ -37,451 +37,299 @@ import java.util.List;
 import java.util.Map;
 
 public class enter_score_screen extends AppCompatActivity {
-
-    Button full;
-    HashMap<String, ArrayList<String>> importantdata;
-    List<String> item = new ArrayList<>();
-    TextView grade1, grade2, grade3, grade4, grade5, out_csv, now_score;
-    int pos = 0;
-    List<String> op = new ArrayList<>();//老師可選任意號碼spinner的資料放置區
-    Spinner opeator;
-    List<String> test = new ArrayList<>();
-    score_struct[] score_s1 = new score_struct[20];
-    EditText enter1, enter2, enter3, enter4, enter5, enter6;
-    Button enter, date_pick;
+    Double t1;
+    ArrayList<String> now_max_score;
     Calendar calendar = Calendar.getInstance();
-    String today, account_name, no;//今天日期//登入時的帳號名//登入者的編號
-    Intent intent;//拿過去資料的元件
-    ArrayList<String> get = new ArrayList<>();
-    Spinner choose;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    Map<String, List> c = new HashMap<>();
-    List<String> data = new ArrayList<>();
-    ArrayAdapter<String> adapter;
+    String no, today;
+    HashMap<String, ArrayList<String>> importantdata;
+    Intent intent;
+    Spinner choose_class, choose_no;
+    TextView grade1, grade2, grade3, grade4, grade5, now_score;
+    EditText enter1, enter2, enter3, enter4, enter5, enter6;
+    Button full_score, datepicker,next,prev;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_score_screen);
-        intent = getIntent();//拿取登入時的帳號跟編號
-        setup();//設定id和基本設定
-        readDataOnInternet();
-        //clear_Alldata();//清除所有資料
-        event();//所有事件
-        Log.e("no", no.equals("30") + "");
+        setup();
+        importdata();
+        event();
     }
 
-    private void do2() {
-        get.clear();
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, get);
-        choose.setAdapter(adapter);
-    }//沒啥意義
-
-    private void getdata(String no) {
-        Log.e("no", "" + no);
-        if (!no.equals("30")) {
-            get = importantdata.get(no);
-            do1();
-        }
-    }//拿班級資料
-
-    void clear_Alldata() {
-        enter1.setText("");
-        enter2.setText("");
-        enter3.setText("");
-        enter4.setText("");
-        enter5.setText("");
-        enter6.setText("");
-    }//清除目前在輸入格的數字
-
-    void do1() {
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, get);//選擇班級的spinner的資料
-        choose.setAdapter(adapter);//設定
-        Log.d("re", String.valueOf(get.size()));
-        for (int i = 0; i < get.size(); i++) {
-            Log.d("re", get.get(i));
-            score_s1[i].setName(get.get(i));
-            if (score_s1[i].getScore().size() <= 5)
-                for (int x = 0; x <= 5; x++) {
-                    score_s1[i].score.add(0.0);
-                }
-            Log.d("test1", String.valueOf(score_s1[0].getScore().size()));
-
-        }
-
-
-    }//設定選擇班級的spinner
-
-    private void upload(String no) {
-        data.add("請選擇");
-        data.add("建二甲");
-        data.add("製圖二");
-        data.add("室一甲");
-        data.add("綜一丁");
-        data.add("製圖一");
-        data.add("子一乙");
-        c.put("class", data);
-        databaseReference.child("no").child(no).setValue(c);
-    }//上傳程式
-
-    void setup() {
-        importdata();
-        full = findViewById(R.id.auto_class);
-        now_score = findViewById(R.id.now_score_class);
-        grade1 = findViewById(R.id.floor_t);
-        grade2 = findViewById(R.id.window_t);
-        grade3 = findViewById(R.id.garbage_t);
-        grade4 = findViewById(R.id.desk_chair_t);
-        grade5 = findViewById(R.id.blackboard_t);
-        out_csv = findViewById(R.id.out_csv_btn);//老師特別權限
-        opeator = findViewById(R.id.opeator);//老師特別權限
-        choose = findViewById(R.id.position_spinner);
-        enter = findViewById(R.id.enter_scorce_btn_class);
-        enter1 = findViewById(R.id.floor);
-        enter2 = findViewById(R.id.window);
-        enter3 = findViewById(R.id.garbage);
-        enter4 = findViewById(R.id.desk_chair);
-        enter5 = findViewById(R.id.blackboard);
-        enter6 = findViewById(R.id.grade7);
-        date_pick = findViewById(R.id.date_picker_enter_score);
-        no = intent.getStringExtra("no");//拿登入時的編號
-        account_name = intent.getStringExtra("account");//拿登入時的帳號名
-        getitem(no); //拿評分項目
-        op.add("請選擇");//加入請選擇
-        for (int j = 1; j <= 24; j++) {
-            op.add(String.valueOf(j));//老師特別權限
-            if (j == 24) {
-                if (account_name.equals("teacher")) {
-                    //out_csv.setVisibility(View.VISIBLE);
-                    opeator.setVisibility(View.VISIBLE);
-                    date_pick.setVisibility(View.VISIBLE);
-                    ArrayAdapter<String> op_adpart = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, op);
-                    opeator.setAdapter(op_adpart);
-                }//老師特別權限加載區
-            }
-        }//老師特別權限
-        setToday();
-        nofition("登入成功");//登入成功顯示提示
-        //nofition(no);//測試
-        for (int i = 0; i < 20; i++)//宣告記憶體
-            score_s1[i] = new score_struct();
-    }//初始化變數
-
-    private void getitem(String no) {
-        String select;
-        if (Integer.parseInt(no) >= 1 && Integer.parseInt(no) <= 12)
-            select = "1~12";
-        else if (Integer.parseInt(no) >= 13 && Integer.parseInt(no) <= 17)
-            select = "13~17";
-        else if (Integer.parseInt(no) >= 18 && Integer.parseInt(no) <= 24)
-            select = "18~24";
-        else
-            select = "opeator";
-        if (!select.equals("opeator")) {
-            grade1.setText(importantdata.get(select).get(0));
-            grade2.setText(importantdata.get(select).get(1));
-            grade3.setText(importantdata.get(select).get(2));
-            grade4.setText(importantdata.get(select).get(3));
-            grade5.setText(importantdata.get(select).get(4));
-        }
-
-
-    }//老師特別指令
-
-    void nofition(String data) {
-        Toast.makeText(this, data, Toast.LENGTH_LONG).show();
-    }//泡泡訊息
-
-    private void getnowdata(String no) {
-        databaseReference.child("no").child(no).child(today).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() == null) {
-                    for (int k = 0; k < get.size(); k++)
-                        for (int x = 0; x <= 5; x++)
-                            score_s1[k].score.set(x, 0.0);
-                    clear_Alldata();
-                } //如果沒有之前的資料的情況
-                else {
-                    for (int i = 0; i < get.size(); i++) {
-                        Log.d("fewf", String.valueOf(i));
-                        score_s1[i].SETSCORE((ArrayList<Object>) dataSnapshot.child(get.get(i)).getValue());
-                        List<Object> temp = score_s1[pos].getScore();
-                        enter1.setText(String.valueOf(temp.get(0)));
-                        enter2.setText(String.valueOf(temp.get(1)));
-                        enter3.setText(String.valueOf(temp.get(2)));
-                        enter4.setText(String.valueOf(temp.get(3)));
-                        enter5.setText(String.valueOf(temp.get(4)));
-                        enter6.setText(String.valueOf(temp.get(5)));
-                        setNow_score();
-                    }
-
-                }//還原網路上的設定
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }//拿是否有資料
-
-    private void event() {
-        full.setOnClickListener(new View.OnClickListener() {
+    void event() {
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                autoinput();
-            }
-        });
-        out_csv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(enter_score_screen.this, ouput.class);
-                startActivity(intent);
-            }
-        });//老師全線輸出檔案按鈕的事件
-        choose.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //nofition(Integer.toString(position));
-                pos = position;
-                //Log.d("ERROR",String.valueOf(pos));
-                if (position >= 0) {
-                    List<Object> temp = score_s1[pos].getScore();
-                    enter1.setText(String.valueOf(temp.get(0)));
-                    enter2.setText(String.valueOf(temp.get(1)));
-                    enter3.setText(String.valueOf(temp.get(2)));
-                    enter4.setText(String.valueOf(temp.get(3)));
-                    enter5.setText(String.valueOf(temp.get(4)));
-                    enter6.setText(String.valueOf(temp.get(5)));
-                    setNow_score();
-                } else
-                    clear_Alldata();
-            }
+                if(!no.equals("30"))
+                {
+                        if(choose_class.getSelectedItemPosition()<choose_class.getCount()-1)
+                            choose_class.setSelection(choose_class.getSelectedItemPosition()+1);
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });//當選擇器更新，更新對的檔案
-        enter1.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!(no.equals("請選擇")))
-                    if (!enter1.getText().toString().equals("")) {
-                        score_s1[pos].setScore(0, enter1.getText().toString());
-                        if (enter1.getText().toString().equals("0.0"))
-                            enter1.setText("");
-                        setNow_score();
-                    }
-
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });//每個按鈕上面的字更新時，更新本地資料
-        enter2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!(no.equals("請選擇")))
-                    if (!enter2.getText().toString().equals("")) {
-                        score_s1[pos].setScore(1, enter2.getText().toString());
-                        if (enter2.getText().toString().equals("0.0"))
-                            enter2.setText("");
-                        setNow_score();
-                    }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });//每個按鈕上面的字更新時，更新本地資料
-        enter3.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!(no.equals("請選擇")))
-                    if (!enter3.getText().toString().equals("")) {
-                        score_s1[pos].setScore(2, enter3.getText().toString());
-                        if (enter3.getText().toString().equals("0.0"))
-                            enter3.setText("");
-                        setNow_score();
-                    }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });//每個按鈕上面的字更新時，更新本地資料
-        enter4.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!(no.equals("請選擇")))
-                    if (!enter4.getText().toString().equals("")) {
-                        score_s1[pos].setScore(3, enter4.getText().toString());
-                        if (enter4.getText().toString().equals("0.0"))
-                            enter4.setText("");
-                        setNow_score();
-                    }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });//每個按鈕上面的字更新時，更新本地資料
-        enter5.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!(no.equals("請選擇")))
-                    if (!enter5.getText().toString().equals("")) {
-                        score_s1[pos].setScore(4, enter5.getText().toString());
-                        if (enter5.getText().toString().equals("0.0"))
-                            enter5.setText("");
-                        setNow_score();
-                    }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });//每個按鈕上面的字更新時，更新本地資料
-        enter6.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!(no.equals("請選擇")))
-                    if (!enter6.getText().toString().equals("")) {
-                        score_s1[pos].setScore(5, enter6.getText().toString());
-                        if (enter6.getText().toString().equals("0.0"))
-                            enter6.setText("");
-                    }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });//每個按鈕上面的字更新時，更新本地資料
-        enter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //today = "20200208";
-                Log.d("test1", String.valueOf(score_s1[0].getScore().size()));
-                for (int i = 0; i < get.size(); i++)
-                    databaseReference.child("no").child(no).child(today).child(score_s1[i].getName()).setValue(score_s1[i].getScore());
-                nofition("上傳完成");
-            }
-        });//上傳指令
-        opeator.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                for (int i = 0; i < 20; i++)//宣告記憶體
-                    score_s1[i] = new score_struct();
-                //clear_Alldata();
-               // for (int i = 0; i < 20; i++)//宣告記憶體
-                    //score_s1[i] = new score_struct();
-                no = op.get(position);
-                if (!no.equals("請選擇")) {
-                    //clear_Alldata();//清除顯示框
-                    readDataOnInternet();
-                    getitem(no);
-                    getnowdata(no);
-                    pos = 0;
-
-                } else {
-                    do2();//我不知道為什麼我加這東西
                 }
             }
-
+        });
+        prev.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onClick(View v) {
+                if(!no.equals("30"))
+                {
+                    if(choose_class.getSelectedItemPosition()>0)
+                        choose_class.setSelection(choose_class.getSelectedItemPosition()-1);
 
+                }
             }
         });
-        date_pick.setOnClickListener(new View.OnClickListener() {
+        datepicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 datePicker1(v);
             }
         });
-    }//所有事件
-
-    void setToday() {
-        today = Integer.toString(calendar.get(Calendar.YEAR));
-        if (calendar.get(Calendar.MONTH) + 1 < 10)
-            today += "0";
-        today += Integer.toString(calendar.get(Calendar.MONTH) + 1);
-        if (calendar.get(Calendar.DAY_OF_MONTH) < 10)
-            today += "0";
-        today += Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
-    }//設定當天日期
-
-    void readDataOnInternet() {
-        getdata(no);
-        getnowdata(no);
-    }//拿網路資料
-
-    void setNow_score() {
-        //Log.e("enter1",enter1.getText().toString());
-        double now = 0;
-        if (!enter1.getText().toString().equals(""))
-            now += Double.parseDouble(enter1.getText().toString());
-        if (!enter2.getText().toString().equals(""))
-            now += Double.parseDouble(enter2.getText().toString());
-        if (!enter3.getText().toString().equals(""))
-            now += Double.parseDouble(enter3.getText().toString());
-        if (!enter4.getText().toString().equals(""))
-            now += Double.parseDouble(enter4.getText().toString());
-        if (!enter5.getText().toString().equals(""))
-            now += Double.parseDouble(enter5.getText().toString());
-        now_score.setText("目前總分:" + String.valueOf(now));
-        for (int i = 0; i < get.size(); i++)
-            databaseReference.child("no").child(no).child(today).child(score_s1[i].getName()).setValue(score_s1[i].getScore());
-    }
-
-    public void datePicker1(View v) {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
+        choose_no.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-                today = ("" + year);
-                today += month < 10 ? "0" + (month + 1) : "" + (month + 1);
-                today += (day) < 10 ? "0" + day : "" + day;
-                Log.e("123", today);
-                getdata(no);
-                getnowdata(no);
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(!choose_no.getSelectedItem().toString().equals("請選擇"))
+                    no=choose_no.getSelectedItem().toString();
+                else
+                    no="30";
+                updatespinner();
+                updateitem();
             }
 
-        }, year, month, day).show();
-    }//日期選擇器１
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        full_score.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!no.equals("30")) {
+                    if (!choose_class.getSelectedItem().toString().equals("請選擇")) {
+                        if (importantdata.get("maxscore-" + choose_class.getSelectedItem().toString() + "-" + no) != null) {
+                            now_max_score = importantdata.get("maxscore-" + choose_class.getSelectedItem().toString() + "-" + no);
+                            enter1.setText(now_max_score.get(0).toString());
+                            enter2.setText(now_max_score.get(1).toString());
+                            enter3.setText(now_max_score.get(2).toString());
+                            enter4.setText(now_max_score.get(3).toString());
+                            enter5.setText(now_max_score.get(4).toString());
+                            enter6.setText("無");
+                        }
+                    }
+                }
+            }
+        });
+        choose_class.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                now_max_score = importantdata.get("maxscore-" + choose_class.getSelectedItem().toString() + "-" + no);
+                databaseReference.child("no").child(no).child(today).child(choose_class.getSelectedItem().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getValue() != null) {
+                            ArrayList<Object> temp = (ArrayList<Object>) dataSnapshot.getValue();
+                            enter1.setText(temp.get(0).toString());
+                            enter2.setText(temp.get(1).toString());
+                            enter3.setText(temp.get(2).toString());
+                            enter4.setText(temp.get(3).toString());
+                            enter5.setText(temp.get(4).toString());
+                            enter6.setText(temp.get(5).toString());
+                        } else {
+                            enter1.setText("");
+                            enter2.setText("");
+                            enter3.setText("");
+                            enter4.setText("");
+                            enter5.setText("");
+                            enter6.setText("");
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        enter1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!no.equals("30")) {
+                    if (!choose_class.getSelectedItem().toString().equals("請選擇")) {
+                        if (!enter1.getText().toString().equals(""))
+                            if (Double.parseDouble(enter1.getText().toString()) > Double.parseDouble(now_max_score.get(0)))
+                                enter1.setText(now_max_score.get(0));
+                        upload(choose_class.getSelectedItem().toString());
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        enter2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!no.equals("30")) {
+                    if (!choose_class.getSelectedItem().toString().equals("請選擇")) {
+                        if (!enter2.getText().toString().equals(""))
+                            if (Double.parseDouble(enter2.getText().toString()) > Double.parseDouble(now_max_score.get(1)))
+                                enter2.setText(now_max_score.get(1));
+                        upload(choose_class.getSelectedItem().toString());
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        enter3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!no.equals("30")) {
+                    if (!choose_class.getSelectedItem().toString().equals("請選擇")) {
+                        if (!enter3.getText().toString().equals(""))
+                            if (Double.parseDouble(enter3.getText().toString()) > Double.parseDouble(now_max_score.get(2)))
+                                enter3.setText(now_max_score.get(2));
+                        upload(choose_class.getSelectedItem().toString());
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        enter4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!no.equals("30")) {
+                    if (!choose_class.getSelectedItem().toString().equals("請選擇")) {
+                        if (!enter4.getText().toString().equals(""))
+                            if (Double.parseDouble(enter4.getText().toString()) > Double.parseDouble(now_max_score.get(3)))
+                                enter4.setText(now_max_score.get(3));
+                        upload(choose_class.getSelectedItem().toString());
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        enter5.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!no.equals("30")) {
+                    if (!choose_class.getSelectedItem().toString().equals("請選擇")) {
+                        if (!enter5.getText().toString().equals(""))
+                            if (Double.parseDouble(enter5.getText().toString()) > Double.parseDouble(now_max_score.get(4)))
+                                enter5.setText(now_max_score.get(4));
+                        upload(choose_class.getSelectedItem().toString());
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        enter6.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!no.equals("30")) {
+                    if (!choose_class.getSelectedItem().toString().equals("請選擇")) {
+                        upload(choose_class.getSelectedItem().toString());
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+    void setup() {
+        setToday();
+        next=findViewById(R.id.next_enter);
+        prev=findViewById(R.id.prev_enter);
+        now_score = findViewById(R.id.now_score_class1);
+        intent = getIntent();//拿取登入時的帳號跟編號
+        no = intent.getStringExtra("no");
+        grade1 = findViewById(R.id.enter1_t);
+        grade2 = findViewById(R.id.enter2_t);
+        grade3 = findViewById(R.id.enter3_t);
+        grade4 = findViewById(R.id.enter4_t);
+        grade5 = findViewById(R.id.enter5_t);
+        enter1 = findViewById(R.id.enter1);
+        enter2 = findViewById(R.id.enter2);
+        enter3 = findViewById(R.id.enter3);
+        enter4 = findViewById(R.id.enter4);
+        enter5 = findViewById(R.id.enter5);
+        enter6 = findViewById(R.id.enter6);
+        choose_class = findViewById(R.id.position_spinner_enter_score);
+        choose_no = findViewById(R.id.opeator2);
+        full_score = findViewById(R.id.auto_enter_score);
+        datepicker = findViewById(R.id.date_picker2);
+        if(no.equals("30"))
+        {
+            choose_no.setVisibility(View.VISIBLE);
+            datepicker.setVisibility(View.VISIBLE);
+            ArrayList<String> t =new ArrayList<>();
+            t.add("請選擇");
+            for(int i=1;i<25;i++)
+            t.add(""+i);
+            choose_no.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, t));
+        }
+    }
 
     void importdata() {
         importantdata = new HashMap<>();
@@ -498,60 +346,114 @@ public class enter_score_screen extends AppCompatActivity {
                 ArrayList<String> t = new ArrayList<>();
                 for (int i = 1; i < temp.length; i++)
                     t.add(temp[i]);
-                importantdata.put(temp[0].replaceAll("\\s+", ""), t);
+                importantdata.put(temp[0].replaceAll(" ", ""), t);
+                //Log.e("test",temp[0].replaceAll(" ",""));
                 //data.append(line);
             }
+            if (!no.equals("30")) {
+                updatespinner();
+                updateitem();
+            }
+
         } catch (Exception e) {
-            ;
+            e.printStackTrace();
         } finally {
             try {
                 reader.close();
             } catch (Exception e) {
-
+                ;
             }
         }
-        for (String t : importantdata.keySet())
-            Log.e(t, t);
 
     }
 
-    void autoinput() {
+    void updatespinner() {
+        if (importantdata.get(no) != null) {
+            ArrayAdapter<String> t = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, importantdata.get(no));
+            t.insert("請選擇", 0);
+            choose_class.setAdapter(t);
+        }
 
+    }
+
+    void upload(String class_name) {
+        update_now_score();
+        ArrayList<String> t = new ArrayList<>();
+        t.add(enter1.getText().toString());
+        t.add(enter2.getText().toString());
+        t.add(enter3.getText().toString());
+        t.add(enter4.getText().toString());
+        t.add(enter5.getText().toString());
+        t.add(enter6.getText().toString());
+        databaseReference
+                .child("no")
+                .child(no)
+                .child(today)
+                .child(class_name)
+                .setValue(t);
+    }
+
+    void setToday() {
+        today = Integer.toString(calendar.get(Calendar.YEAR));
+        if (calendar.get(Calendar.MONTH) + 1 < 10)
+            today += "0";
+        today += Integer.toString(calendar.get(Calendar.MONTH) + 1);
+        if (calendar.get(Calendar.DAY_OF_MONTH) < 10)
+            today += "0";
+        today += Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+    void updateitem() {
         Log.e("no", no);
-        if (Integer.parseInt(no) != 30) {
-            ArrayList<Object> t = new ArrayList<>();
-            Log.e("123", choose.getSelectedItem() + "");
-            for (int i = 0; i < 5; i++)
-                t.add(importantdata.get("maxscore-" + choose.getSelectedItem() + "-" + no + "").get(i));
-            t.add("無");
-            enter1.setText(String.valueOf(t.get(0)));
-            enter2.setText(String.valueOf(t.get(1)));
-            enter3.setText(String.valueOf(t.get(2)));
-            enter4.setText(String.valueOf(t.get(3)));
-            enter5.setText(String.valueOf(t.get(4)));
-            enter6.setText(String.valueOf(t.get(5)));
-            /*
-            Log.e("size", importantdata.get(no).size() + "");
-            for (int i = 0; i < importantdata.get(no).size(); i++) {
-                ArrayList<Object> t = new ArrayList<>();
-                Log.e(i + "", i + "");
-                Log.e("123", importantdata.get("maxscore-" + importantdata.get(no).get(i) + "-" + no + "") + "1");
-                for (int k = 0; k < importantdata.get("maxscore-" + importantdata.get(no).get(i) + "-" + no + "").size(); k++)
-                    t.add(importantdata.get("maxscore-" + importantdata.get(no).get(i) + "-" + no + "").get(k));
-                t.add("無");
-                score_s1[i].SETSCORE(t);
-            }
-            List<Object> temp = score_s1[pos].getScore();
-            enter1.setText(String.valueOf(temp.get(0)));
-            enter2.setText(String.valueOf(temp.get(1)));
-            enter3.setText(String.valueOf(temp.get(2)));
-            enter4.setText(String.valueOf(temp.get(3)));
-            enter5.setText(String.valueOf(temp.get(4)));
-            enter6.setText(String.valueOf(temp.get(5)));
-            setNow_score();
-               */
-
+        int temp123=Integer.parseInt(no);
+        String scope;
+        if(temp123<=12)
+            scope="1~12";
+        else if(temp123<=17)
+            scope="13~17";
+            else
+            scope="18~24";
+        if (importantdata.get(scope) != null && !no.equals("30")) {
+            ArrayList<String> item = importantdata.get(scope);
+            grade1.setText(item.get(0));
+            grade2.setText(item.get(1));
+            grade3.setText(item.get(2));
+            grade4.setText(item.get(3));
+            grade5.setText(item.get(4));
         }
 
     }
+
+    void update_now_score() {
+        t1 = 0.0;
+        if (!enter1.getText().toString().equals(""))
+            t1 += Double.parseDouble(enter1.getText().toString());
+        if (!enter2.getText().toString().equals(""))
+            t1 += Double.parseDouble(enter2.getText().toString());
+        if (!enter3.getText().toString().equals(""))
+            t1 += Double.parseDouble(enter3.getText().toString());
+        if (!enter4.getText().toString().equals(""))
+            t1 += Double.parseDouble(enter4.getText().toString());
+        if (!enter5.getText().toString().equals(""))
+            t1 += Double.parseDouble(enter5.getText().toString());
+        now_score.setText(t1+"");
+    } public void datePicker1(View v) {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                today = ("" + year);
+                today += month < 10 ? "0" + (month + 1) : "" + (month + 1);
+                today += (day) < 10 ? "0" + day : "" + day;
+                Log.e("123", today);
+                updatespinner();
+                updateitem();
+            }
+
+        }, year, month, day).show();
+    }
+
 }

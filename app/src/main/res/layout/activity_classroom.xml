@@ -62,14 +62,14 @@
                 android:text="日期"
                 android:textSize="20sp"
                 android:visibility="invisible"
-                app:layout_constraintStart_toEndOf="@+id/enter_scorce_btn_class"
-                app:layout_constraintTop_toTopOf="@+id/enter_scorce_btn_class" />
+                app:layout_constraintStart_toEndOf="@+id/enter_scorce_btn_class2"
+                app:layout_constraintTop_toTopOf="@+id/enter_scorce_btn_class2" />
 
             <Spinner
                 android:id="@+id/class_spinner"
-                android:layout_width="232dp"
+                android:layout_width="150dp"
                 android:layout_height="43dp"
-                android:layout_marginStart="36dp"
+                android:layout_marginStart="20dp"
                 android:background="#BE0B7485"
                 app:layout_constraintBottom_toBottomOf="@+id/textView17"
                 app:layout_constraintEnd_toEndOf="@+id/position_spinner"
@@ -78,7 +78,7 @@
                 app:layout_constraintTop_toTopOf="@+id/textView17" />
 
             <Button
-                android:id="@+id/enter_scorce_btn_class"
+                android:id="@+id/enter_scorce_btn_class2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="112dp"
@@ -119,12 +119,11 @@
 
             <Spinner
                 android:id="@+id/position_spinner"
-                android:layout_width="232dp"
+                android:layout_width="150dp"
                 android:layout_height="43dp"
+                android:layout_marginStart="20dp"
                 android:background="#BE0B7485"
                 app:layout_constraintBottom_toBottomOf="@+id/textView16"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.311"
                 app:layout_constraintStart_toEndOf="@+id/textView16"
                 app:layout_constraintTop_toTopOf="@+id/textView16" />
 
@@ -290,16 +289,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="滿分"
-                app:layout_constraintBottom_toBottomOf="@+id/enter_scorce_btn_class"
-                app:layout_constraintEnd_toStartOf="@+id/enter_scorce_btn_class"
-                app:layout_constraintTop_toTopOf="@+id/enter_scorce_btn_class" />
+                app:layout_constraintBottom_toBottomOf="@+id/enter_scorce_btn_class2"
+                app:layout_constraintEnd_toStartOf="@+id/enter_scorce_btn_class2"
+                app:layout_constraintTop_toTopOf="@+id/enter_scorce_btn_class2" />
 
             <TextView
                 android:id="@+id/textView16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="56dp"
+                android:layout_marginTop="24dp"
                 android:text="地點"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
@@ -316,6 +315,27 @@
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="@+id/textView16"
                 app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+            <Button
+                android:id="@+id/prev_class"
+                android:layout_width="62dp"
+                android:layout_height="42dp"
+                android:layout_marginEnd="5dp"
+                android:text="prev"
+                app:layout_constraintBottom_toBottomOf="@+id/class_spinner"
+                app:layout_constraintEnd_toStartOf="@+id/textView17"
+                app:layout_constraintTop_toTopOf="@+id/class_spinner" />
+
+            <Button
+                android:id="@+id/next_class"
+                android:layout_width="63dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="5dp"
+                android:text="next"
+                app:layout_constraintBottom_toBottomOf="@+id/class_spinner"
+                app:layout_constraintStart_toEndOf="@+id/class_spinner"
+                app:layout_constraintTop_toTopOf="@+id/class_spinner"
+                app:layout_constraintVertical_bias="0.6" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
