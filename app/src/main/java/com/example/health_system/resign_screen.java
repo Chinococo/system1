@@ -25,6 +25,7 @@ public class resign_screen extends AppCompatActivity {
     DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
     EditText account, repeat, nickname, password, no, truename;
     Button enter;
+    long first = 0;//退出指令所需物件
     HashMap<String, String> worker = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) //main()
@@ -160,5 +161,15 @@ public class resign_screen extends AppCompatActivity {
         });
 
     }
-
+    @Override
+    public void onBackPressed()  //退出事件
+    {
+        if (System.currentTimeMillis() - first < 2000) {
+            startActivity(new Intent(this,MainActivity.class));
+            this.finish();
+        } else {
+            nofition("再按一次退出");
+            first = System.currentTimeMillis();
+        }
+    }
 }

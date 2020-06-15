@@ -128,9 +128,16 @@ public class MainActivity extends AppCompatActivity {
                             fragment.show(getSupportFragmentManager(),null);
                         }
                         else if(Integer.parseInt(no)>24)
+                        {
                             startActivity(intent2);
+                            MainActivity.this.finish();
+                        }
                             else
+                        {
                             startActivity(intent1);
+                            MainActivity.this.finish();
+                        }
+
                     } else
                         nofition("帳號或密碼錯誤");
                 } else {
@@ -210,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, resign_screen.class);
                 startActivity(intent);
+                MainActivity.this.finish();
             }
         });
     }

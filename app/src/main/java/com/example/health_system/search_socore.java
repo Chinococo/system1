@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Editable;
@@ -43,6 +44,7 @@ import java.util.Map;
 public class search_socore extends AppCompatActivity {
     String erase_class="子二乙";
     int fun=0;
+    long first = 0;//退出指令所需物件
     TextView total_score;
     HashMap<String, ArrayList<String>> importantdata = new HashMap<>();
     ArrayList<String> workplace = new ArrayList<>();
@@ -335,5 +337,17 @@ public class search_socore extends AppCompatActivity {
             }
         }
 
+    }
+
+    @Override
+    public void onBackPressed()  //退出事件
+    {
+        if (System.currentTimeMillis() - first < 2000) {
+            startActivity(new Intent(this,MainActivity.class));
+            this.finish();
+        } else {
+            nofition("再按一次退出");
+            first = System.currentTimeMillis();
+        }
     }
 }

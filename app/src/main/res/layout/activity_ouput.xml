@@ -14,8 +14,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -87,6 +89,17 @@
                 app:layout_constraintStart_toEndOf="@+id/datepicker2"
                 app:layout_constraintTop_toTopOf="@+id/datepicker2"
                 app:layout_constraintVertical_bias="0.0" />
+
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="100dp"
+                android:layout_height="62dp"
+                android:layout_marginStart="24dp"
+                android:background="#95FFFFFF"
+                android:text="切換模式"
+                app:layout_constraintBottom_toBottomOf="@+id/test3"
+                app:layout_constraintStart_toEndOf="@+id/test3"
+                app:layout_constraintTop_toTopOf="@+id/test3" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 public class enter_score_screen extends AppCompatActivity {
+    long first = 0;//退出指令所需物件
     Double t1;
     ArrayList<String> now_max_score;
     Calendar calendar = Calendar.getInstance();
@@ -455,5 +456,19 @@ public class enter_score_screen extends AppCompatActivity {
 
         }, year, month, day).show();
     }
-
+    void nofition(String data)//顯示泡泡資訊
+    {
+        Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void onBackPressed()  //退出事件
+    {
+        if (System.currentTimeMillis() - first < 2000) {
+            startActivity(new Intent(this,MainActivity.class));
+            this.finish();
+        } else {
+            nofition("再按一次退出");
+            first = System.currentTimeMillis();
+        }
+    }
 }

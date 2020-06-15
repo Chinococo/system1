@@ -22,6 +22,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,6 +42,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class classroom extends AppCompatActivity {
+    long first = 0;//退出指令所需物件
     ArrayList<Object> t2 = new ArrayList<>();
     Intent intent;
     Double t1;
@@ -559,5 +561,20 @@ public class classroom extends AppCompatActivity {
                 , android.R.layout.simple_spinner_item
                 ,new ArrayList<>()));
         clear();
+    }
+    void nofition(String data)//顯示泡泡資訊
+    {
+        Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void onBackPressed()  //退出事件
+    {
+        if (System.currentTimeMillis() - first < 2000) {
+            startActivity(new Intent(this,MainActivity.class));
+            this.finish();
+        } else {
+            nofition("再按一次退出");
+            first = System.currentTimeMillis();
+        }
     }
 }
