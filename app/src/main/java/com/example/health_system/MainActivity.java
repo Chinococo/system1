@@ -96,6 +96,12 @@ public class MainActivity extends AppCompatActivity {
     void check() //檢查是否有此帳，並登入
     {
         ch = true;
+        if(!new File(Environment.getExternalStorageDirectory(),"important_data.csv").exists())
+        {
+            nofition("dont_have location data");
+            getsheet();
+            return;
+        }
         if (account.getText().toString().equals("")) {
             nofition("你沒有輸入帳號");
             return;
@@ -289,7 +295,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void getsheet() {
+    void getsheet()
+    {
         get_html getHtml = new get_html("https://docs.google.com/spreadsheets/d/e/2PACX-1vTSUjx6g2eiKzdFzBE6xiCdSUMo8ugZDW1LN_eXZ_wFb_1x3cv0-P1TgewZJB4WvhX7u82DGV4-OWQ1/pub?output=csv", "just_getdata");
         new Thread(new Runnable() {
             @Override
@@ -298,7 +305,19 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     getHtml.join();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            nofition(e.toString());
+                        }
+                    });
+                }finally {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            nofition("成功讀取網路資料");
+                        }
+                    });
                 }
                 outfile("important_data", new StringBuilder(getHtml.returndata()));
                 importdata();
@@ -306,13 +325,15 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    void outfile(String name, StringBuilder sb) {
+    void outfile(String name, StringBuilder sb)
+    {
         output_csv outputCsv = new output_csv(MainActivity.this);
         outputCsv.WriteFileExample(name, sb);
 
     }
 
-    void importdata() {
+    void importdata()
+    {
         importantdata = new HashMap<>();
         File dir = Environment.getExternalStorageDirectory();
         File csv= new File(dir,"important_data.csv");
@@ -340,5 +361,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 }
 
