@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 public class search_socore extends AppCompatActivity {
-    String erase_class="子二乙";
+    String erase_class="子三乙";
     int fun=0;
     long first = 0;//退出指令所需物件
     TextView total_score;
