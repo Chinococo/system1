@@ -180,6 +180,10 @@ public class search_socore extends AppCompatActivity {
                                         if(item_list.get(7).equals("30"))
                                             item_list.set(7,"評分編號:最高權限者");
                                         do5();
+                                    }else
+                                    {
+                                        do5();
+                                        nofition("現在尚無資料");
                                     }
                                 }
 
@@ -311,8 +315,9 @@ public class search_socore extends AppCompatActivity {
 
     void importdata() {
         importantdata = new HashMap<>();
+        File directory123 = new File(Environment.getExternalStorageDirectory() + File.separator + "衛生評分系統資料夾");
         File dir = Environment.getExternalStorageDirectory();
-        File csv = new File(dir, "important_data.csv");
+        File csv= new File(directory123,"important_data.csv");
         StringBuilder data = new StringBuilder();
         BufferedReader reader = null;
         try {

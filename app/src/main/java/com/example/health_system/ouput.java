@@ -394,7 +394,7 @@ public class ouput extends AppCompatActivity {
 
     void outfile(String name) {
         try {
-            File directory = new File(Environment.getExternalStorageDirectory() + File.separator + "test_csv");
+            File directory = new File(Environment.getExternalStorageDirectory() + File.separator + "衛生評分系統資料夾");
             if (!directory.exists())
                 directory.mkdirs();
             File file = new File(directory, name + ".csv");
@@ -485,7 +485,7 @@ public class ouput extends AppCompatActivity {
 
     void outfile1(String name) {
         try {
-            File directory = new File(Environment.getExternalStorageDirectory() + File.separator + "test_csv");
+            File directory = new File(Environment.getExternalStorageDirectory() + File.separator + "衛生評分系統資料夾");
             if (!directory.exists())
                 directory.mkdirs();
             File file = new File(directory, name + ".csv");
@@ -593,8 +593,9 @@ public class ouput extends AppCompatActivity {
 
     void importdata() {
         importantdata = new HashMap<>();
+        File directory123 = new File(Environment.getExternalStorageDirectory() + File.separator + "衛生評分系統資料夾");
         File dir = Environment.getExternalStorageDirectory();
-        File csv = new File(dir, "important_data.csv");
+        File csv= new File(directory123,"important_data.csv");
         StringBuilder data = new StringBuilder();
         BufferedReader reader = null;
         try {

@@ -108,16 +108,19 @@ public class enter_score_screen extends AppCompatActivity {
         full_score.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!no.equals("30")) {
+                if (!no.toString().equals("30")) {
                     if (!choose_class.getSelectedItem().toString().equals("請選擇")) {
-                        if (importantdata.get("maxscore-" + choose_class.getSelectedItem().toString() + "-" + no) != null) {
-                            now_max_score = importantdata.get("maxscore-" + choose_class.getSelectedItem().toString() + "-" + no);
+                        if (importantdata.get("max score - " + choose_class.getSelectedItem().toString() + " - " + no) != null) {
+                            now_max_score = importantdata.get("max score - " + choose_class.getSelectedItem().toString() + " - " + no);
                             enter1.setText(now_max_score.get(0).toString());
                             enter2.setText(now_max_score.get(1).toString());
                             enter3.setText(now_max_score.get(2).toString());
                             enter4.setText(now_max_score.get(3).toString());
                             enter5.setText(now_max_score.get(4).toString());
                             enter6.setText("無");
+                        }else
+                        {
+                            System.out.println("bad");
                         }
                     }
                 }
@@ -126,7 +129,8 @@ public class enter_score_screen extends AppCompatActivity {
         choose_class.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                now_max_score = importantdata.get("maxscore-" + choose_class.getSelectedItem().toString() + "-" + no);
+                System.out.println("max score - " + choose_class.getSelectedItem().toString() + " - " + no);
+                now_max_score = importantdata.get("max score - " + choose_class.getSelectedItem().toString() + " - " + no);
                 databaseReference.child("no").child(no).child(today).child(choose_class.getSelectedItem().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -145,6 +149,8 @@ public class enter_score_screen extends AppCompatActivity {
                             enter4.setText("");
                             enter5.setText("");
                             enter6.setText("");
+                            for(String key:importantdata.keySet())
+                        System.out.println(key);
                         }
 
                     }
@@ -332,10 +338,12 @@ public class enter_score_screen extends AppCompatActivity {
         }
     }
 
-    void importdata() {
+    void importdata()
+    {
         importantdata = new HashMap<>();
+        File directory123 = new File(Environment.getExternalStorageDirectory() + File.separator + "衛生評分系統資料夾");
         File dir = Environment.getExternalStorageDirectory();
-        File csv = new File(dir, "important_data.csv");
+        File csv= new File(directory123,"important_data.csv");
         StringBuilder data = new StringBuilder();
         BufferedReader reader = null;
         try {
@@ -343,21 +351,15 @@ public class enter_score_screen extends AppCompatActivity {
                     new FileInputStream(csv), "utf-8"));
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] temp = line.split(",");
-                ArrayList<String> t = new ArrayList<>();
-                for (int i = 1; i < temp.length; i++)
+                String[] temp =line.split(",");
+                ArrayList<String> t= new ArrayList<>();
+                for(int i=1;i<temp.length;i++)
                     t.add(temp[i]);
-                importantdata.put(temp[0].replaceAll(" ", ""), t);
-                //Log.e("test",temp[0].replaceAll(" ",""));
+                importantdata.put(temp[0],t);
                 //data.append(line);
             }
-            if (!no.equals("30")) {
-                updatespinner();
-                updateitem();
-            }
-
         } catch (Exception e) {
-            e.printStackTrace();
+            ;
         } finally {
             try {
                 reader.close();
@@ -365,7 +367,6 @@ public class enter_score_screen extends AppCompatActivity {
                 ;
             }
         }
-
     }
 
     void updatespinner() {

@@ -67,9 +67,10 @@ public class ask_opeator extends DialogFragment {
                             databaseReference.child("account").child(worker.get("account")).setValue(worker);
                             databaseReference.child("id").child(worker.get("no")).setValue(worker.get("account"));
                             Log.d("test", worker.get("account") + "123");
-                            nofition("succedful 繼承");
+                            nofition("succedful 繼承\n感謝以下同學"+account_prev);
                             //Log.e("fin","fin");
-                            getActivity().finish();
+                            Intent intent = new Intent(getContext(),MainActivity.class);
+                            startActivity(intent);
                             getDialog().dismiss();
                         } else {
                             nofition("帳密有誤");

@@ -74,12 +74,16 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getsheet();
-        //insition();
-        requestpermission();
-        getallclass();
-        setup();
-        event();
+        if(haveInternet())
+        {
+            getsheet();
+            //insition();
+            requestpermission();
+            getallclass();
+            setup();
+            event();
+        }
+
     }
 
     @Override
@@ -95,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
 
     void check() //檢查是否有此帳，並登入
     {
+        //File directory = new File();
         ch = true;
-        if(!new File(Environment.getExternalStorageDirectory(),"important_data.csv").exists())
-        {
+        if (!new File(Environment.getExternalStorageDirectory() + File.separator + "衛生評分系統資料夾", "important_data.csv").exists()) {
             nofition("dont_have location data");
             getsheet();
             return;
@@ -128,18 +132,13 @@ public class MainActivity extends AppCompatActivity {
                         intent1.putExtra("account", account1);
                         intent1.putExtra("no", no);
                         //getsheet();
-                        if(Integer.parseInt(no)>29)
-                        {
+                        if (Integer.parseInt(no) > 29) {
                             final choose fragment = new choose();
-                            fragment.show(getSupportFragmentManager(),null);
-                        }
-                        else if(Integer.parseInt(no)>24)
-                        {
+                            fragment.show(getSupportFragmentManager(), null);
+                        } else if (Integer.parseInt(no) > 24) {
                             startActivity(intent2);
                             MainActivity.this.finish();
-                        }
-                            else
-                        {
+                        } else {
                             startActivity(intent1);
                             MainActivity.this.finish();
                         }
@@ -191,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
         worker.put("account", "teacher");
         worker.put("nickname", "teacher");
         worker.put("no", "30");
-        worker.put("password","0000");
+        worker.put("password", "0000");
         db.child("account").child("teacher").setValue(worker);
         for (l = 1; l <= 29; l++) {
             Log.d("fwa", String.valueOf(l));
@@ -295,8 +294,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void getsheet()
-    {
+    void getsheet() {
         get_html getHtml = new get_html("https://docs.google.com/spreadsheets/d/e/2PACX-1vTSUjx6g2eiKzdFzBE6xiCdSUMo8ugZDW1LN_eXZ_wFb_1x3cv0-P1TgewZJB4WvhX7u82DGV4-OWQ1/pub?output=csv", "just_getdata");
         new Thread(new Runnable() {
             @Override
@@ -311,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
                             nofition(e.toString());
                         }
                     });
-                }finally {
+                } finally {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -325,18 +323,17 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    void outfile(String name, StringBuilder sb)
-    {
+    void outfile(String name, StringBuilder sb) {
         output_csv outputCsv = new output_csv(MainActivity.this);
         outputCsv.WriteFileExample(name, sb);
 
     }
 
-    void importdata()
-    {
+    void importdata() {
         importantdata = new HashMap<>();
+        File directory123 = new File(Environment.getExternalStorageDirectory() + File.separator + "衛生評分系統資料夾");
         File dir = Environment.getExternalStorageDirectory();
-        File csv= new File(dir,"important_data.csv");
+        File csv = new File(directory123, "important_data.csv");
         StringBuilder data = new StringBuilder();
         BufferedReader reader = null;
         try {
@@ -344,11 +341,11 @@ public class MainActivity extends AppCompatActivity {
                     new FileInputStream(csv), "utf-8"));
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] temp =line.split(",");
-                ArrayList<String> t= new ArrayList<>();
-                for(int i=1;i<temp.length;i++)
-                t.add(temp[i]);
-                importantdata.put(temp[0],t);
+                String[] temp = line.split(",");
+                ArrayList<String> t = new ArrayList<>();
+                for (int i = 1; i < temp.length; i++)
+                    t.add(temp[i]);
+                importantdata.put(temp[0], t);
                 //data.append(line);
             }
         } catch (Exception e) {
@@ -362,5 +359,33 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    boolean haveInternet() {
+        boolean result = false;
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connManager.getActiveNetworkInfo();
+        if (info == null || !info.isConnected()) {
+            AlertDialog.Builder alertDialog =
+                    new AlertDialog.Builder(MainActivity.this);
+            alertDialog.setTitle("請打開網路");
+            alertDialog.setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //Toast.makeText(getBaseContext(), "確定", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            });
+
+            alertDialog.setCancelable(false);
+            alertDialog.show();
+
+        } else {
+            if (!info.isAvailable()) {
+                result = false;
+            } else {
+                result = true;
+            }
+        }
+        return result;
+    }
 }
 

@@ -47,14 +47,15 @@ public class classroom extends AppCompatActivity {
     Intent intent;
     Double t1;
     String no = "28";
-    TextView nowscore,out_csv;
+    TextView nowscore, out_csv;
     String today;
     Button date_pick;
     Calendar calendar = Calendar.getInstance();
     HashMap<String, ArrayList<String>> importantdata;
     Spinner spinner_position, spinner_class;
     EditText grade1, grade2, grade3, grade4, grade5, grade6, grade7;
-    Button full,next,prev;;
+    Button full, next, prev;
+    ;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     Set<String> check = new HashSet<>();
     ArrayList<String> pos = new ArrayList<>();
@@ -86,15 +87,15 @@ public class classroom extends AppCompatActivity {
 
     void setup() {
         setToday();
-        next=findViewById(R.id.next_class);
-        prev=findViewById(R.id.prev_class);
+        next = findViewById(R.id.next_class);
+        prev = findViewById(R.id.prev_class);
         intent = getIntent();
         no = intent.getStringExtra("no");
         check_state();
         spinner_position = findViewById(R.id.position_spinner);
         spinner_class = findViewById(R.id.class_spinner);
-        date_pick=findViewById(R.id.date_picker_enter_score_class);
-        out_csv=findViewById(R.id.out_csv_btn2_class);
+        date_pick = findViewById(R.id.date_picker_enter_score_class);
+        out_csv = findViewById(R.id.out_csv_btn2_class);
         grade1 = findViewById(R.id.floor);
         grade2 = findViewById(R.id.window);
         grade3 = findViewById(R.id.garbage);
@@ -105,8 +106,7 @@ public class classroom extends AppCompatActivity {
         full = findViewById(R.id.auto_class);
         enter = findViewById(R.id.enter_scorce_btn_class2);
         nowscore = findViewById(R.id.now_score_class);
-        if(no.equals("30"))
-        {
+        if (no.equals("30")) {
             //out_csv.setVisibility(View.VISIBLE);
             date_pick.setVisibility(View.VISIBLE);
         }
@@ -127,12 +127,10 @@ public class classroom extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(spinner_position.getSelectedItem()!=null)
-                {
-                    if(!spinner_position.getSelectedItem().toString().equals("請選擇"))
-                    {
-                        if(spinner_class.getSelectedItemPosition()<spinner_class.getCount()-1)
-                        spinner_class.setSelection(spinner_class.getSelectedItemPosition()+1);
+                if (spinner_position.getSelectedItem() != null) {
+                    if (!spinner_position.getSelectedItem().toString().equals("請選擇")) {
+                        if (spinner_class.getSelectedItemPosition() < spinner_class.getCount() - 1)
+                            spinner_class.setSelection(spinner_class.getSelectedItemPosition() + 1);
                     }
                 }
             }
@@ -140,12 +138,10 @@ public class classroom extends AppCompatActivity {
         prev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(spinner_position.getSelectedItem()!=null)
-                {
-                    if(!spinner_position.getSelectedItem().toString().equals("請選擇"))
-                    {
-                        if(spinner_class.getSelectedItemPosition()>0)
-                            spinner_class.setSelection(spinner_class.getSelectedItemPosition()-1);
+                if (spinner_position.getSelectedItem() != null) {
+                    if (!spinner_position.getSelectedItem().toString().equals("請選擇")) {
+                        if (spinner_class.getSelectedItemPosition() > 0)
+                            spinner_class.setSelection(spinner_class.getSelectedItemPosition() - 1);
                     }
                 }
             }
@@ -210,14 +206,13 @@ public class classroom extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!spinner_position.getSelectedItem().toString().equals("請選擇"))
-                    if(spinner_class.getSelectedItem()!=null)
-                    if (!spinner_class.getSelectedItem().toString().equals("請選擇"))
-                    {
-                        if(!grade1.getText().toString().equals(""))
-                            if(Double.parseDouble(grade1.getText().toString())>2)
-                            grade1.setText("2");
-                        upload();
-                    }
+                    if (spinner_class.getSelectedItem() != null)
+                        if (!spinner_class.getSelectedItem().toString().equals("請選擇")) {
+                            if (!grade1.getText().toString().equals(""))
+                                if (Double.parseDouble(grade1.getText().toString()) > 2)
+                                    grade1.setText("2");
+                            upload();
+                        }
 
             }
 
@@ -235,11 +230,10 @@ public class classroom extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!spinner_position.getSelectedItem().toString().equals("請選擇"))
-                    if(spinner_class.getSelectedItem()!=null)
-                        if (!spinner_class.getSelectedItem().toString().equals("請選擇"))
-                        {
-                            if(!grade2.getText().toString().equals(""))
-                                if(Double.parseDouble(grade2.getText().toString())>2)
+                    if (spinner_class.getSelectedItem() != null)
+                        if (!spinner_class.getSelectedItem().toString().equals("請選擇")) {
+                            if (!grade2.getText().toString().equals(""))
+                                if (Double.parseDouble(grade2.getText().toString()) > 2)
                                     grade2.setText("2");
                             upload();
                         }
@@ -259,11 +253,10 @@ public class classroom extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!spinner_position.getSelectedItem().toString().equals("請選擇"))
-                    if(spinner_class.getSelectedItem()!=null)
-                        if (!spinner_class.getSelectedItem().toString().equals("請選擇"))
-                        {
-                            if(!grade3.getText().toString().equals(""))
-                                if(Double.parseDouble(grade3.getText().toString())>2)
+                    if (spinner_class.getSelectedItem() != null)
+                        if (!spinner_class.getSelectedItem().toString().equals("請選擇")) {
+                            if (!grade3.getText().toString().equals(""))
+                                if (Double.parseDouble(grade3.getText().toString()) > 2)
                                     grade3.setText("2");
                             upload();
                         }
@@ -283,11 +276,10 @@ public class classroom extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!spinner_position.getSelectedItem().toString().equals("請選擇"))
-                    if(spinner_class.getSelectedItem()!=null)
-                        if (!spinner_class.getSelectedItem().toString().equals("請選擇"))
-                        {
-                            if(!grade4.getText().toString().equals(""))
-                                if(Double.parseDouble(grade4.getText().toString())>2)
+                    if (spinner_class.getSelectedItem() != null)
+                        if (!spinner_class.getSelectedItem().toString().equals("請選擇")) {
+                            if (!grade4.getText().toString().equals(""))
+                                if (Double.parseDouble(grade4.getText().toString()) > 2)
                                     grade4.setText("2");
                             upload();
                         }
@@ -307,11 +299,10 @@ public class classroom extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!spinner_position.getSelectedItem().toString().equals("請選擇"))
-                    if(spinner_class.getSelectedItem()!=null)
-                        if (!spinner_class.getSelectedItem().toString().equals("請選擇"))
-                        {
-                            if(!grade5.getText().toString().equals(""))
-                                if(Double.parseDouble(grade5.getText().toString())>2)
+                    if (spinner_class.getSelectedItem() != null)
+                        if (!spinner_class.getSelectedItem().toString().equals("請選擇")) {
+                            if (!grade5.getText().toString().equals(""))
+                                if (Double.parseDouble(grade5.getText().toString()) > 2)
                                     grade5.setText("2");
                             upload();
                         }
@@ -331,11 +322,10 @@ public class classroom extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!spinner_position.getSelectedItem().toString().equals("請選擇"))
-                    if(spinner_class.getSelectedItem()!=null)
-                        if (!spinner_class.getSelectedItem().toString().equals("請選擇"))
-                        {
-                            if(!grade6.getText().toString().equals(""))
-                                if(Double.parseDouble(grade6.getText().toString())>0)
+                    if (spinner_class.getSelectedItem() != null)
+                        if (!spinner_class.getSelectedItem().toString().equals("請選擇")) {
+                            if (!grade6.getText().toString().equals(""))
+                                if (Double.parseDouble(grade6.getText().toString()) > 0)
                                     grade6.setText("0");
                             upload();
                         }
@@ -355,7 +345,7 @@ public class classroom extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!spinner_position.getSelectedItem().toString().equals("請選擇"))
-                    if(spinner_class.getSelectedItem()!=null)
+                    if (spinner_class.getSelectedItem() != null)
                         if (!spinner_class.getSelectedItem().toString().equals("請選擇"))
                             upload();
             }
@@ -376,8 +366,7 @@ public class classroom extends AppCompatActivity {
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.getValue() != null)
-                            {
+                            if (dataSnapshot.getValue() != null) {
                                 t2 = (ArrayList<Object>) dataSnapshot.getValue();
                                 Log.e("123", t2.toString());
                                 grade1.setText(t2.get(0).toString());
@@ -387,9 +376,9 @@ public class classroom extends AppCompatActivity {
                                 grade5.setText(t2.get(4).toString());
                                 grade6.setText(t2.get(5).toString());
                                 grade7.setText(t2.get(6).toString());
-                            }else
+                            } else
 
-                            clear();
+                                clear();
                         }
 
                         @Override
@@ -446,8 +435,9 @@ public class classroom extends AppCompatActivity {
 
     void importdata() {
         importantdata = new HashMap<>();
+        File directory123 = new File(Environment.getExternalStorageDirectory() + File.separator + "衛生評分系統資料夾");
         File dir = Environment.getExternalStorageDirectory();
-        File csv = new File(dir, "important_data.csv");
+        File csv = new File(directory123, "important_data.csv");
         StringBuilder data = new StringBuilder();
         BufferedReader reader = null;
         try {
@@ -457,7 +447,7 @@ public class classroom extends AppCompatActivity {
             //check=new HashSet<>();
             while ((line = reader.readLine()) != null) {
                 String[] temp = line.split(",");
-                if (temp.length == 2&&temp[0].length()==5) {
+                if (temp.length == 2 && temp[0].length() == 5) {
                     if (all_class_data.get(temp[1]) != null)
                         all_class_data.get(temp[1]).add(temp[0]);
                     else {
@@ -477,7 +467,7 @@ public class classroom extends AppCompatActivity {
             for (String key : all_class_data.keySet()) {
                 all_class_data.get(key).add(0, "請選擇");
             }
-            ArrayAdapter<String> t=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, pos);
+            ArrayAdapter<String> t = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, pos);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -537,6 +527,7 @@ public class classroom extends AppCompatActivity {
             today += "0";
         today += Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
     }
+
     public void datePicker1(View v) {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -554,23 +545,25 @@ public class classroom extends AppCompatActivity {
 
         }, year, month, day).show();
     }//日期選擇器１
-    void do2()
-    {
+
+    void do2() {
         spinner_class.setAdapter(new ArrayAdapter<String>(
                 this
                 , android.R.layout.simple_spinner_item
-                ,new ArrayList<>()));
+                , new ArrayList<>()));
         clear();
     }
+
     void nofition(String data)//顯示泡泡資訊
     {
         Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
     }
+
     @Override
     public void onBackPressed()  //退出事件
     {
         if (System.currentTimeMillis() - first < 2000) {
-            startActivity(new Intent(this,MainActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
             this.finish();
         } else {
             nofition("再按一次退出");

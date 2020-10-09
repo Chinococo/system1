@@ -102,6 +102,8 @@ public class resign_screen extends AppCompatActivity {
                                 reference.child("account").child(account.getText().toString()).setValue(worker);
                                 reference.child("id").child(no.getText().toString()).setValue(account.getText().toString());
                                 nofition("successful");
+                                Intent intent = new Intent(resign_screen.this,MainActivity.class);
+                                startActivity(intent);
                                 resign_screen.this.finish();
                             } else {
                                 openfragment();

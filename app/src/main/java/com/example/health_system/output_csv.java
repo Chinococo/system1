@@ -20,8 +20,10 @@ public class output_csv {
         StringBuilder content = message;
 
        try{
-           File sdcard = Environment.getExternalStorageDirectory();
-            file = new File(sdcard, filename+".csv"); //輸出檔案位置
+           File directory = new File(Environment.getExternalStorageDirectory() + File.separator + "衛生評分系統資料夾");
+           if (!directory.exists())
+               directory.mkdirs();
+            file = new File(directory, filename+".csv"); //輸出檔案位置
             Log.i("Write File:", file + "");
             fop = new FileOutputStream(file);
 
