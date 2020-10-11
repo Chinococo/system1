@@ -42,7 +42,7 @@ public class enter_score_screen extends AppCompatActivity {
     ArrayList<String> now_max_score;
     Calendar calendar = Calendar.getInstance();
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    String no, today;
+    String no, today,power_today;
     HashMap<String, ArrayList<String>> importantdata;
     Intent intent;
     Spinner choose_class, choose_no;
@@ -393,6 +393,17 @@ public class enter_score_screen extends AppCompatActivity {
                 .child(today)
                 .child(class_name)
                 .setValue(t);
+        ArrayList<Object> power=new ArrayList<>();
+        power.add(power_today);
+        power.add(class_name);
+        power.add(enter1.getText().toString());
+        power.add(enter2.getText().toString());
+        power.add(enter3.getText().toString());
+        power.add(enter4.getText().toString());
+        power.add(enter5.getText().toString());
+        power.add(enter6.getText().toString());
+        power.add(t1);
+        databaseReference.child("power_bi").child("outside").child(class_name+today).setValue(power);
     }
 
     void setToday() {
@@ -403,6 +414,16 @@ public class enter_score_screen extends AppCompatActivity {
         if (calendar.get(Calendar.DAY_OF_MONTH) < 10)
             today += "0";
         today += Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
+
+        power_today = Integer.toString(calendar.get(Calendar.YEAR));
+        power_today+="/";
+        if (calendar.get(Calendar.MONTH) + 1 < 10)
+            power_today += "0";
+        power_today += Integer.toString(calendar.get(Calendar.MONTH) + 1);
+        power_today+="/";
+        if (calendar.get(Calendar.DAY_OF_MONTH) < 10)
+            power_today += "0";
+        power_today += Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
     }
 
     void updateitem() {
@@ -448,8 +469,15 @@ public class enter_score_screen extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 today = ("" + year);
-                today += month < 10 ? "0" + (month + 1) : "" + (month + 1);
+                today += (month+1) < 10 ? "0" + (month + 1) : "" + (month + 1);
                 today += (day) < 10 ? "0" + day : "" + day;
+
+                power_today = ("" + year);
+                power_today += "/";
+                power_today += (month+1) < 10 ? "0" + (month + 1) : "" + (month + 1);
+                power_today += "/";
+                power_today += (day) < 10 ? "0" + day : "" + day;
+
                 Log.e("123", today);
                 updatespinner();
                 updateitem();

@@ -48,7 +48,7 @@ public class classroom extends AppCompatActivity {
     Double t1;
     String no = "28";
     TextView nowscore, out_csv;
-    String today;
+    String today,power_today;
     Button date_pick;
     Calendar calendar = Calendar.getInstance();
     HashMap<String, ArrayList<String>> importantdata;
@@ -426,11 +426,26 @@ public class classroom extends AppCompatActivity {
         t.add("no=" + no);
         if (spinner_class.getSelectedItem() != null)
             if (!spinner_class.getSelectedItem().toString().equals("請選擇"))
+            {
                 databaseReference
                         .child("class")
                         .child(today)
                         .child(spinner_class.getSelectedItem().toString())
                         .setValue(t);
+                ArrayList<Object> power=new ArrayList<>();
+                power.add(power_today);
+                power.add(spinner_class.getSelectedItem().toString());
+                power.add(grade1.getText().toString());
+                power.add(grade2.getText().toString());
+                power.add(grade3.getText().toString());
+                power.add(grade4.getText().toString());
+                power.add(grade5.getText().toString());
+                power.add(grade6.getText().toString());
+                power.add(grade7.getText().toString());
+                power.add(t1);
+                databaseReference.child("power_bi").child("class").child(today+spinner_class.getSelectedItem().toString()).setValue(power);
+            }
+
     }
 
     void importdata() {
@@ -523,9 +538,19 @@ public class classroom extends AppCompatActivity {
         if (calendar.get(Calendar.MONTH) + 1 < 10)
             today += "0";
         today += Integer.toString(calendar.get(Calendar.MONTH) + 1);
-        if (calendar.get(Calendar.DAY_OF_MONTH) < 10)
+        if (calendar.get(Calendar.DAY_OF_MONTH)+1 < 10)
             today += "0";
         today += Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
+
+        power_today = Integer.toString(calendar.get(Calendar.YEAR));
+        power_today+="/";
+        if (calendar.get(Calendar.MONTH) + 1 < 10)
+            power_today += "0";
+        power_today += Integer.toString(calendar.get(Calendar.MONTH) + 1);
+        power_today+="/";
+        if (calendar.get(Calendar.DAY_OF_MONTH) < 10)
+            power_today += "0";
+        power_today += Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
     }
 
     public void datePicker1(View v) {
@@ -537,8 +562,15 @@ public class classroom extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 today = ("" + year);
-                today += month < 10 ? "0" + (month + 1) : "" + (month + 1);
+                today += (month+1) < 10 ? "0" + (month + 1) : "" + (month + 1);
                 today += (day) < 10 ? "0" + day : "" + day;
+
+                power_today = ("" + year);
+                power_today += "/";
+                power_today += (month+1) < 10 ? "0" + (month + 1) : "" + (month + 1);
+                power_today += "/";
+                power_today += (day) < 10 ? "0" + day : "" + day;
+
                 Log.e("123", today);
                 set_class_spinner();
             }
