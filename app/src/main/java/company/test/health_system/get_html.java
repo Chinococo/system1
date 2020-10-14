@@ -1,12 +1,10 @@
-package com.example.health_system;
+package company.test.health_system;
 
 
 
 import android.util.Log;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;

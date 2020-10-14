@@ -1,4 +1,4 @@
-package com.example.health_system;
+package company.test.health_system;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -13,6 +13,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
 
 public class choose extends DialogFragment {
     Button b1,b2,b3;

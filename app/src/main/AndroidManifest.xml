@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.health_system">
-
+    xmlns:tools="http://schemas.android.com/tools"
+    package="company.test.health_system"
+    android:versionCode="2"
+    android:versionName="v1.01"
+    tools:ignore="GradleOverrides"
+    >
+    <uses-permission android:name="android.permission.READ_PROFILE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:screenOrientation="portrait"
         android:allowBackup="true"
@@ -15,20 +19,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
 
+
         android:theme="@style/AppTheme">
 
-        <activity android:name=".classroom"
+        <activity android:name="company.test.health_system.classroom"
             android:screenOrientation="portrait" ></activity>
-        <activity android:name=".ouput"
+        <activity android:name="company.test.health_system.ouput"
             android:screenOrientation="portrait" />
-        <activity android:name=".search_socore"
+        <activity android:name="company.test.health_system.search_socore"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".enter_score_screen"
+            android:name="company.test.health_system.enter_score_screen"
             android:screenOrientation="portrait" />
-        <activity android:name=".resign_screen"
+        <activity android:name="company.test.health_system.resign_screen"
             android:screenOrientation="portrait" />
-        <activity android:name=".MainActivity"
+        <activity android:name="company.test.health_system.MainActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

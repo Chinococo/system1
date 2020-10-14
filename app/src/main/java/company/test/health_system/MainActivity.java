@@ -1,24 +1,24 @@
-package com.example.health_system;
+package company.test.health_system;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.audiofx.DynamicsProcessing;
 import android.net.ConnectivityManager;
+import android.net.Network;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Environment;
+import android.util.Config;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,29 +26,31 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import company.test.health_system.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.JsonArray;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.security.Permission;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.CountDownLatch;
 
 public class MainActivity extends AppCompatActivity {
+    int newVerCode;
+    String newVerName;
     HashMap<String, ArrayList<String>> importantdata;
     StringBuilder g_sb = new StringBuilder();
     int l = 1;
@@ -76,12 +78,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         if(haveInternet())
         {
-            getsheet();
-            //insition();
-            requestpermission();
-            getallclass();
-            setup();
-            event();
+                getsheet();
+                //insition();
+                requestpermission();
+                getallclass();
+                setup();
+                event();
+
+
         }
 
     }
@@ -387,5 +391,49 @@ public class MainActivity extends AppCompatActivity {
         }
         return result;
     }
+
+    public static int getVerCode(Context context) {
+        int verCode = -1;
+        try {
+            verCode = context.getPackageManager().getPackageInfo(
+                    "company.test", 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("error", e.getMessage());
+        }
+
+        return verCode;
+    }
+    public static String getVerName(Context context) {
+        String verName = "";
+        try {
+            verName = context.getPackageManager().getPackageInfo(
+                    "com.demo", 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("error", e.getMessage());
+        }
+        return verName;
+    }
+    private boolean getServerVer () {
+        try {
+            String verjson = NetworkTool.getContent(company.test.health_system.Config.UPDATE_SERVER +company.test.health_system.Config.UPDATE_VERJSON);
+            JSONArray array = new JSONArray(verjson);
+            if (array.length() > 0) {
+                JSONObject obj = array.getJSONObject(0);
+                try {
+                    newVerCode = Integer.parseInt(obj.getString("verCode"));
+                    newVerName = obj.getString("verName");
+                } catch (Exception e) {
+                    newVerCode = -1;
+                    newVerName = "";
+                    return false;
+                }
+            }
+        } catch (Exception e) {
+            Log.e("error", e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
 }
 

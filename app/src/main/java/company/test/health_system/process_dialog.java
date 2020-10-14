@@ -1,4 +1,4 @@
-package com.example.health_system;
+package company.test.health_system;
 
 import android.app.ProgressDialog;
 import android.content.Context;
