@@ -17,7 +17,8 @@ android {
 
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 2
+        versionCode 3
+        //更新完一定要重新用自己的機器先跑一次
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

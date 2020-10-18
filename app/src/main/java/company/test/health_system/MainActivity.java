@@ -18,7 +18,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Config;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -68,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     EditText account, password;
     StringBuilder stringBuilder = new StringBuilder();
     String no;//編號
+    int nowvercode;
     DatabaseReference db = FirebaseDatabase.getInstance().getReference();//網路資料庫
     boolean ch;//檢查帳號狀態的bool
 
@@ -76,16 +76,34 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        nowvercode = getVerCode(this);
         if(haveInternet())
         {
-                getsheet();
-                //insition();
-                requestpermission();
-                getallclass();
-                setup();
-                event();
+            db.child("vercode").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    int seververcode = Integer.parseInt(snapshot.getValue().toString());
+                    if(nowvercode!=seververcode)
+                    {
+                        db.child("vercode").setValue(Math.max(nowvercode,seververcode));
+                        go2GooglePlay();
+                        finish();
+                    }
 
+                }
 
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+            getsheet();
+            //insition();
+            requestpermission();
+            getallclass();
+            setup();
+            event();
         }
 
     }
@@ -396,7 +414,7 @@ public class MainActivity extends AppCompatActivity {
         int verCode = -1;
         try {
             verCode = context.getPackageManager().getPackageInfo(
-                    "company.test", 0).versionCode;
+                    context.getPackageName(), 0).versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             Log.e("error", e.getMessage());
         }
@@ -407,15 +425,15 @@ public class MainActivity extends AppCompatActivity {
         String verName = "";
         try {
             verName = context.getPackageManager().getPackageInfo(
-                    "com.demo", 0).versionName;
+                    context.getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
             Log.e("error", e.getMessage());
         }
         return verName;
-    }
+    }/*
     private boolean getServerVer () {
         try {
-            String verjson = NetworkTool.getContent(company.test.health_system.Config.UPDATE_SERVER +company.test.health_system.Config.UPDATE_VERJSON);
+            String verjson = NetworkTool.getContent(company.test.health_system.Config.UPDATE_SERVER + Config.UPDATE_VERJSON);
             JSONArray array = new JSONArray(verjson);
             if (array.length() > 0) {
                 JSONObject obj = array.getJSONObject(0);
@@ -429,11 +447,20 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         } catch (Exception e) {
-            Log.e("error", e.getMessage());
+            Log.e(TAG, e.getMessage());
             return false;
         }
         return true;
+    }*/
+    private void go2GooglePlay() {
+        // getPackageName() from Context or Activity object
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=company.test.health_system")));
+        } catch (android.content.ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=company.test.health_system" )));
+        }
     }
-
 }
 
