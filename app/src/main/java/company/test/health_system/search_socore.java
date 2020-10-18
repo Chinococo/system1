@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import company.test.health_system.R;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,8 +40,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class search_socore extends AppCompatActivity {
-    String erase_class="子三乙";
-    int fun=0;
+    String erase_class = "子三乙";
+    int fun = 0;
     long first = 0;//退出指令所需物件
     TextView total_score;
     HashMap<String, ArrayList<String>> importantdata = new HashMap<>();
@@ -92,15 +93,13 @@ public class search_socore extends AppCompatActivity {
         choose.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(ch.getText().toString().equals(erase_class))
+                if (ch.getText().toString().equals(erase_class))
                     fun++;
                 if (!sp.get(position).equals("請選擇")) {
-                    Log.e("fun",fun+"");
+                    Log.e("fun", fun + "");
                     item_list.clear();
-                    if(!ch.getText().toString().equals(erase_class)||(fun%10==0&&fun!=0))
-                    {
-                        if(ch.getText().toString().equals(erase_class))
-                        {
+                    if (!ch.getText().toString().equals(erase_class) || (fun % 10 == 0 && fun != 0)) {
+                        if (ch.getText().toString().equals(erase_class)) {
                             nofition("好啦，讓你看一下");
                             delay delay = new delay(3000);
                             delay.start();
@@ -125,7 +124,7 @@ public class search_socore extends AppCompatActivity {
                             }).start();
                         }
 
-                        if(!choose.getSelectedItem().toString().equals("教室"))
+                        if (!choose.getSelectedItem().toString().equals("教室"))
                             databaseReference.child("no").child(no.get(sp.get(position)) + "").child(today).child(ch.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -140,14 +139,13 @@ public class search_socore extends AppCompatActivity {
                                         workplace.add("備註");
                                         ArrayList<String> score = (ArrayList<String>) dataSnapshot.getValue();
                                         for (int i = 0; i < 6; i++) {
-                                            if (i != 5&&!score.get(i).equals(""))
+                                            if (i != 5 && !score.get(i).equals(""))
                                                 total += Double.parseDouble(score.get(i));
-                                            item_list.add(workplace.get(i) + ":"+score.get(i));
+                                            item_list.add(workplace.get(i) + ":" + score.get(i));
                                         }
                                         total_score.setText("總分:" + total);
                                         do5();
-                                    }else
-                                    {
+                                    } else {
                                         do5();
                                         nofition("現在尚無資料");
                                     }
@@ -160,25 +158,23 @@ public class search_socore extends AppCompatActivity {
                                 }
                             });
                         else
-                            databaseReference.child("class").child(today).child(importantdata.get(ch.getText().toString()).get(0)+ch.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            databaseReference.child("class").child(today).child(importantdata.get(ch.getText().toString()).get(0) + ch.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    if(dataSnapshot.getValue()!=null)
-                                    {
-                                        item_list =(List<String>) dataSnapshot.getValue();
-                                        item_list.set(0,"地板:"+item_list.get(0));
-                                        item_list.set(1,"窗戶:"+item_list.get(1));
-                                        item_list.set(2,"垃圾:"+item_list.get(2));
-                                        item_list.set(3,"桌椅:"+item_list.get(3));
-                                        item_list.set(4,"黑板:"+item_list.get(4));
-                                        item_list.set(5,"其他:"+item_list.get(5));
-                                        item_list.set(6,"查堂成績:"+item_list.get(6));
-                                        item_list.set(7,"評分編號:"+(Integer.parseInt(item_list.get(7).replaceAll("no=",""))-24));
-                                        if(item_list.get(7).equals("30"))
-                                            item_list.set(7,"評分編號:最高權限者");
+                                    if (dataSnapshot.getValue() != null) {
+                                        item_list = (List<String>) dataSnapshot.getValue();
+                                        item_list.set(0, "地板:" + item_list.get(0));
+                                        item_list.set(1, "窗戶:" + item_list.get(1));
+                                        item_list.set(2, "垃圾:" + item_list.get(2));
+                                        item_list.set(3, "桌椅:" + item_list.get(3));
+                                        item_list.set(4, "黑板:" + item_list.get(4));
+                                        item_list.set(5, "其他:" + item_list.get(5));
+                                        item_list.set(6, "查堂成績:" + item_list.get(6));
+                                        item_list.set(7, "評分編號:" + (Integer.parseInt(item_list.get(7).replaceAll("no=", "")) - 24));
+                                        if (item_list.get(7).equals("30"))
+                                            item_list.set(7, "評分編號:最高權限者");
                                         do5();
-                                    }else
-                                    {
+                                    } else {
                                         do5();
                                         nofition("現在尚無資料");
                                     }
@@ -189,7 +185,7 @@ public class search_socore extends AppCompatActivity {
 
                                 }
                             });
-                    }else
+                    } else
                         nofition("你輸入到禁忌班級，無法查詢");
 
                 }
@@ -293,12 +289,11 @@ public class search_socore extends AppCompatActivity {
                     do1();
                     no.clear();
                     for (int i = 1; i <= 24; i++) {
-                        for(int k=0;k<importantdata.get("position-"+i).size();k++)
-                        if(importantdata.get("position-"+i).get(k).contains(ch.getText().toString()))
-                        {
-                            sp.add(importantdata.get("position-"+i).get(k).replaceAll(ch.getText().toString()+"=",""));
-                           no.put(importantdata.get("position-"+i).get(k).replaceAll(ch.getText().toString()+"=",""),i);
-                        }
+                        for (int k = 0; k < importantdata.get("position-" + i).size(); k++)
+                            if (importantdata.get("position-" + i).get(k).contains(ch.getText().toString())) {
+                                sp.add(importantdata.get("position-" + i).get(k).replaceAll(ch.getText().toString() + "=", ""));
+                                no.put(importantdata.get("position-" + i).get(k).replaceAll(ch.getText().toString() + "=", ""), i);
+                            }
 
                     }
                 } else
@@ -309,12 +304,11 @@ public class search_socore extends AppCompatActivity {
     }
 
 
-
     void importdata() {
         importantdata = new HashMap<>();
         File directory123 = new File(Environment.getExternalStorageDirectory() + File.separator + "衛生評分系統資料夾");
         File dir = Environment.getExternalStorageDirectory();
-        File csv= new File(directory123,"important_data.csv");
+        File csv = new File(directory123, "important_data.csv");
         StringBuilder data = new StringBuilder();
         BufferedReader reader = null;
         try {
@@ -345,7 +339,7 @@ public class search_socore extends AppCompatActivity {
     public void onBackPressed()  //退出事件
     {
         if (System.currentTimeMillis() - first < 2000) {
-            startActivity(new Intent(this,MainActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
             this.finish();
         } else {
             nofition("再按一次退出");

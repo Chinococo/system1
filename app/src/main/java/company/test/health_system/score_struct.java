@@ -23,7 +23,7 @@ public class score_struct {
         return score;
     }
 
-    public void setScore(int index,Object data) {
+    public void setScore(int index, Object data) {
         this.score.set(index, data);
     }
 }

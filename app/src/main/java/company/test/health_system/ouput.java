@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import company.test.health_system.R;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -596,7 +597,7 @@ public class ouput extends AppCompatActivity {
         importantdata = new HashMap<>();
         File directory123 = new File(Environment.getExternalStorageDirectory() + File.separator + "衛生評分系統資料夾");
         File dir = Environment.getExternalStorageDirectory();
-        File csv= new File(directory123,"important_data.csv");
+        File csv = new File(directory123, "important_data.csv");
         StringBuilder data = new StringBuilder();
         BufferedReader reader = null;
         try {
@@ -714,7 +715,7 @@ public class ouput extends AppCompatActivity {
     public void onBackPressed()  //退出事件
     {
         if (System.currentTimeMillis() - first < 2000) {
-            startActivity(new Intent(this,MainActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
             this.finish();
         } else {
             nofition("再按一次退出");

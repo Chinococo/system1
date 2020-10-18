@@ -14,16 +14,16 @@ public class output_csv {
         this.context = context;
     }
 
-    public  void WriteFileExample(String filename,StringBuilder message) {
+    public void WriteFileExample(String filename, StringBuilder message) {
         FileOutputStream fop = null;
         File file;
         StringBuilder content = message;
 
-       try{
-           File directory = new File(Environment.getExternalStorageDirectory() + File.separator + "衛生評分系統資料夾");
-           if (!directory.exists())
-               directory.mkdirs();
-            file = new File(directory, filename+".csv"); //輸出檔案位置
+        try {
+            File directory = new File(Environment.getExternalStorageDirectory() + File.separator + "衛生評分系統資料夾");
+            if (!directory.exists())
+                directory.mkdirs();
+            file = new File(directory, filename + ".csv"); //輸出檔案位置
             Log.i("Write File:", file + "");
             fop = new FileOutputStream(file);
 

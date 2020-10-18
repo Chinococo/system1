@@ -1,7 +1,6 @@
 package company.test.health_system;
 
 
-
 import android.util.Log;
 
 import org.apache.http.NameValuePair;
@@ -29,6 +28,7 @@ public class get_html extends Thread {
     ArrayList<NameValuePair> upload_parmter;
     HashMap<String, List<Cookie>> cookieStore = new HashMap<String, List<okhttp3.Cookie>>();
     String result;
+
     public get_html(String url, String metholn) {
         this.metholn = metholn;
         this.url = url;

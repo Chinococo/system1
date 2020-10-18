@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import company.test.health_system.R;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +27,7 @@ public class resign_screen extends AppCompatActivity {
     Button enter;
     long first = 0;//退出指令所需物件
     HashMap<String, String> worker = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) //main()
     {
@@ -34,6 +36,7 @@ public class resign_screen extends AppCompatActivity {
         setup();
         event();
     }
+
     void input_data()//設置所輸入資料
     {
         worker.put("truename", truename.getText().toString());
@@ -67,7 +70,7 @@ public class resign_screen extends AppCompatActivity {
             return;
         }
         //if(!no.getText().toString().equals("30"))//老師特別避免指令
-        if (no.getText().toString().equals("") || (Integer.parseInt(no.getText().toString()) > 30) || (Integer.parseInt(no.getText().toString()) <=0)) {
+        if (no.getText().toString().equals("") || (Integer.parseInt(no.getText().toString()) > 30) || (Integer.parseInt(no.getText().toString()) <= 0)) {
             nofition("你的編號沒輸入喔或編號亂輸");
             return;
         }
@@ -101,12 +104,12 @@ public class resign_screen extends AppCompatActivity {
                                 reference.child("account").child(account.getText().toString()).setValue(worker);
                                 reference.child("id").child(no.getText().toString()).setValue(account.getText().toString());
                                 nofition("successful");
-                                Intent intent = new Intent(resign_screen.this,MainActivity.class);
+                                Intent intent = new Intent(resign_screen.this, MainActivity.class);
                                 startActivity(intent);
                                 resign_screen.this.finish();
                             } else {
                                 openfragment();
-                                Log.e("end","end");
+                                Log.e("end", "end");
                             }
                         }
 
@@ -162,11 +165,12 @@ public class resign_screen extends AppCompatActivity {
         });
 
     }
+
     @Override
     public void onBackPressed()  //退出事件
     {
         if (System.currentTimeMillis() - first < 2000) {
-            startActivity(new Intent(this,MainActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
             this.finish();
         } else {
             nofition("再按一次退出");

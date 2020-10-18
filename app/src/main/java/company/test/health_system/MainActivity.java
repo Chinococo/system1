@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import company.test.health_system.R;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -77,15 +78,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         nowvercode = getVerCode(this);
-        if(haveInternet())
-        {
+        if (haveInternet()) {
             db.child("vercode").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     int seververcode = Integer.parseInt(snapshot.getValue().toString());
-                    if(nowvercode!=seververcode)
-                    {
-                        db.child("vercode").setValue(Math.max(nowvercode,seververcode));
+                    if (nowvercode != seververcode) {
+                        db.child("vercode").setValue(Math.max(nowvercode, seververcode));
                         go2GooglePlay();
                         finish();
                     }
@@ -421,6 +420,7 @@ public class MainActivity extends AppCompatActivity {
 
         return verCode;
     }
+
     public static String getVerName(Context context) {
         String verName = "";
         try {
@@ -452,6 +452,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }*/
+
     private void go2GooglePlay() {
         // getPackageName() from Context or Activity object
         try {
@@ -459,7 +460,7 @@ public class MainActivity extends AppCompatActivity {
                     Uri.parse("https://play.google.com/store/apps/details?id=company.test.health_system")));
         } catch (android.content.ActivityNotFoundException e) {
             startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://play.google.com/store/apps/details?id=company.test.health_system" )));
+                    Uri.parse("https://play.google.com/store/apps/details?id=company.test.health_system")));
         }
     }
 }
