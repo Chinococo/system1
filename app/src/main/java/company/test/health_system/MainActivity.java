@@ -49,10 +49,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    int newVerCode;
-    String newVerName;
     HashMap<String, ArrayList<String>> importantdata;
-    StringBuilder g_sb = new StringBuilder();
     int l = 1;
     String Floder = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "class";
     File directry = new File(Floder);
@@ -77,17 +74,29 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        nowvercode = getVerCode(this);
+
         if (haveInternet()) {
+            nowvercode = Integer.parseInt(getString(R.string.version_code));
             db.child("vercode").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     int seververcode = Integer.parseInt(snapshot.getValue().toString());
-                    if (nowvercode != seververcode) {
-                        db.child("vercode").setValue(Math.max(nowvercode, seververcode));
-                        go2GooglePlay();
-                        finish();
-                    }
+                    if (nowvercode >= seververcode) {
+                        db.child("vercode").setValue(nowvercode);
+                    }else
+                        {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                            builder.setTitle("警告");
+                            builder.setCancelable(false);
+                            builder.setMessage("版本過低，請至google play更新");
+                            builder.setPositiveButton("退出軟體", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            });
+                            builder.show();
+                        }
 
                 }
 
@@ -108,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed()  //退出事件
+    public void onBackPressed()  //雙擊退出事件
     {
         if (System.currentTimeMillis() - first < 2000) {
             super.onBackPressed();
@@ -248,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    void testfragment(String title, String message)//繼承畫面
+    void testfragment(String title, String message)//測試繼承畫面
     {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message).setTitle(title).setCancelable(false).setPositiveButton("我了解了", new DialogInterface.OnClickListener() {
@@ -315,7 +324,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void getsheet() {
+    void getsheet()
+    {
         get_html getHtml = new get_html("https://docs.google.com/spreadsheets/d/e/2PACX-1vTSUjx6g2eiKzdFzBE6xiCdSUMo8ugZDW1LN_eXZ_wFb_1x3cv0-P1TgewZJB4WvhX7u82DGV4-OWQ1/pub?output=csv", "just_getdata");
         new Thread(new Runnable() {
             @Override
@@ -344,13 +354,15 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    void outfile(String name, StringBuilder sb) {
+    void outfile(String name, StringBuilder sb)
+    {
         output_csv outputCsv = new output_csv(MainActivity.this);
         outputCsv.WriteFileExample(name, sb);
 
     }
 
-    void importdata() {
+    void importdata()
+    {
         importantdata = new HashMap<>();
         File directory123 = new File(Environment.getExternalStorageDirectory() + File.separator + "衛生評分系統資料夾");
         File dir = Environment.getExternalStorageDirectory();
@@ -380,7 +392,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    boolean haveInternet() {
+    boolean haveInternet()
+    {
         boolean result = false;
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = connManager.getActiveNetworkInfo();
@@ -391,8 +404,7 @@ public class MainActivity extends AppCompatActivity {
             alertDialog.setPositiveButton("確定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    //Toast.makeText(getBaseContext(), "確定", Toast.LENGTH_SHORT).show();
-                    finish();
+                    haveInternet();
                 }
             });
 
@@ -406,62 +418,12 @@ public class MainActivity extends AppCompatActivity {
                 result = true;
             }
         }
+        Log.e("連線狀態=", "" + result);
         return result;
-    }
+    }//檢查連線狀態
 
-    public static int getVerCode(Context context) {
-        int verCode = -1;
-        try {
-            verCode = context.getPackageManager().getPackageInfo(
-                    context.getPackageName(), 0).versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e("error", e.getMessage());
-        }
 
-        return verCode;
-    }
 
-    public static String getVerName(Context context) {
-        String verName = "";
-        try {
-            verName = context.getPackageManager().getPackageInfo(
-                    context.getPackageName(), 0).versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e("error", e.getMessage());
-        }
-        return verName;
-    }/*
-    private boolean getServerVer () {
-        try {
-            String verjson = NetworkTool.getContent(company.test.health_system.Config.UPDATE_SERVER + Config.UPDATE_VERJSON);
-            JSONArray array = new JSONArray(verjson);
-            if (array.length() > 0) {
-                JSONObject obj = array.getJSONObject(0);
-                try {
-                    newVerCode = Integer.parseInt(obj.getString("verCode"));
-                    newVerName = obj.getString("verName");
-                } catch (Exception e) {
-                    newVerCode = -1;
-                    newVerName = "";
-                    return false;
-                }
-            }
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-            return false;
-        }
-        return true;
-    }*/
 
-    private void go2GooglePlay() {
-        // getPackageName() from Context or Activity object
-        try {
-            startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://play.google.com/store/apps/details?id=company.test.health_system")));
-        } catch (android.content.ActivityNotFoundException e) {
-            startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://play.google.com/store/apps/details?id=company.test.health_system")));
-        }
-    }
 }
 

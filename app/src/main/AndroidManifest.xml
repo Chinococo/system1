@@ -20,26 +20,25 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".Advance_serarch_score"></activity>
         <activity
-            android:name="company.test.health_system.classroom"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name="company.test.health_system.ouput"
+            android:name=".classroom"
             android:screenOrientation="portrait" />
         <activity
-            android:name="company.test.health_system.search_socore"
+            android:name=".ouput"
             android:screenOrientation="portrait" />
         <activity
-            android:name="company.test.health_system.enter_score_screen"
+            android:name=".search_socore"
             android:screenOrientation="portrait" />
         <activity
-            android:name="company.test.health_system.resign_screen"
+            android:name=".enter_score_screen"
             android:screenOrientation="portrait" />
         <activity
-            android:name="company.test.health_system.MainActivity"
+            android:name=".resign_screen"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
