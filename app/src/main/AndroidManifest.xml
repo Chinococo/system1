@@ -21,7 +21,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Advance_serarch_score"></activity>
+        <activity android:name=".test"></activity>
+        <activity android:name=".Advance_serarch_score" />
         <activity
             android:name=".classroom"
             android:screenOrientation="portrait" />

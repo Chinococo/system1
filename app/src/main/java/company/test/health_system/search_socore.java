@@ -163,6 +163,7 @@ public class search_socore extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.getValue() != null) {
                                         item_list = (List<String>) dataSnapshot.getValue();
+                                        /*
                                         item_list.set(0, "地板:" + item_list.get(0));
                                         item_list.set(1, "窗戶:" + item_list.get(1));
                                         item_list.set(2, "垃圾:" + item_list.get(2));
@@ -171,11 +172,31 @@ public class search_socore extends AppCompatActivity {
                                         item_list.set(5, "其他:" + item_list.get(5));
                                         item_list.set(6, "查堂成績:" + item_list.get(6));
                                         item_list.set(7, "評分編號:" + (Integer.parseInt(item_list.get(7).replaceAll("no=", "")) - 24));
-                                        if (item_list.get(7).equals("30"))
-                                            item_list.set(7, "評分編號:最高權限者");
-                                        do5();
+                                        */
+                                        item_list.add( "地板:");
+                                        item_list.add( "窗戶:");
+                                        item_list.add( "垃圾:");
+                                        item_list.add( "桌椅:");
+                                        item_list.add( "黑板:");
+                                        item_list.add( "其他:");
+                                        item_list.add("備註:");
+                                        item_list.add( "評分編號:");
+                                        item_list.add(""+ (Integer.parseInt(item_list.get(7).replaceAll("no=", "")) - 24));
+                                        if (item_list.get(7).equals("no=30"))
+                                            item_list.set(7, "最高權限者");
+                                        if (item_list.get(6).equals(""))
+                                            item_list.set(6, "無");
+                                        Intent intent = new Intent(search_socore.this, test.class);
+                                        Bundle bundle = new Bundle();
+                                        ArrayList<String> tran = new ArrayList<>();
+                                        for (int i = 0; i < item_list.size(); i++)
+                                            tran.add(item_list.get(i));
+                                        bundle.putStringArrayList("view", tran);
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
+                                        //do5();
                                     } else {
-                                        do5();
+                                        //do5();
                                         nofition("現在尚無資料");
                                     }
                                 }
@@ -213,6 +234,7 @@ public class search_socore extends AppCompatActivity {
     }
 
     private void do5() {
+
         ListAdapter adapter = new ArrayAdapter<>(this, R.layout.spinner_custom, item_list);
         item_listview.setAdapter(adapter);
     }

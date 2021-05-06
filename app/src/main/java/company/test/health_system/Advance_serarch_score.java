@@ -2,6 +2,7 @@ package company.test.health_system;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -63,7 +64,7 @@ public class Advance_serarch_score extends AppCompatActivity {
     ListView item_listview;
     Spinner choose;
     List<String> sp = new ArrayList<>();
-
+    //RecyclerView recyclerView;
     //String nowclass="no select";
     @Override
     protected void onCreate(Bundle savedInstanceState) {

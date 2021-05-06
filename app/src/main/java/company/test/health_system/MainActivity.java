@@ -5,6 +5,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
 import android.content.Context;
@@ -19,7 +23,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -69,12 +75,16 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference db = FirebaseDatabase.getInstance().getReference();//網路資料庫
     boolean ch;//檢查帳號狀態的bool
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) //main()
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //Intent it = new Intent(this, company.test.health_system.test.class);
+        //startActivity(it);
         if (haveInternet()) {
             nowvercode = Integer.parseInt(getString(R.string.version_code));
             db.child("vercode").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -83,20 +93,19 @@ public class MainActivity extends AppCompatActivity {
                     int seververcode = Integer.parseInt(snapshot.getValue().toString());
                     if (nowvercode >= seververcode) {
                         db.child("vercode").setValue(nowvercode);
-                    }else
-                        {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                            builder.setTitle("警告");
-                            builder.setCancelable(false);
-                            builder.setMessage("版本過低，請至google play更新");
-                            builder.setPositiveButton("退出軟體", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finish();
-                                }
-                            });
-                            builder.show();
-                        }
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setTitle("警告");
+                        builder.setCancelable(false);
+                        builder.setMessage("版本過低，請至google play更新");
+                        builder.setPositiveButton("退出軟體", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        });
+                        builder.show();
+                    }
 
                 }
 
@@ -115,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
 
     @Override
     public void onBackPressed()  //雙擊退出事件
@@ -324,8 +335,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void getsheet()
-    {
+    void getsheet() {
         get_html getHtml = new get_html("https://docs.google.com/spreadsheets/d/e/2PACX-1vTSUjx6g2eiKzdFzBE6xiCdSUMo8ugZDW1LN_eXZ_wFb_1x3cv0-P1TgewZJB4WvhX7u82DGV4-OWQ1/pub?output=csv", "just_getdata");
         new Thread(new Runnable() {
             @Override
@@ -354,15 +364,13 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    void outfile(String name, StringBuilder sb)
-    {
+    void outfile(String name, StringBuilder sb) {
         output_csv outputCsv = new output_csv(MainActivity.this);
         outputCsv.WriteFileExample(name, sb);
 
     }
 
-    void importdata()
-    {
+    void importdata() {
         importantdata = new HashMap<>();
         File directory123 = new File(Environment.getExternalStorageDirectory() + File.separator + "衛生評分系統資料夾");
         File dir = Environment.getExternalStorageDirectory();
@@ -392,8 +400,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    boolean haveInternet()
-    {
+    boolean haveInternet() {
         boolean result = false;
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = connManager.getActiveNetworkInfo();
@@ -421,7 +428,6 @@ public class MainActivity extends AppCompatActivity {
         Log.e("連線狀態=", "" + result);
         return result;
     }//檢查連線狀態
-
 
 
 
