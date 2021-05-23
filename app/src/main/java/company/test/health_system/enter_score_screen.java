@@ -55,6 +55,12 @@ public class enter_score_screen extends AppCompatActivity {
         setContentView(R.layout.activity_enter_score_screen);
         setup();
         importdata();
+        if(!no.equals("30"))
+        {
+            updatespinner();
+            updateitem();
+        }
+
         event();
     }
 
@@ -310,6 +316,7 @@ public class enter_score_screen extends AppCompatActivity {
         now_score = findViewById(R.id.now_score_class1);
         intent = getIntent();//拿取登入時的帳號跟編號
         no = intent.getStringExtra("no");
+        Log.e("no",no+"");
         grade1 = findViewById(R.id.enter1_t);
         grade2 = findViewById(R.id.enter2_t);
         grade3 = findViewById(R.id.enter3_t);

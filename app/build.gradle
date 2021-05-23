@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId "company.test.health_system"
 
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion 29
         versionCode 3
         //更新完一定要重新用自己的機器先跑一次

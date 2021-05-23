@@ -138,11 +138,25 @@ public class search_socore extends AppCompatActivity {
                                             workplace = importantdata.get("13~17");
                                         workplace.add("備註");
                                         ArrayList<String> score = (ArrayList<String>) dataSnapshot.getValue();
+                                        ArrayList<String> tran = new ArrayList<>();
+                                        for(int i=0;i<16;i++)
+                                            tran.add("");
+
+
                                         for (int i = 0; i < 6; i++) {
                                             if (i != 5 && !score.get(i).equals(""))
                                                 total += Double.parseDouble(score.get(i));
                                             item_list.add(workplace.get(i) + ":" + score.get(i));
+                                            tran.set(i,score.get(i));
+                                            tran.set(i+8,workplace.get(i)+ ":");
                                         }
+                                        tran.set(14,"總分:");
+                                        tran.set(6,""+total);
+                                        Intent intent = new Intent(search_socore.this, test.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putStringArrayList("view", tran);
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
                                         total_score.setText("總分:" + total);
                                         do5();
                                     } else {
