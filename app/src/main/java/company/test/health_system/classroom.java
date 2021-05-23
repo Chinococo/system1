@@ -56,7 +56,7 @@ public class classroom extends AppCompatActivity {
     Spinner spinner_position, spinner_class;
     EditText grade1, grade2, grade3, grade4, grade5, grade6, grade7;
     Button full, next, prev;
-    ;
+
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     Set<String> check = new HashSet<>();
     ArrayList<String> pos = new ArrayList<>();
